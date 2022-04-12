@@ -17,8 +17,6 @@
 
 static char	*line_read = (char *)NULL; // a static variable for holding the line.
 
-
-
 char	*rl_gets() // read a string and return a pointer to it. Returns NULL on EOF.
 {
 	if (line_read) // if the buffer has already been allocated, return the memory to the free pool.
