@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/29 15:02:55 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/04/30 12:57:47 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ typedef struct s_command {
 // FUNCTION PROTOTYPES
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
-void	expand_tokens(char **tokens, char **envp);
+void	expand_tokens(char **tokens);
 
 #endif

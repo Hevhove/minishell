@@ -4,7 +4,7 @@ NAME_DEBUG = minishell.dSYM
 INCS	= inc/minishell.h
 OBJS	= $(SRCS:c=o)
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror `pkg-config readline --cflags` #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror `pkg-config readline --cflags` -fsanitize=address
 RM		= rm -f
 LIBFT	= libft/libft.a
 LIBFT_DIR = libft

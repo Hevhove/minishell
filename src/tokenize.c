@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/29 13:35:59 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/04/30 13:00:22 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,11 @@ static int	add_tokens(char **tokens, const char *s, char c)
 
 void	print_tokens(char **tokens)
 {
-	int i;
+	int	i;
 
 	i = 0;
+	if (!tokens)
+		exit(1);
 	printf("#----#\n");
 	while (tokens[i])
 	{

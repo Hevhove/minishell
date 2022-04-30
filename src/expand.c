@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/29 18:24:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/04/30 13:01:46 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,80 +39,66 @@ int	start_end_quote(char *token)
 	return (0);
 }
 
-char *strip_quote(char *str)
+void	text_replace(char **token, int len, char *str)
 {
-	int	i;
-	char *stripped;
+	char	*pre;
+	char	*inter;
+	int		i;
 
-	if (str[ft_strlen(str) - 1] == '\"')
+	i = 0;
+	pre = (char *)malloc(sizeof(char) * (len + 1));
+	ft_strlcpy(pre, *token, len);
+	printf("pre is: %s\n", pre);
+	free(*token);
+	*token = NULL;
+	*token = ft_strjoin(pre, str);
+	printf("INSIDE is: %s\n", *token);
+	if (pre[0] == '\"')
 	{
-		stripped = (char *)malloc(sizeof(char) * (ft_strlen(str)));
-		if (!stripped)
-			return (NULL);
-		i = 0;
-		while (i < (int)ft_strlen(str) - 1)
-		{
-			stripped[i] = str[i];
-			i++;
-		}
-		stripped[i] = '\0';
-		printf("stripped string: %s\n", stripped);
-		return (stripped);
+		inter = ft_strjoin(*token, "\"");
+		free(*token);
+		*token = inter;
 	}
-	return (str);
+	free(pre);
+	return ;
 }
 
-void	expand_tokens(char **tokens, char **envp) // echo "hello $PWD"
+/*	Expand Tokens function:
+|	This function expands the $ for variables, and handles the following cases:
+|	CASE1: $PWD			-> WORKS
+|	CASE2: "$PWD"		-> WORKS
+|	CASE3: $PWDo		-> Variable doesn't exist and will remain as $PWDo for now
+|	CASE4: "old$PWD"	-> WORKS. Variable will be expanded with the prefix
+|	
+|	INPUT:	tokens[0] is: echo
+|			tokens[1] is: "old$PWD"
+|
+|	OUTPUT: 
+|			tokens[0] is: echo
+|			tokens[1] is: "old/Users/hvan-hov/Documents/minishell"
+*/
+
+void	expand_tokens(char **tokens)
 {
 	int		i;
 	int		j;
 	char	*str;
 	char	*pretext;
-	// case1: $PWD
-	// case2: "$PWD"
-	// case3: $PWDo
-	// case4: "old$PWD"
 
-	(void)envp;
 	i = 0;
 	while (tokens[i])
 	{
-		if (start_end_quote(tokens[i]) == 1)
-			i++;
-		else
+		if (start_end_quote(tokens[i]) != 1 && ft_strchr(tokens[i], '$'))
 		{
 			j = 0;
 			pretext = (char *)malloc((j + 1) * sizeof(char));
 			while (tokens[i][j] != '$' && tokens[i][j])
-			{
-				if (tokens[i][j] == '\"')
-				{
-					pretext[j] = tokens[i][j];
-					j++;
-					pretext[j] = '\0';
-				}
 				j++;
-			}
 			str = getenv(ft_strtrim(tokens[i] + j + 1, " \""));
-			printf("str is : %s\n", str);
-			free(tokens[i]);
-			printf("PRETEXT IS: %s\n", pretext);
-			tokens[i] = ft_strjoin(pretext, str);
-			if (!tokens[i])
-				// exit?
-			// len = ft_strlen(str);
-			free(pretext);
-			printf("does this happen?\n");
+			if (!str)
+				break ;
+			text_replace(&tokens[i], j + 1, str);
 		}
 		i++;
-		// printf("check\n");
 	}
 }
-
-// int main(void)
-// {
-// 	char str[] = "lol baby  $PWD";
-
-// 	printf("result is: %d\n", check_single_literal(str));
-// 	return (0);
-// }
