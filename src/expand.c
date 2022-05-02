@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/30 13:01:46 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/04/30 13:16:06 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,9 @@ void	text_replace(char **token, int len, char *str)
 	i = 0;
 	pre = (char *)malloc(sizeof(char) * (len + 1));
 	ft_strlcpy(pre, *token, len);
-	printf("pre is: %s\n", pre);
 	free(*token);
 	*token = NULL;
 	*token = ft_strjoin(pre, str);
-	printf("INSIDE is: %s\n", *token);
 	if (pre[0] == '\"')
 	{
 		inter = ft_strjoin(*token, "\"");

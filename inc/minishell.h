@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/30 12:57:47 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/04/30 17:10:40 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,21 @@ typedef struct s_redir {
 	
 }	t_redir;
 
-typedef struct s_command {
-	char	**argv;	// ls -al
-	t_redir redirs[2];	// redirections
-}	t_command;
+typedef struct s_simp_cmd
+{
+	int		argc;
+	char	**argv;
+	int		fd_in;
+	int		fd_out;
+	int		fd_err;
+}	t_simp_cmd;
+
+typedef struct s_cmd {
+	t_simp_cmd	*simple_cmd;	// ls -al
+	int			fd_in;
+	int			fd_out;
+	int			fd_err;
+}	t_cmd;
 
 // FUNCTION PROTOTYPES
 char	**tokenize(const char *s);
