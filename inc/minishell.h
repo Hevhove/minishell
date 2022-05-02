@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/30 17:10:40 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/02 11:48:35 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
+# define METACHARSET ""
 
 // STRUCTS
 typedef struct	s_ast {
@@ -27,7 +28,7 @@ typedef struct	s_ast {
 	void *content;
 }	t_ast;
 
-typedef enum RedirType 
+typedef enum RedirType
 {
 	LEFT_SINGLE, 
 	LEFT_DOUBLE, 
@@ -39,18 +40,15 @@ typedef enum TokenType{
 	CHAR_GENERAL = -1,
 	CHAR_PIPE = '|',
 	CHAR_AMPERSAND = '&',
-	CHAR_QUOTE = '\'',
+	CHAR_SQUOTE = '\'',
 	CHAR_DQUOTE = '\"',
-	CHAR_SEMICOLON = ';',
 	CHAR_WHITESPACE = ' ',
-	CHAR_ESCAPESEQUENCE = '\\',
-	CHAR_TAB = '\t',
 	CHAR_NEWLINE = '\n',
 	CHAR_GREATER = '>',
 	CHAR_LESSER = '<',
 	CHAR_NULL = 0,
 	TOKEN	= -1,
-}	t_token_type;
+}	t_token;
 
 typedef struct	s_token {
 	struct s_token	*prev;
@@ -75,9 +73,6 @@ typedef struct s_simp_cmd
 
 typedef struct s_cmd {
 	t_simp_cmd	*simple_cmd;	// ls -al
-	int			fd_in;
-	int			fd_out;
-	int			fd_err;
 }	t_cmd;
 
 // FUNCTION PROTOTYPES

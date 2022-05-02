@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/30 13:16:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/02 10:33:02 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	expand_tokens(char **tokens)
 	int		i;
 	int		j;
 	char	*str;
-	char	*pretext;
+	//char	*pretext;
 
 	i = 0;
 	while (tokens[i])
@@ -89,7 +89,7 @@ void	expand_tokens(char **tokens)
 		if (start_end_quote(tokens[i]) != 1 && ft_strchr(tokens[i], '$'))
 		{
 			j = 0;
-			pretext = (char *)malloc((j + 1) * sizeof(char));
+			// pretext = (char *)malloc((j + 1) * sizeof(char));
 			while (tokens[i][j] != '$' && tokens[i][j])
 				j++;
 			str = getenv(ft_strtrim(tokens[i] + j + 1, " \""));
