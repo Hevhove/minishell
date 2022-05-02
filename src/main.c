@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/02 10:30:54 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:35:16 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	main(void)
 		line = rl_gets(line);
 		tokens = tokenize(line);
 		//print_tokens(tokens);
-		expand_tokens(tokens);
+		//expand_tokens(tokens);
 		print_tokens(tokens);
 		// build_cmd_table(tokens);
 		if (ft_strncmp(line, "clear history", 13) == 0)
 			clear_history();
-		rl_on_new_line();
+		// rl_on_new_line();
 	}
 	return (0);
 }

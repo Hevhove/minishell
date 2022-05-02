@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/02 11:48:35 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:15:41 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,6 @@ typedef enum TokenType{
 	CHAR_LESSER = '<',
 	CHAR_NULL = 0,
 	TOKEN	= -1,
-}	t_token;
-
-typedef struct	s_token {
-	struct s_token	*prev;
-	struct s_token	*next;
-	enum TokenType	type;
-	char			*str;
 }	t_token;
 
 typedef struct s_redir {

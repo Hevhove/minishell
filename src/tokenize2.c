@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/02 12:36:03 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:51:41 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,38 @@ static int	check_quotes(const char *s)
 	int	i;
 
 	i = 0;
-	if (s[i] == '\"')
+	if (s[i] == CHAR_DQUOTE)
 	{
 		i++;
-		while (s[i] != '\"' && s[i])
+		while (s[i] != CHAR_DQUOTE && s[i])
 			i++;
 	}
-	if (s[i] == '\'')
+	if (s[i] == CHAR_SQUOTE)
 	{
 		i++;
-		while (s[i] != '\'' && s[i])
+		while (s[i] != CHAR_SQUOTE && s[i])
 			i++;
 	}
 	return (i);
 }
 
-static int	word_count(const char *s, char c)
+int metachar_wordlen(const char *s, int offset)
+{
+	if (*(s + offset) == CHAR_PIPE || *(s + offset) == CHAR_AMPERSAND)
+		return (1);
+	else if (*(s + offset) == CHAR_GREATER || *(s + offset) == CHAR_LESSER)
+		return (1);
+	if (offset < (int)ft_strlen(s))
+	{
+		if (*(s + offset) == CHAR_GREATER && *(s + offset + 1) == CHAR_GREATER)
+			return (2);
+		else if (*(s + offset) == CHAR_LESSER && *(s + offset + 1) == CHAR_LESSER)
+			return (2);		
+	}
+	return (0);
+}
+
+static int	word_count(const char *s)
 {
 	int	wc;
 	int	i;
@@ -56,10 +72,16 @@ static int	word_count(const char *s, char c)
 	{
 		while (s[i] == CHAR_WHITESPACE)
 			i++;
+		if (metachar_wordlen(s, i) != 0)
+		{
+			i = i + metachar_wordlen(s, i) + 1;
+			wc++;
+			continue ;
+		}
 		while (s[i] && s[i] != CHAR_WHITESPACE && check_token_type(s[i]) != 1)
 			i = i + check_quotes(s + i) + 1;
 		wc++;
-		if (s[i])
+		if (s[i] == CHAR_WHITESPACE)
 			i++;
 	}
 	return (wc);
@@ -88,7 +110,7 @@ static int	add_tokens(char **tokens, const char *s, char c)
 	wc = 0;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (s[i] == CHAR_WHITESPACE)
 			i++;
 		else
 		{
