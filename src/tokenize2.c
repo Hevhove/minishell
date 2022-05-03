@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/02 16:51:41 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/03 13:04:08 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	check_token_type(int token)
 {
-	if (token == CHAR_PIPE 
-	|| token == CHAR_AMPERSAND 
-	|| token == CHAR_GREATER 
+	if (token == CHAR_PIPE
+	|| token == CHAR_AMPERSAND
+	|| token == CHAR_GREATER
 	|| token == CHAR_LESSER)
 		return (1);
 	else if (token == CHAR_SQUOTE
@@ -49,14 +49,14 @@ int metachar_wordlen(const char *s, int offset)
 {
 	if (*(s + offset) == CHAR_PIPE || *(s + offset) == CHAR_AMPERSAND)
 		return (1);
-	else if (*(s + offset) == CHAR_GREATER || *(s + offset) == CHAR_LESSER)
-		return (1);
 	if (offset < (int)ft_strlen(s))
 	{
 		if (*(s + offset) == CHAR_GREATER && *(s + offset + 1) == CHAR_GREATER)
 			return (2);
 		else if (*(s + offset) == CHAR_LESSER && *(s + offset + 1) == CHAR_LESSER)
-			return (2);		
+			return (2);
+		else if (*(s + offset) == CHAR_GREATER || *(s + offset) == CHAR_LESSER)
+			return (1);
 	}
 	return (0);
 }
@@ -87,7 +87,7 @@ static int	word_count(const char *s)
 	return (wc);
 }
 
-static void	write_token(char *dst, const char *src, int word_len)
+static int	write_token(char *dst, const char *src, int word_len)
 {
 	int	i;
 
@@ -98,9 +98,10 @@ static void	write_token(char *dst, const char *src, int word_len)
 		i++;
 	}
 	dst[i] = '\0';
+	return (word_len);
 }
 
-static int	add_tokens(char **tokens, const char *s, char c)
+static int	add_tokens(char **tokens, const char *s) // echo "hello $PWD"|wc -l>>outfile
 {
 	int	i;
 	int	word_len;
@@ -115,14 +116,15 @@ static int	add_tokens(char **tokens, const char *s, char c)
 		else
 		{
 			word_len = 0;
-			while (s[i + word_len] != c && s[i + word_len])
-				word_len = word_len + check_quotes(s + i) + 1;
-			tokens[wc] = malloc((word_len + 1) * sizeof(char));
-			if (!tokens[wc])
-				return (-1);
-			write_token(tokens[wc], s + i, word_len);
-			i += word_len;
-			wc++;
+			if (check_token_type(s[i]) == 1)
+				word_len = word_len + metachar_wordlen(s, i);
+			else
+			{
+				while (s[i + word_len] != CHAR_WHITESPACE && check_token_type(s[i + word_len]) != 1 && s[i + word_len])
+					word_len = word_len + check_quotes(s + i) + 1;
+			}
+				tokens[wc] = (char *)malloc((word_len + 1) * sizeof(char));
+				i += write_token(tokens[wc++], s + i, word_len);
 		}
 	}
 	return (0);
@@ -156,7 +158,7 @@ char	**tokenize(const char *s)
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
 	if (!tokens)
 		return (NULL);
-	if (add_tokens(tokens, s, ' ') == -1)
+	if (add_tokens(tokens, s) == -1)
 		return (NULL);
 	tokens[wc] = NULL;
 	return (tokens);
@@ -174,7 +176,7 @@ char	**tokenize(const char *s)
 // 	}
 // 	free(tokens);
 // }
-// 
+//
 // int main(void)
 // {
 // 	char 	str1[] = "     hello test    here";
