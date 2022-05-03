@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/02 15:15:41 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/03 14:53:05 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ typedef struct	s_ast {
 
 typedef enum RedirType
 {
-	LEFT_SINGLE, 
-	LEFT_DOUBLE, 
-	RIGHT_SINGLE, 
+	LEFT_SINGLE,
+	LEFT_DOUBLE,
+	RIGHT_SINGLE,
 	RIGHT_DOUBLE
 }	t_redir_type;
 
@@ -52,7 +52,7 @@ typedef enum TokenType{
 
 typedef struct s_redir {
 	t_redir_type redir_type;
-	
+
 }	t_redir;
 
 typedef struct s_simp_cmd
@@ -72,5 +72,10 @@ typedef struct s_cmd {
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens);
+void	print_tokens(char **tokens);
+int			check_token_type(int token);
+int	check_quotes(const char *s);
+int	metachar_wordlen(const char *s, int offset);
+
 
 #endif
