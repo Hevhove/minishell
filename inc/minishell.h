@@ -6,7 +6,7 @@
 /*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/03 14:53:05 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/05/04 10:24:29 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum RedirType
 	RIGHT_DOUBLE
 }	t_redir_type;
 
-typedef enum TokenType{
+typedef enum s_token_type{
 	CHAR_GENERAL = -1,
 	CHAR_PIPE = '|',
 	CHAR_AMPERSAND = '&',
@@ -48,24 +48,35 @@ typedef enum TokenType{
 	CHAR_LESSER = '<',
 	CHAR_NULL = 0,
 	TOKEN	= -1,
-}	t_token;
+}	t_token_type;
 
 typedef struct s_redir {
 	t_redir_type redir_type;
 
 }	t_redir;
 
+typedef struct s_fd {
+	char	*fname;
+	int		fd;
+}	t_fd;
+
+typedef struct s_token {
+	char 			*token;
+	t_token_type	tokentype;
+}	t_token;
+
 typedef struct s_simp_cmd
 {
 	int		argc;
 	char	**argv;
-	int		fd_in;
-	int		fd_out;
-	int		fd_err;
-}	t_simp_cmd;
+	t_fd	fd_in;
+	t_fd	fd_out;
+	t_fd	fd_err;
+}	t_scmd;
 
 typedef struct s_cmd {
-	t_simp_cmd	*simple_cmd;	// ls -al
+	int			argc;
+	t_scmd		*scmds;	// ls -al
 }	t_cmd;
 
 // FUNCTION PROTOTYPES
@@ -73,9 +84,9 @@ char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens);
 void	print_tokens(char **tokens);
-int			check_token_type(int token);
-int	check_quotes(const char *s);
-int	metachar_wordlen(const char *s, int offset);
-
+int		check_token_type(int token);
+int		check_quotes(const char *s);
+int		metachar_wordlen(const char *s, int offset);
+void	build_cmds(char **tokens, t_cmd *cmd);
 
 #endif

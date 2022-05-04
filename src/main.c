@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/02 15:35:16 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/04 10:22:14 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ char	*rl_gets(char *line)
 
 int	main(void)
 {
-	char	*line;
-	char	**tokens;
+	char		*line;
+	char		**tokens;
+	//t_cmd		cmd;
 
 	line = NULL;
 	while (1)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
-		//print_tokens(tokens);
-		//expand_tokens(tokens);
+		expand_tokens(tokens);
 		print_tokens(tokens);
-		// build_cmd_table(tokens);
+		//build_cmds(tokens, &cmd);
 		if (ft_strncmp(line, "clear history", 13) == 0)
 			clear_history();
 		// rl_on_new_line();
