@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/04 10:24:29 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/05/04 15:28:45 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_simp_cmd
 	t_fd	fd_in;
 	t_fd	fd_out;
 	t_fd	fd_err;
+	int		heredoc;
+	int		append;
 }	t_scmd;
 
 typedef struct s_cmd {
