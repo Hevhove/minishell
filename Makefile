@@ -8,7 +8,7 @@ HENDRIKINCS = /usr/local/Cellar/readline/include
 HENDRIKLINK = /usr/local/Cellar/readline/lib
 OBJS	= $(SRCS:c=o)
 CC		= gcc
-CFLAGS	= -Wall -Wextra -Werror `pkg-config readline --cflags` #-fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror `pkg-config readline --cflags` -fsanitize=address
 RM		= rm -f
 LIBFT	= libft/libft.a
 LIBFT_DIR = libft

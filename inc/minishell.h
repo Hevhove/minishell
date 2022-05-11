@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/04 15:28:45 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/11 19:10:22 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
+#include <string.h>
+#include <unistd.h>
 # define METACHARSET ""
 
 // STRUCTS
@@ -68,6 +70,8 @@ typedef struct s_token {
 typedef struct s_simp_cmd
 {
 	int		argc;
+	int		raw_argc;
+	char	**raw;
 	char	**argv;
 	t_fd	fd_in;
 	t_fd	fd_out;
@@ -90,5 +94,12 @@ int		check_token_type(int token);
 int		check_quotes(const char *s);
 int		metachar_wordlen(const char *s, int offset);
 void	build_cmds(char **tokens, t_cmd *cmd);
+void	exec_echo(char **tokens);
+void	exec_echo(char **tokens);
+void	exec_cd(char **tokens);
+void	exec_pwd(char **tokens);
+int		builtin_identifier(char **tokens);
+int		builtin_executor(char **tokens);
+
 
 #endif
