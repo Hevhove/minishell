@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/03 14:51:51 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/05/13 19:45:31 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ static int	add_tokens(char **tokens, const char *s)
 					&& check_token_type(s[i + word_len]) != 1 && s[i + word_len])
 					word_len = word_len + check_quotes(s + i) + 1;
 			}
-				tokens[wc] = (char *)malloc((word_len + 1) * sizeof(char));
-				if (!tokens[wc])
-					return (-1);
-				i += write_token(tokens[wc++], s + i, word_len);
+			tokens[wc] = (char *)malloc((word_len + 1) * sizeof(char));
+			if (!tokens[wc])
+				return (-1);
+			i += write_token(tokens[wc++], s + i, word_len);
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 11:18:27 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/13 18:35:39 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	main(void)
 	t_cmd		cmd;
 
 	line = NULL;
-	int i = 0;
-	while (i++ < 2)
+	while (1)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);

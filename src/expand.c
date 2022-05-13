@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 13:27:12 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/13 19:43:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	expand_tokens(char **tokens)
 			while (tokens[i][j] != '$' && tokens[i][j])
 				j++;
 			tmp = ft_strtrim(tokens[i] + j + 1, " \"");
-			str = getenv(tmp); // PWD -> usr/hvan-hov/...
+			str = getenv(tmp);
 			free(tmp);
 			if (!str)
 				break ;
@@ -101,22 +101,3 @@ void	expand_tokens(char **tokens)
 		i++;
 	}
 }
-
-// void	expand_tokens2(char **tokens) // tokens[0] echo | tokens[1] "hello $PWD"
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*substr;
-	
-// 	i = 0;
-// 	while (tokens[i])
-// 	{
-// 		if (start_end_quote(tokens[i]) != 1 && ft_strchr(tokens[i], '$'))
-// 		{
-// 			j = 0;
-// 			while (tokens[i][j] && tokens[i][j] != '$')
-// 				j++;
-// 			substr = ft_substr(tokens[i], j, )
-// 		}
-// 	}
-// }
