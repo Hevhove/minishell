@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/12 16:40:48 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/13 19:46:26 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
-#include <string.h>
-#include <unistd.h>
+# include <string.h>
+# include <unistd.h>
 # define METACHARSET ""
 
 // STRUCTS
-typedef struct	s_ast {
-	struct s_ast *left;
-	struct s_ast *right;
-	void *content;
-}	t_ast;
-
-typedef enum RedirType
-{
-	LEFT_SINGLE,
-	LEFT_DOUBLE,
-	RIGHT_SINGLE,
-	RIGHT_DOUBLE
-}	t_redir_type;
 
 typedef enum s_token_type{
 	CHAR_GENERAL = -1,
@@ -59,20 +46,10 @@ typedef enum s_token_type{
 	TOKEN	= -1,
 }	t_token_type;
 
-typedef struct s_redir {
-	t_redir_type redir_type;
-
-}	t_redir;
-
 typedef struct s_fd {
 	char	*fname;
 	int		fd;
 }	t_fd;
-
-typedef struct s_token {
-	char 			*token;
-	t_token_type	tokentype;
-}	t_token;
 
 typedef struct s_simp_cmd
 {
@@ -89,7 +66,7 @@ typedef struct s_simp_cmd
 
 typedef struct s_cmd {
 	int			argc;
-	t_scmd		*scmds;	// ls -al
+	t_scmd		*scmds;
 }	t_cmd;
 
 // FUNCTION PROTOTYPES
@@ -109,5 +86,15 @@ int		builtin_identifier(char **tokens);
 int		builtin_executor(char **tokens);
 void	free_tokens(char **tokens);
 void	free_cmds(t_cmd cmd);
+int		count_cmds(char **tokens);
+int		skip_token(char *token);
+int		scmd_arg_count(char **tokens, int index);
+int		raw_arg_count(t_cmd *cmd, char **tokens, int i, int j);
+void	write_raw_cmds(t_cmd *cmd, char **tokens);
+void	set_cmd_count(char **tokens, t_cmd *cmd);
+void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos);
+void	init_scmd_fds(t_cmd *cmd, int i);
+void	update_fds(t_cmd *cmd);
+int		count_argv(t_scmd scmd);
 
 #endif
