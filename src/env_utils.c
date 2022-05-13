@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/10 12:15:07 by miam             ###   ########.fr       */
+/*   Updated: 2022/05/11 10:39:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	array_len(char **array)
 	return (len);
 }
 
-void	get_env_table(char **env)
-{
-	int	i;
-	int	chars;
+// void	get_env_table(char **env)
+// {
+// 	int	i;
+// 	int	chars;
 
-}
+// }

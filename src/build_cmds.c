@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/05/12 13:58:43 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/13 13:57:00 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	set_cmd_count(char **tokens, t_cmd *cmd)
 	int	j;
 
 	cmd->argc = count_cmds(tokens);
-	cmd->scmds = (t_scmd *)malloc((cmd->argc + 1) * sizeof(t_scmd));
+	cmd->scmds = (t_scmd *)malloc((cmd->argc) * sizeof(t_scmd)); //[scmd1 scmd2]
 	if (!cmd->scmds)
 		exit(2);
 	i = 0;
@@ -134,25 +134,28 @@ void	set_cmd_count(char **tokens, t_cmd *cmd)
 	we might overwrite fname here which is a strdup causing memleak
 */
 
-void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos)
+void	write_fds(t_cmd *cmd, const char *fname, const char *mode, int pos)
 {
 	if (ft_strncmp(mode, ">>", 2) == 0)
 	{
+		//free(cmd->scmds[pos].fd_out.fname);
 		cmd->scmds[pos].fd_out.fname = ft_strdup(fname);
-		printf("fout is: %s\n", cmd->scmds[pos].fd_out.fname);
 		cmd->scmds[pos].append = 1;
 	}
 	else if (ft_strncmp(mode, "<<", 2) == 0)
 	{
+		//free(cmd->scmds[pos].fd_in.fname);
 		cmd->scmds[pos].fd_in.fname = ft_strdup(fname);
 		cmd->scmds[pos].heredoc = 1;
 	}
 	else if (ft_strncmp(mode, ">", 1) == 0)
 	{
+		//free(cmd->scmds[pos].fd_out.fname);
 		cmd->scmds[pos].fd_out.fname = ft_strdup(fname);
 	}
 	else if (ft_strncmp(mode, "<", 1) == 0)
 	{
+		//free(cmd->scmds[pos].fd_in.fname);
 		cmd->scmds[pos].fd_in.fname = ft_strdup(fname);
 	}
 }

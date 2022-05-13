@@ -6,9 +6,16 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/11 19:10:22 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/12 16:40:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+	ERROR MANAGEMENT:
+	1: MALLOC ERROR
+	2: OPEN ERROR
+	3: 
+*/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -69,9 +76,9 @@ typedef struct s_token {
 
 typedef struct s_simp_cmd
 {
-	int		argc;
 	int		raw_argc;
 	char	**raw;
+	int		argc;
 	char	**argv;
 	t_fd	fd_in;
 	t_fd	fd_out;
@@ -100,6 +107,7 @@ void	exec_cd(char **tokens);
 void	exec_pwd(char **tokens);
 int		builtin_identifier(char **tokens);
 int		builtin_executor(char **tokens);
-
+void	free_tokens(char **tokens);
+void	free_cmds(t_cmd cmd);
 
 #endif

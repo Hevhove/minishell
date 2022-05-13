@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/11 11:43:51 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/13 11:18:27 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	main(void)
 	t_cmd		cmd;
 
 	line = NULL;
-	while (1)
+	int i = 0;
+	while (i++ < 2)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
@@ -45,7 +46,8 @@ int	main(void)
 		build_cmds(tokens, &cmd);
 		if (ft_strncmp(line, "clear history", 13) == 0)
 			clear_history();
-		// rl_on_new_line();
+		free_tokens(tokens);
+		free_cmds(cmd);
 	}
 	return (0);
 }

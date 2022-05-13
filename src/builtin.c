@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/04 16:52:04 by miam             ###   ########.fr       */
+/*   Updated: 2022/05/11 10:38:53 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int	builtin_executor(char **tokens)
 		exec_cd(tokens);
 	else if (builtin_id == 4)
 		exec_pwd(tokens);
-	else if (builtin_id == 5)
-		exec_export(tokens);
-	else if (builtin_id == 6)
-		exec_unset(tokens);
-	else if (builtin_id == 7)
-		exec_env(tokens);
+	// else if (builtin_id == 5)
+	// 	exec_export(tokens);
+	// else if (builtin_id == 6)
+	// 	exec_unset(tokens);
+	// else if (builtin_id == 7)
+	// 	exec_env(tokens);
 	return (1);
 }

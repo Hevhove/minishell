@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/10 18:00:42 by miam             ###   ########.fr       */
+/*   Updated: 2022/05/11 10:39:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
+#include "../inc/minishell.h"
 
 typedef struct	s_env
 {
@@ -73,6 +70,8 @@ void	exec_pwd(char **tokens)
 	// to check why in bash: "pwd | cd .." does nothing while 
 	// "pwd | ls" or "pwd | echo hello" works the way 2nd cmd is performed
 	char	*cwd;
+	// TAKE AWAY LATER:
+	(void)tokens;
 
 	// if (tokens[1] && ft_strcmp(tokens[1], "|") == 0) -> exectute 2nd cmd
 	cwd = getcwd(NULL, 0);
@@ -80,13 +79,13 @@ void	exec_pwd(char **tokens)
 	return ;
 }
 
-void	exec_export(char **tokens)
-{
+// void	exec_export(char **tokens)
+// {
 	
-}
+// }
 
-int main(int argc, char **argv)
-{
-	exec_cd(argv);
-	return (0);
-}
+// int main(int argc, char **argv)
+// {
+// 	exec_cd(argv);
+// 	return (0);
+// }
