@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 19:45:31 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/14 13:00:30 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,18 @@ static int	write_token(char *dst, const char *src, int word_len)
 	return (word_len);
 }
 
-static int	add_tokens(char **tokens, const char *s)
+void	token_alloc(char **tokens, int wc, int word_len)
+{
+	tokens[wc] = (char *)malloc((word_len + 1) * sizeof(char));
+	if (!tokens[wc])
+		exit(3);
+	return ;
+}
+
+void	add_tokens(char **tokens, const char *s)
 {
 	int	i;
-	int	word_len;
+	int	w_l;
 	int	wc;
 
 	i = 0;
@@ -66,22 +74,19 @@ static int	add_tokens(char **tokens, const char *s)
 			i++;
 		else
 		{
-			word_len = 0;
+			w_l = 0;
 			if (check_token_type(s[i]) == 1)
-				word_len = word_len + metachar_wordlen(s, i);
+				w_l = w_l + metachar_wordlen(s, i);
 			else
 			{
-				while (s[i + word_len] != CHAR_WHITESPACE
-					&& check_token_type(s[i + word_len]) != 1 && s[i + word_len])
-					word_len = word_len + check_quotes(s + i) + 1;
+				while (s[i + w_l] != CHAR_WHITESPACE
+					&& check_token_type(s[i + w_l]) != 1 && s[i + w_l])
+					w_l = w_l + check_quotes(s + i) + 1;
 			}
-			tokens[wc] = (char *)malloc((word_len + 1) * sizeof(char));
-			if (!tokens[wc])
-				return (-1);
-			i += write_token(tokens[wc++], s + i, word_len);
+			token_alloc(tokens, wc, w_l);
+			i += write_token(tokens[wc++], s + i, w_l);
 		}
 	}
-	return (0);
 }
 
 char	**tokenize(const char *s)
@@ -95,21 +100,7 @@ char	**tokenize(const char *s)
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
 	if (!tokens)
 		return (NULL);
-	if (add_tokens(tokens, s) == -1)
-		return (NULL);
+	add_tokens(tokens, s);
 	tokens[wc] = NULL;
 	return (tokens);
 }
-
-// void	free_tokens(char **tokens)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (tokens[i])
-// 	{
-// 		free(tokens[i]);
-// 		i++;
-// 	}
-// 	free(tokens);
-// }

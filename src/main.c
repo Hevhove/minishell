@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 18:35:39 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/14 13:35:31 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,12 @@ int	main(void)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
+		if (!tokens)
+			exit(3);
 		expand_tokens(tokens);
 		print_tokens(tokens);
 		build_cmds(tokens, &cmd);
+		exec_cmds(cmd);
 		if (ft_strncmp(line, "clear history", 13) == 0)
 			clear_history();
 		free_tokens(tokens);

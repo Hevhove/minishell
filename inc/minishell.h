@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 19:46:26 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/14 13:45:59 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos);
 void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
+void	exec_cmds(t_cmd cmd);
 
 #endif
