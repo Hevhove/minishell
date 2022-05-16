@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 19:43:32 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:41:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	expand_tokens(char **tokens)
 			while (tokens[i][j] != '$' && tokens[i][j])
 				j++;
 			tmp = ft_strtrim(tokens[i] + j + 1, " \"");
-			str = getenv(tmp);
+			str = getenv(tmp); // fix this
 			free(tmp);
 			if (!str)
 				break ;

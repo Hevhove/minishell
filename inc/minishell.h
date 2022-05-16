@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/14 13:45:59 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:06:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include "../libft/libft.h"
 # include <string.h>
 # include <unistd.h>
+# include <fcntl.h>
 # define METACHARSET ""
 
 // STRUCTS
@@ -84,7 +85,7 @@ void	exec_pwd(char **tokens);
 void	exec_export(char **tokens, t_list **env);
 void	exec_env(char **tokens, t_list **env);
 int		builtin_identifier(char **tokens);
-int		builtin_executor(char **tokens);
+int		builtin_executor(char **tokens, t_list **env);
 void	env_init(t_list **env, char **envp);
 void	export_no_var(t_list **env);
 int		check_in_env(t_list *new, t_list **env);
@@ -101,5 +102,7 @@ void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
 void	exec_cmds(t_cmd cmd);
+
+char	*get_next_line(int fd);
 
 #endif

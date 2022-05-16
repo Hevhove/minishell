@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 11:05:53 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/16 11:06:42 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:38:31 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	exec_unset(char **tokens, t_list **env)
-{
+// void	exec_unset(char **tokens, t_list **env)
+// {
 	
-}
+// }

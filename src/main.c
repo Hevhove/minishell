@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/16 16:22:30 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/16 17:28:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!env)
 		return (1);
 	*env = NULL;
+	tokens = NULL;
 	env_init(env, envp);
 	exec_env(tokens, env);
 	
@@ -51,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 		line = rl_gets(line);
 		tokens = tokenize(line);
 		if (!tokens)
-			exit(3);
+			continue ; // or exit?
 		expand_tokens(tokens);
 		print_tokens(tokens);
 		build_cmds(tokens, &cmd);

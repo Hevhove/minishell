@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/16 10:37:14 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:38:13 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ int	builtin_identifier(char **tokens)
 	char	**list_of_builtin;
 
 	cmd_no = 7;
-	list_of_builtin[0] = "exit";
-	list_of_builtin[1] = "echo";
-	list_of_builtin[2] = "cd";
-	list_of_builtin[3] = "pwd";
-	list_of_builtin[4] = "export";
-	list_of_builtin[5] = "unset";
-	list_of_builtin[6] = "env";
-	list_of_builtin[7] = "\0";
+	list_of_builtin = (char **)malloc(7 * sizeof(char *));
+	list_of_builtin[0] = ft_strdup("exit");
+	list_of_builtin[1] = ft_strdup("echo");
+	list_of_builtin[2] = ft_strdup("cd");
+	list_of_builtin[3] = ft_strdup("pwd");
+	list_of_builtin[4] = ft_strdup("export");
+	list_of_builtin[5] = ft_strdup("unset");
+	list_of_builtin[6] = ft_strdup("env");
+	list_of_builtin[7] = ft_strdup("\0");
 	i = 0;
 	while (i < cmd_no)
 	{
@@ -57,8 +58,8 @@ int	builtin_executor(char **tokens, t_list **env)
 		exec_pwd(tokens);
 	else if (builtin_id == 5)
 		exec_export(tokens, env);
-	else if (builtin_id == 6)
-		exec_unset(tokens);
+	//else if (builtin_id == 6)
+		//exec_unset(tokens);
 	else if (builtin_id == 7)
 		exec_env(tokens, env);
 	return (1);
