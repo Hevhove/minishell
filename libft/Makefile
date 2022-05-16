@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: miam <miam@student.42.fr>                  +#+  +:+       +#+         #
+#    By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:33:15 by hvan-hov          #+#    #+#              #
-#    Updated: 2022/05/03 10:31:41 by miam             ###   ########.fr        #
+#    Updated: 2022/05/14 12:41:19 by hvan-hov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS =	$(wildcard *.c)
-INCS	= ./libft.h
+INCS	= ./libft.h -I./get_next_line.h -I./ft_printf.h
 OBJS	= $(SRCS:c=o)
 NAME	= libft.a
 CC		= gcc

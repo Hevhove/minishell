@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/14 13:35:31 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/16 16:22:30 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,22 @@ char	*rl_gets(char *line)
 	return (line);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
 	char		**tokens;
 	t_cmd		cmd;
+	t_list		**env;
 
+	(void)argv;
+	(void)argc;
+	env = (t_list **)malloc(sizeof(t_list));
+	if (!env)
+		return (1);
+	*env = NULL;
+	env_init(env, envp);
+	exec_env(tokens, env);
+	
 	line = NULL;
 	while (1)
 	{
