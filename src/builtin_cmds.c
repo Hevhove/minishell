@@ -6,7 +6,11 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/05/17 12:16:17 by hvan-hov         ###   ########.fr       */
+=======
+/*   Updated: 2022/05/17 13:51:01 by mmaxime-         ###   ########.fr       */
+>>>>>>> 3ff64beaf7d3a9705de1fa01987570688f20c0a2
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +96,27 @@ void	exec_env(char **tokens, t_list **env)
 	}
 }
 
-void	exec_export(char **tokens, t_list **env)
+int	exec_export(char **tokens, t_list **env)
 {
 	t_list	*new;
 
 	if (!tokens[1])
 	{
 		export_no_var(env);
-		return ;
+		return (0);
 	}
+	if (ft_isdigit((int)tokens[1][0]))
+	{
+		printf("bash: export: `%s': not a valid identifier\n", tokens[1]);
+		return (-1);
+	}
+	if (!ft_strchr(tokens[1], '='))
+		return (-1);
 	new = ft_lstnew(tokens[1]);
 	if (check_in_env(new, env) != 0)
-		return ;
+		return (0);
 	ft_lstadd_back(env, new);
-	return ;
+	return (1);
 }
 
 // int main(int argc, char **argv, char **envp)
@@ -119,6 +130,7 @@ void	exec_export(char **tokens, t_list **env)
 // 	*env = NULL;
 // 	env_init(env, envp);
 // 	exec_export(argv, env);
+// 	exec_unset(argv, env);
 // 	exec_env(argv, env);
 // 	ft_clear_env(env);
 // 	return (0);
