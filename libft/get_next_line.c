@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:27:16 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/05 19:49:13 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:11:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,20 +119,20 @@ char	*get_next_line(int fd)
 // 	*/
 // }
 
-int main(void)
-{
-	int 	fd;
-	char	*line;
+// int main(void)
+// {
+// 	int 	fd;
+// 	char	*line;
 	
-	fd = open("test1.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("line is : %s", line);
-	line = get_next_line(fd);
-	printf("line is : %s", line);
-	line = get_next_line(fd);
-	printf("line is : %s", line);
-	line = get_next_line(fd);
-	printf("line is : %s", line);
-	line = get_next_line(fd);
-	printf("line is : %s", line);
-}
+// 	fd = open("test1.txt", O_RDONLY);
+// 	line = get_next_line(fd);
+// 	printf("line is : %s", line);
+// 	line = get_next_line(fd);
+// 	printf("line is : %s", line);
+// 	line = get_next_line(fd);
+// 	printf("line is : %s", line);
+// 	line = get_next_line(fd);
+// 	printf("line is : %s", line);
+// 	line = get_next_line(fd);
+// 	printf("line is : %s", line);
+// }

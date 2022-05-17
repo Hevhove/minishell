@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/16 17:28:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/17 10:35:22 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
+		// token validity check on heredocs?
 		if (!tokens)
 			continue ; // or exit?
 		expand_tokens(tokens);

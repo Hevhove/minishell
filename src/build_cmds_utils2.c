@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:26:33 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 19:27:49 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/17 12:18:13 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,15 @@ void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos)
 		cmd->scmds[pos].heredoc = 1;
 	}
 	else if (ft_strncmp(mode, ">", 1) == 0)
+	{
 		cmd->scmds[pos].fd_out.fname = fname;
+		cmd->scmds[pos].append = 0;
+	}
 	else if (ft_strncmp(mode, "<", 1) == 0)
+	{
 		cmd->scmds[pos].fd_in.fname = fname;
+		cmd->scmds[pos].heredoc = 0;
+	}
 }
 
 void	init_scmd_fds(t_cmd *cmd, int i)
@@ -63,6 +69,9 @@ void	init_scmd_fds(t_cmd *cmd, int i)
 	cmd->scmds[i].fd_in.fname = NULL;
 	cmd->scmds[i].fd_out.fname = NULL;
 	cmd->scmds[i].fd_err.fname = NULL;
+	cmd->scmds[i].fd_in.fd = 0;
+	cmd->scmds[i].fd_out.fd = 1;
+	cmd->scmds[i].fd_err.fd = 2;
 }
 
 void	update_fds(t_cmd *cmd)

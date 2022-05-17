@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/16 18:17:11 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/17 13:14:59 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,34 @@ void	heredoc_input(t_cmd cmd, char *delim)
 	}
 	free(line);
 	close(file);
+	free(cmd.scmds[0].fd_in.fname);
+	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp");
 	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
+}
+
+void	open_files(t_cmd cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd.argc)
+	{
+		if (cmd.scmds[i].fd_in.fname != NULL && !access(cmd.scmds[i].fd_in.fname, F_OK | R_OK))
+			cmd.scmds[i].fd_in.fd = open(cmd.scmds[i].fd_in.fname, O_RDONLY);
+		else if (cmd.scmds[i].fd_in.fname != NULL && access(cmd.scmds[i].fd_in.fname, F_OK | R_OK))
+			printf("parse error: can't read from %s\n", cmd.scmds[i].fd_in.fname); // some exit?
+		if (cmd.scmds[i].fd_out.fname != NULL && !access(cmd.scmds[i].fd_out.fname, F_OK) && access(cmd.scmds[i].fd_out.fname, W_OK))
+			printf("parse error: can't write to %s\n", cmd.scmds[i].fd_out.fname); // some exit?
+		if (cmd.scmds[i].fd_out.fname != NULL && cmd.scmds[i].append == 1)
+			cmd.scmds[i].fd_out.fd = open(cmd.scmds[i].fd_out.fname, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		else if (cmd.scmds[i].fd_out.fname != NULL && cmd.scmds[i].append == 0)
+			cmd.scmds[i].fd_out.fd = open(cmd.scmds[i].fd_out.fname, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		else if (access(cmd.scmds[i].fd_out.fname, F_OK | R_OK))
+			; // some exit?
+		if (cmd.scmds[i].fd_in.fd < 0 || cmd.scmds[i].fd_out.fd < 0)
+			; // some exit?
+		i++;
+	}
 }
 
 void	exec_cmds(t_cmd cmd) // cat << EOF
@@ -43,15 +70,17 @@ void	exec_cmds(t_cmd cmd) // cat << EOF
 	if (cmd.scmds[0].heredoc == 1)
 		heredoc_input(cmd, cmd.scmds[0].fd_in.fname);
 	// STEP 2: open files
-	
+	open_files(cmd);
 	// STEP 3: open pipes
-
+	//char buff[20];
+	//read(cmd.scmds[1].fd_out.fd, buff, 20);
+	//printf("The buff is now: %s\n", buff);
 	// STEP 4: build the paths/envp to where to execute cmds
 	// if no absolute path is given, execute relative path?
 
 	// STEP 5: launch children for every pipe and execute either binaries or built-ins
 
 	// STEP 6: close the pipes and fds, waitpid processes
-
+	
 	// STEP 7: free all the information used above, delete heredoc
 }

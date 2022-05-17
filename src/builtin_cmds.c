@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/17 11:54:09 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/17 12:16:17 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,18 +108,18 @@ void	exec_export(char **tokens, t_list **env)
 	return ;
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	t_list	**env;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_list	**env;
 
-	(void)argc;
-	env = (t_list **)malloc(sizeof(t_list));
-	if (!env)
-		return (1);
-	*env = NULL;
-	env_init(env, envp);
-	exec_export(argv, env);
-	exec_env(argv, env);
-	ft_clear_env(env);
-	return (0);
-}
+// 	(void)argc;
+// 	env = (t_list **)malloc(sizeof(t_list));
+// 	if (!env)
+// 		return (1);
+// 	*env = NULL;
+// 	env_init(env, envp);
+// 	exec_export(argv, env);
+// 	exec_env(argv, env);
+// 	ft_clear_env(env);
+// 	return (0);
+// }
