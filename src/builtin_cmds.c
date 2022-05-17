@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/17 11:54:09 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/17 13:51:01 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,34 +92,41 @@ void	exec_env(char **tokens, t_list **env)
 	}
 }
 
-void	exec_export(char **tokens, t_list **env)
+int	exec_export(char **tokens, t_list **env)
 {
 	t_list	*new;
 
 	if (!tokens[1])
 	{
 		export_no_var(env);
-		return ;
+		return (0);
 	}
+	if (ft_isdigit((int)tokens[1][0]))
+	{
+		printf("bash: export: `%s': not a valid identifier\n", tokens[1]);
+		return (-1);
+	}
+	if (!ft_strchr(tokens[1], '='))
+		return (-1);
 	new = ft_lstnew(tokens[1]);
 	if (check_in_env(new, env) != 0)
-		return ;
+		return (0);
 	ft_lstadd_back(env, new);
-	return ;
+	return (1);
 }
 
-int main(int argc, char **argv, char **envp)
-{
-	t_list	**env;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	t_list	**env;
 
-	(void)argc;
-	env = (t_list **)malloc(sizeof(t_list));
-	if (!env)
-		return (1);
-	*env = NULL;
-	env_init(env, envp);
-	exec_export(argv, env);
-	exec_env(argv, env);
-	ft_clear_env(env);
-	return (0);
-}
+// 	(void)argc;
+// 	env = (t_list **)malloc(sizeof(t_list));
+// 	if (!env)
+// 		return (1);
+// 	*env = NULL;
+// 	env_init(env, envp);
+// 	exec_unset(argv, env);
+// 	exec_env(argv, env);
+// 	ft_clear_env(env);
+// 	return (0);
+// }
