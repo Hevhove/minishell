@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/16 18:06:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:51:35 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
 void	exec_cmds(t_cmd cmd);
+void	ft_clear_env(t_list **env);
 
 char	*get_next_line(int fd);
 

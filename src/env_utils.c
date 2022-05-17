@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/13 10:40:02 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/17 11:46:18 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@ void	env_init(t_list **env, char **envp)
 		i++;
 	}
 	return ;
+}
+
+void	ft_clear_env(t_list **env)
+{
+	t_list	*tmp;
+
+	while (*env != NULL)
+	{
+		tmp = *env;
+		*env = (*env)->next;
+		free(tmp);
+	}
+	free(env);
 }
 
 // int	main(int argc, char **argv, char **envp)
