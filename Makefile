@@ -34,7 +34,7 @@ debug: $(LIBFT)
 	$(CC) -g $(CFLAGS) -I$(INCS) -I$(42INCS) -lreadline -L $(42LINK) $(LIBFT) $(SRCS) -o $(NAME)
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME)
 
 clean:
 	$(RM) $(OBJS)

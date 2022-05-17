@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/17 10:35:22 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:01:36 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,16 @@ int	main(int argc, char **argv, char **envp)
 	char		*line;
 	char		**tokens;
 	t_cmd		cmd;
-	t_list		**env;
 
 	(void)argv;
 	(void)argc;
-	env = (t_list **)malloc(sizeof(t_list));
-	if (!env)
+	cmd.env = (t_list **)malloc(sizeof(t_list));
+	if (!cmd.env)
 		return (1);
-	*env = NULL;
+	*(cmd.env) = NULL;
 	tokens = NULL;
-	env_init(env, envp);
-	exec_env(tokens, env);
+	env_init(cmd.env, envp);
+	exec_env(tokens, cmd.env);
 	
 	line = NULL;
 	while (1)
@@ -57,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		expand_tokens(tokens);
 		print_tokens(tokens);
 		build_cmds(tokens, &cmd);
-		exec_cmds(cmd);
+		exec_cmds(&cmd);
 		if (ft_strncmp(line, "clear history", 13) == 0)
 			clear_history();
 		free_tokens(tokens);

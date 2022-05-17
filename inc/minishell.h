@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/17 13:49:11 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:36:33 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_simp_cmd
 typedef struct s_cmd {
 	int			argc;
 	t_scmd		*scmds;
+	int			*pipes;
+	t_list		**env;
 }	t_cmd;
 
 // FUNCTION PROTOTYPES
@@ -102,7 +104,7 @@ void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos);
 void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
-void	exec_cmds(t_cmd cmd);
+void	exec_cmds(t_cmd *cmd);
 void	ft_clear_env(t_list **env);
 char	*get_next_line(int fd);
 
