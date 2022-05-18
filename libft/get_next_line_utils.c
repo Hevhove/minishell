@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 13:54:46 by hvan-hov          #+#    #+#             */
-/*   Updated: 2021/11/17 12:31:20 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:13:24 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-long	ft_strlen(const char *str)
-{
-	long	len;
+// long	ft_strlen(const char *str)
+// {
+// 	long	len;
 
-	len = 0;
-	while (*str != '\0')
-	{
-		len++;
-		str++;
-	}
-	return (len);
-}
+// 	len = 0;
+// 	while (*str != '\0')
+// 	{
+// 		len++;
+// 		str++;
+// 	}
+// 	return (len);
+// }
 
 char	*ft_strnjoin(const char *s1, char *s2, struct s_i it)
 {
@@ -54,59 +54,59 @@ char	*ft_strnjoin(const char *s1, char *s2, struct s_i it)
 	return (join);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	long long	i;
-	char		c2;
+// char	*ft_strchr(const char *s, int c)
+// {
+// 	long long	i;
+// 	char		c2;
 
-	c2 = c;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c2)
-			return ((char *)(s + i));
-		i++;
-	}
-	if (s[i] == c2)
-		return ((char *)(s + i));
-	return (NULL);
-}
+// 	c2 = c;
+// 	i = 0;
+// 	while (s[i])
+// 	{
+// 		if (s[i] == c2)
+// 			return ((char *)(s + i));
+// 		i++;
+// 	}
+// 	if (s[i] == c2)
+// 		return ((char *)(s + i));
+// 	return (NULL);
+// }
 
-void	*ft_memcpy(void *dst, const void *src, long long n)
-{
-	long long	i;
-	char		*dstptr;
-	char		*srcptr;
+// void	*ft_memcpy(void *dst, const void *src, long long n)
+// {
+// 	long long	i;
+// 	char		*dstptr;
+// 	char		*srcptr;
 
-	if (!dst && !src)
-		return (NULL);
-	i = 0;
-	dstptr = (char *)dst;
-	srcptr = (char *)src;
-	while (n--)
-	{
-		dstptr[i] = srcptr[i];
-		i++;
-	}
-	return (dst);
-}
+// 	if (!dst && !src)
+// 		return (NULL);
+// 	i = 0;
+// 	dstptr = (char *)dst;
+// 	srcptr = (char *)src;
+// 	while (n--)
+// 	{
+// 		dstptr[i] = srcptr[i];
+// 		i++;
+// 	}
+// 	return (dst);
+// }
 
-char	*ft_strdup(const char *s1)
-{
-	char	*ptr;
-	size_t	len;
-	size_t	i;
+// char	*ft_strdup(const char *s1)
+// {
+// 	char	*ptr;
+// 	size_t	len;
+// 	size_t	i;
 
-	len = ft_strlen(s1) + 1;
-	ptr = malloc(len * sizeof(char));
-	if (!ptr)
-		return (NULL);
-	i = 0;
-	while (s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
+// 	len = ft_strlen(s1) + 1;
+// 	ptr = malloc(len * sizeof(char));
+// 	if (!ptr)
+// 		return (NULL);
+// 	i = 0;
+// 	while (s1[i])
+// 	{
+// 		ptr[i] = s1[i];
+// 		i++;
+// 	}
+// 	ptr[i] = '\0';
+// 	return (ptr);
+// }
