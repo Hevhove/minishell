@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/17 13:51:01 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:12:49 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_echo(char **tokens)
 		printf("\n");
 }
 
-void	exec_cd(char **tokens)
+void	exec_cd(char **tokens, t_list **env)
 {
 	char	*cwd;
 
@@ -79,16 +79,18 @@ void	exec_pwd(char **tokens)
 
 void	exec_env(char **tokens, t_list **env)
 {
+	t_list	*tmp;
 	(void)tokens;
 	// if (tokens[1])
 	// {
 	// 	printf("No option or argument allowed with this command\n");
 	// 	return ;
 	// }
-	while (*env)
+	tmp = *env;
+	while (tmp)
 	{
-		printf("%s\n", (*env)->content);
-		env = &(*env)->next;
+		printf("%s\n", (tmp)->content);
+		tmp = tmp->next;
 	}
 }
 
@@ -96,6 +98,7 @@ int	exec_export(char **tokens, t_list **env)
 {
 	t_list	*new;
 
+	printf("arg = %s\n", tokens[1]);
 	if (!tokens[1])
 	{
 		export_no_var(env);
@@ -108,9 +111,10 @@ int	exec_export(char **tokens, t_list **env)
 	}
 	if (!ft_strchr(tokens[1], '='))
 		return (-1);
+	// if (already_in_env(&tokens[1], env) != 0)
+	// 	return (0);
+	
 	new = ft_lstnew(tokens[1]);
-	if (check_in_env(new, env) != 0)
-		return (0);
 	ft_lstadd_back(env, new);
 	return (1);
 }
@@ -125,7 +129,7 @@ int	exec_export(char **tokens, t_list **env)
 // 		return (1);
 // 	*env = NULL;
 // 	env_init(env, envp);
-// 	exec_unset(argv, env);
+// 	exec_export(argv, env);
 // 	exec_env(argv, env);
 // 	ft_clear_env(env);
 // 	return (0);

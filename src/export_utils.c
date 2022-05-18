@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:19:06 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/17 13:09:39 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:14:00 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	export_no_var(t_list **env)
 	}
 }
 
-int	check_in_env(t_list *new, t_list **env)
+int	already_in_env(char **tokens, t_list **env)
 {
 	while (*env)
 	{
-		if (strncmp(new->content, (*env)->content, ft_strlen(new->content)) == 0)
+		if (strncmp(tokens[1], (*env)->content, ft_strlen(tokens[1])) == 0)
 			return (1);
 		*env = (*env)->next;
 	}

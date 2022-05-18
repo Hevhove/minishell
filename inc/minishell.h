@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/17 13:49:11 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:45:54 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		check_quotes(const char *s);
 int		metachar_wordlen(const char *s, int offset);
 void	build_cmds(char **tokens, t_cmd *cmd);
 void	exec_echo(char **tokens);
-void	exec_cd(char **tokens);
+void	exec_cd(char **tokens, t_list **env);
 void	exec_pwd(char **tokens);
 int		exec_export(char **tokens, t_list **env);
 void	exec_env(char **tokens, t_list **env);
@@ -89,7 +89,7 @@ int		builtin_identifier(char **tokens);
 int		builtin_executor(char **tokens, t_list **env);
 void	env_init(t_list **env, char **envp);
 void	export_no_var(t_list **env);
-int		check_in_env(t_list *new, t_list **env);
+int		already_in_env(char **tokens, t_list **env);
 void	free_tokens(char **tokens);
 void	free_cmds(t_cmd cmd);
 int		count_cmds(char **tokens);
@@ -105,5 +105,6 @@ int		count_argv(t_scmd scmd);
 void	exec_cmds(t_cmd cmd);
 void	ft_clear_env(t_list **env);
 char	*get_next_line(int fd);
+void	rm_env_var(char *var, t_list **env);
 
 #endif
