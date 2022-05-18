@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/18 17:47:01 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:48:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	exec_cd(char **tokens, t_list **env)
 {
 	char	*cwd;
 
+	(void)env;
 	cwd = getcwd(NULL, 0); // this can go to $OLDPWD in order to manage the cd -
 	printf("%s\n", cwd);
 	if (!tokens[1] || (ft_strcmp(tokens[1], "~") == 0))

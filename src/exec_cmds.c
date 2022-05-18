@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/18 16:55:36 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:44:38 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,20 +85,28 @@ void	create_pipes(t_cmd *cmd)
 }
 
 // Write another function for close pipes..
+void	child(t_cmd *cmd, int i)
+{
+	(void)cmd;
+	(void)i;
+}
+
 
 char	*find_path(t_list **env)
 {
 	char	*line;
+	t_list	*tmp;
 
+	tmp = *env;
 	line = NULL;
-	while ((*env)->next != NULL)
+	while (tmp->next != NULL)
 	{
-		if (ft_strncmp((*env)->content, "PATH", 4) == 0)
+		if (ft_strncmp(tmp->content, "PATH", 4) == 0)
 		{
-			line = ft_strdup((*env)->content + 5);
+			line = ft_strdup(tmp->content + 5);
 			return (line);
 		}
-		(*env) = (*env)->next;
+		tmp = tmp->next;
 	}
 	printf("path not found\n");
 	return (line);
@@ -108,7 +116,7 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 {
 	char	*paths_str;
 	char	**paths;
-	
+	int		i;
 	// (void)cmd;
 	// STEP 1: if heredoc of first scmd is 1, then open controls for heredoc
 	if ((*cmd).scmds[0].heredoc == 1)
@@ -124,7 +132,10 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	paths_str = find_path(cmd->env); // "/usr/bin:/usr/local/bin:..."
 	paths = ft_split(paths_str, ':');
 	free(paths_str);
+	
 	int i = 0;
+	if (!paths)
+		; // some exit code
 	while (paths[i])
 	{
 		printf("paths[%d] is: %s\n", i, paths[i]);
@@ -132,7 +143,9 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	}
 	free_split(paths);
 	// STEP 5: launch children for every pipe and execute either binaries or built-ins
-	
+	i = -1;
+	while (++i < cmd->argc)
+		child(cmd, i);
 	// STEP 6: close the pipes and fds, waitpid processes
 	
 	// STEP 7: free all the information used above, delete heredoc

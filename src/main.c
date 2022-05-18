@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/18 16:55:23 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:20:19 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	ft_clear_env(cmd.env);
+	printf("TESTINGXXXXXXX!\n");
 	return (0);
 }

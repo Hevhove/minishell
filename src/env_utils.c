@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/18 17:39:19 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:11:24 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	env_init(t_list **env, char **envp)
 
 	i = 0;
 	lines_nb = 0;
-	while (envp[i++]) // envp[9]
+	while (envp[i++])
 		lines_nb++;
 	i = 0;
 	while (i < lines_nb)
@@ -39,6 +39,7 @@ void	ft_clear_env(t_list **env)
 	while (*env != NULL)
 	{
 		tmp = *env;
+		printf("freed: %s\n", tmp->content);
 		*env = (*env)->next;
 		free(tmp);
 	}
@@ -49,6 +50,7 @@ void	rm_env_var(char *var, t_list **env)
 {
 	t_list	*tmp;
 
+	(void)var;
 	tmp = (*env)->next;
 	(*env)->next = (*env)->next->next;
 	free(tmp);
@@ -56,6 +58,8 @@ void	rm_env_var(char *var, t_list **env)
 
 void	write_old_pwd(char *old_pwd, t_list **env)
 {
+	(void)old_pwd;
+	(void)env;
 	return ;
 }
 
