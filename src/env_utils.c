@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/18 13:36:59 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:39:19 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,3 +44,18 @@ void	ft_clear_env(t_list **env)
 	}
 	free(env);
 }
+
+void	rm_env_var(char *var, t_list **env)
+{
+	t_list	*tmp;
+
+	tmp = (*env)->next;
+	(*env)->next = (*env)->next->next;
+	free(tmp);
+}
+
+void	write_old_pwd(char *old_pwd, t_list **env)
+{
+	return ;
+}
+
