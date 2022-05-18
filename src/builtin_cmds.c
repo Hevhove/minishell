@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/18 16:46:01 by hvan-hov         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/18 17:17:18 by mmaxime-         ###   ########.fr       */
->>>>>>> 1e5cb7b5c69684f381e539bc68331f4a2e4e1d01
+/*   Updated: 2022/05/18 17:47:01 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +79,7 @@ void	exec_pwd(char **tokens)
 
 void	exec_env(char **tokens, t_list **env)
 {
-<<<<<<< HEAD
-	t_list *tmp;
-	
-=======
 	t_list	*tmp;
->>>>>>> 1e5cb7b5c69684f381e539bc68331f4a2e4e1d01
 	(void)tokens;
 	// if (tokens[1])
 	// {
@@ -98,11 +89,7 @@ void	exec_env(char **tokens, t_list **env)
 	tmp = *env;
 	while (tmp)
 	{
-<<<<<<< HEAD
-		printf("%s\n", tmp->content);
-=======
 		printf("%s\n", (tmp)->content);
->>>>>>> 1e5cb7b5c69684f381e539bc68331f4a2e4e1d01
 		tmp = tmp->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/16 16:38:13 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 17:46:31 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	builtin_executor(char **tokens, t_list **env)
 	else if (builtin_id == 2)
 		exec_echo(tokens);
 	else if (builtin_id == 3)
-		exec_cd(tokens);
+		exec_cd(tokens, env);
 	else if (builtin_id == 4)
 		exec_pwd(tokens);
 	else if (builtin_id == 5)
