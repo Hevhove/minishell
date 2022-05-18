@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/17 17:01:36 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:55:23 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	main(int argc, char **argv, char **envp)
 	*(cmd.env) = NULL;
 	tokens = NULL;
 	env_init(cmd.env, envp);
-	exec_env(tokens, cmd.env);
-	
+	exec_env(NULL, cmd.env);
 	line = NULL;
 	while (1)
 	{
@@ -61,6 +60,9 @@ int	main(int argc, char **argv, char **envp)
 			clear_history();
 		free_tokens(tokens);
 		free_cmds(cmd);
+		if (ft_strncmp(line, "exit", 4) == 0)
+			break ;
 	}
+	ft_clear_env(cmd.env);
 	return (0);
 }

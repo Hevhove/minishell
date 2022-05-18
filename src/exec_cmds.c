@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/17 17:58:28 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:55:36 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	heredoc_input(t_cmd cmd, char *delim)
 	}
 	free(line);
 	close(file);
-	// free(cmd.scmds[0].fd_in.fname);
+	//free(cmd.scmds[0].fd_in.fname);
 	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp"); // why no free before this?
 	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
 	// UNLINK LATER (SEE PIPEX)
@@ -65,11 +65,13 @@ void	open_files(t_cmd cmd)
 void	create_pipes(t_cmd *cmd)
 {
 	int	i;
+	int pipe_num;
 
+	pipe_num = 2 * (cmd->argc - 1);
 	i = 0;
-	if (cmd->argc > 1) // CHECK VALGRIND -> INVALID WRITE??
+	if (pipe_num > 0) // CHECK VALGRIND -> INVALID WRITE??
 	{
-		cmd->pipes = (int *)malloc((cmd->argc - 1) * sizeof(int));
+		cmd->pipes = (int *)malloc((pipe_num) * sizeof(int));
 		if (!cmd->pipes)
 			; // some error code;
 		while (i < cmd->argc - 1)
@@ -104,6 +106,7 @@ char	*find_path(t_list **env)
 
 void	exec_cmds(t_cmd *cmd) // cat << EOF
 {
+	char	*paths_str;
 	char	**paths;
 	
 	// (void)cmd;
@@ -116,13 +119,18 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	create_pipes(cmd);
 	// STEP 4: build the paths/envp to where to execute cmds
 	// if no absolute path is given, execute relative path?
-	paths = ft_split(find_path(cmd->env), ':');
+	//exec_env(NULL, cmd->env);
+	//exit(0);
+	paths_str = find_path(cmd->env); // "/usr/bin:/usr/local/bin:..."
+	paths = ft_split(paths_str, ':');
+	free(paths_str);
 	int i = 0;
 	while (paths[i])
 	{
 		printf("paths[%d] is: %s\n", i, paths[i]);
 		i++;
 	}
+	free_split(paths);
 	// STEP 5: launch children for every pipe and execute either binaries or built-ins
 	
 	// STEP 6: close the pipes and fds, waitpid processes

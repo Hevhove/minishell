@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/17 12:39:34 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/18 13:36:59 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	env_init(t_list **env, char **envp)
 
 	i = 0;
 	lines_nb = 0;
-	while (envp[i++])
+	while (envp[i++]) // envp[9]
 		lines_nb++;
 	i = 0;
 	while (i < lines_nb)

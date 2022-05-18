@@ -6,11 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/05/17 12:16:17 by hvan-hov         ###   ########.fr       */
-=======
-/*   Updated: 2022/05/17 13:51:01 by mmaxime-         ###   ########.fr       */
->>>>>>> 3ff64beaf7d3a9705de1fa01987570688f20c0a2
+/*   Updated: 2022/05/18 16:46:01 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +79,19 @@ void	exec_pwd(char **tokens)
 
 void	exec_env(char **tokens, t_list **env)
 {
+	t_list *tmp;
+	
 	(void)tokens;
 	// if (tokens[1])
 	// {
 	// 	printf("No option or argument allowed with this command\n");
 	// 	return ;
 	// }
-	while (*env)
+	tmp = *env;
+	while (tmp)
 	{
-		printf("%s\n", (*env)->content);
-		env = &(*env)->next;
+		printf("%s\n", tmp->content);
+		tmp = tmp->next;
 	}
 }
 
