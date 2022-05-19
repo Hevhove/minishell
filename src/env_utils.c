@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/19 12:01:59 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:08:04 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,24 @@ void	rm_env_var(t_list **env)
 	free(tmp);
 }
 
-void	set_old_pwd(char *old_pwd, t_list **env)
+void	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env)
 {
-	(void)old_pwd;
-	(void)env;
+	char	*var_old_pwd;
+	char	*var_pwd;
+	t_list	*head;
+
+	var_old_pwd = ft_strjoin("OLDPWD=", old_pwd);
+	var_pwd = ft_strjoin("PWD=", new_pwd);
+	head = *env;
+	while (!ft_strncmp((*env)->content, "OLDPWD=", 7))
+		*env = (*env)->next;
+	(*env)->content = var_old_pwd;
+	*env = head;
+	while (!ft_strncmp((*env)->content, "PWD=", 4))
+		*env = (*env)->next;
+	(*env)->content = var_pwd;
+	*env = head;
+	ft_free(&var_old_pwd);
+	ft_free(&var_pwd);
 	return ;
 }
-

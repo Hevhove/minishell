@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/19 12:12:39 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:40:33 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,7 @@ void	exec_cmds(t_cmd *cmd);
 void	ft_clear_env(t_list **env);
 char	*get_next_line(int fd);
 void	rm_env_var(t_list **env);
+void	ft_free(char **ptr);
+void	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env);
 
 #endif

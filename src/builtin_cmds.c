@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/19 12:15:11 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/19 14:07:54 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ void	exec_cd(char **tokens, t_list **env)
 	char	*new_cwd;
 
 	(void)env;
-	cwd = getcwd(NULL, 0); // this can go to $OLDPWD in order to manage the cd -
-	printf("%s\n", cwd);
+	cwd = getcwd(NULL, 0);
+	printf("old_pwd = %s\n", cwd);
 	if (!tokens[1] || (ft_strcmp(tokens[1], "~") == 0))
 	{
 		cwd = getenv("HOME");
 		chdir(cwd);
 	}
+	//else if (ft_strcmp(tokens[1], "-") == 0) -> = cd OLDPWD
 	else if (chdir(tokens[1]) != 0)
 	{
 		if (access(tokens[1], X_OK) != 0)
@@ -56,10 +57,9 @@ void	exec_cd(char **tokens, t_list **env)
 			printf("cd: %s: No such file or directory\n", tokens[1]);
 		return ;
 	}
-	// if (ft_strcmp(tokens[1], "-") == 0)
-	// 	set_old_pwd(cwd, env);
 	new_cwd = getcwd(NULL, 0);
-	printf("%s\n", new_cwd);
+	set_pwd_vars_env(cwd, new_cwd, env);
+	printf("new pwd = %s\n", new_cwd);
 	return ;
 }
 
@@ -84,6 +84,7 @@ void	exec_pwd(char **tokens)
 void	exec_env(t_list **env)
 {
 	t_list	*tmp;
+
 	tmp = *env;
 	while (tmp)
 	{
@@ -125,8 +126,9 @@ int	exec_export(char **tokens, t_list **env)
 // 		return (1);
 // 	*env = NULL;
 // 	env_init(env, envp);
+// 	exec_cd(argv, env);
 // 	//exec_unset(argv, env);
-// 	exec_export(argv, env);
+// 	//exec_export(argv, env);
 // 	exec_env(env);
 // 	ft_clear_env(env);
 // 	return (0);
