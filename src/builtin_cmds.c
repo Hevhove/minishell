@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/18 17:48:18 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:15:11 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	exec_echo(char **tokens)
 void	exec_cd(char **tokens, t_list **env)
 {
 	char	*cwd;
+	char	*new_cwd;
 
 	(void)env;
 	cwd = getcwd(NULL, 0); // this can go to $OLDPWD in order to manage the cd -
@@ -55,8 +56,10 @@ void	exec_cd(char **tokens, t_list **env)
 			printf("cd: %s: No such file or directory\n", tokens[1]);
 		return ;
 	}
-	cwd = getcwd(NULL, 0);
-	printf("%s\n", cwd);
+	// if (ft_strcmp(tokens[1], "-") == 0)
+	// 	set_old_pwd(cwd, env);
+	new_cwd = getcwd(NULL, 0);
+	printf("%s\n", new_cwd);
 	return ;
 }
 
@@ -78,15 +81,9 @@ void	exec_pwd(char **tokens)
 	return ;
 }
 
-void	exec_env(char **tokens, t_list **env)
+void	exec_env(t_list **env)
 {
 	t_list	*tmp;
-	(void)tokens;
-	// if (tokens[1])
-	// {
-	// 	printf("No option or argument allowed with this command\n");
-	// 	return ;
-	// }
 	tmp = *env;
 	while (tmp)
 	{
@@ -99,7 +96,6 @@ int	exec_export(char **tokens, t_list **env)
 {
 	t_list	*new;
 
-	printf("arg = %s\n", tokens[1]);
 	if (!tokens[1])
 	{
 		export_no_var(env);
@@ -112,9 +108,8 @@ int	exec_export(char **tokens, t_list **env)
 	}
 	if (!ft_strchr(tokens[1], '='))
 		return (-1);
-	// if (already_in_env(&tokens[1], env) != 0)
-	// 	return (0);
-	
+	if (already_in_env(tokens, env) == 1)
+		return (0);
 	new = ft_lstnew(tokens[1]);
 	ft_lstadd_back(env, new);
 	return (1);
@@ -130,8 +125,9 @@ int	exec_export(char **tokens, t_list **env)
 // 		return (1);
 // 	*env = NULL;
 // 	env_init(env, envp);
+// 	//exec_unset(argv, env);
 // 	exec_export(argv, env);
-// 	exec_env(argv, env);
+// 	exec_env(env);
 // 	ft_clear_env(env);
 // 	return (0);
 // }

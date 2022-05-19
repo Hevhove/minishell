@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/18 18:11:24 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:01:59 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,22 @@ void	ft_clear_env(t_list **env)
 	while (*env != NULL)
 	{
 		tmp = *env;
-		printf("freed: %s\n", tmp->content);
 		*env = (*env)->next;
 		free(tmp);
 	}
 	free(env);
 }
 
-void	rm_env_var(char *var, t_list **env)
+void	rm_env_var(t_list **env)
 {
 	t_list	*tmp;
 
-	(void)var;
 	tmp = (*env)->next;
 	(*env)->next = (*env)->next->next;
 	free(tmp);
 }
 
-void	write_old_pwd(char *old_pwd, t_list **env)
+void	set_old_pwd(char *old_pwd, t_list **env)
 {
 	(void)old_pwd;
 	(void)env;

@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/18 17:16:28 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:12:39 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void	exec_echo(char **tokens);
 void	exec_cd(char **tokens, t_list **env);
 void	exec_pwd(char **tokens);
 int		exec_export(char **tokens, t_list **env);
-void	exec_env(char **tokens, t_list **env);
+void	exec_env(t_list **env);
 int		exec_unset(char **tokens, t_list **env);
-int		builtin_identifier(char **tokens);
+int		builtin_identifier(char *tokens);
 int		builtin_executor(char **tokens, t_list **env);
 void	env_init(t_list **env, char **envp);
 void	export_no_var(t_list **env);
@@ -107,6 +107,6 @@ int		count_argv(t_scmd scmd);
 void	exec_cmds(t_cmd *cmd);
 void	ft_clear_env(t_list **env);
 char	*get_next_line(int fd);
-void	rm_env_var(char *var, t_list **env);
+void	rm_env_var(t_list **env);
 
 #endif

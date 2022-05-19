@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 11:19:06 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/18 12:14:00 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:12:22 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	already_in_env(char **tokens, t_list **env)
 {
 	while (*env)
 	{
-		if (strncmp(tokens[1], (*env)->content, ft_strlen(tokens[1])) == 0)
+		if (!ft_strncmp(tokens[1], (*env)->content, ft_strlen(tokens[1])))
 			return (1);
 		*env = (*env)->next;
 	}
