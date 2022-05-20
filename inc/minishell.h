@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/19 12:40:33 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/20 12:58:06 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <termcap.h>
+# include <termios.h>
+# include <term.h>
+# include <curses.h>
+# include <signal.h>
 # define METACHARSET ""
 
 // STRUCTS
