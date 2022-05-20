@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/20 12:58:06 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/20 13:17:18 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct s_simp_cmd
 	t_fd	fd_err;
 	int		heredoc;
 	int		append;
+	int		pid;
 }	t_scmd;
 
 typedef struct s_cmd {
@@ -75,6 +76,7 @@ typedef struct s_cmd {
 	t_scmd		*scmds;
 	int			*pipes;
 	t_list		**env;
+	char		**paths;
 }	t_cmd;
 
 // FUNCTION PROTOTYPES
