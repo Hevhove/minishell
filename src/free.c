@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:33:44 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/18 12:48:36 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:21:53 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,6 @@ void	free_argv(t_cmd cmd)
 	}
 }
 
-void	free_split(char	**split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-	{
-		free(split[i]);
-		i++;
-	}
-	free(split);
-	return ;
-}
-
 void	free_pipes(t_cmd cmd)
 {
 	if (cmd.argc > 0)
@@ -91,7 +77,7 @@ void	free_pipes(t_cmd cmd)
 // {
 // 	int	i;
 // 	int	j;
-	
+
 // 	i = 0;
 // 	while (i < cmd.argc)
 // 	{

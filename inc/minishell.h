@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/20 13:17:18 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:23:20 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 	ERROR MANAGEMENT:
 	1: MALLOC ERROR
 	2: OPEN ERROR
-	3: 
+	3:
 */
 
 #ifndef MINISHELL_H
@@ -117,5 +117,8 @@ char	*get_next_line(int fd);
 void	rm_env_var(t_list **env);
 void	ft_free(char **ptr);
 void	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env);
+char	*find_path(t_list **env);
+void	build_paths(t_cmd *cmd);
+
 
 #endif

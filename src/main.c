@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/20 13:13:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/20 15:24:55 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 		expand_tokens(tokens);
 		//print_tokens(tokens);
 		build_cmds(tokens, &cmd);
+		build_paths(&cmd);
 		exec_cmds(&cmd);
 		if (ft_strncmp(line, "clear history", 13) == 0)
 			clear_history();
