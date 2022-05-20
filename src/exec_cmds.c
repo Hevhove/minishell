@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/20 17:29:49 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/05/20 19:41:50 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,24 +179,29 @@ void	child(t_cmd *cmd, int i, char **envp) // echo "hello" | wc -w | grep 1
 	{
 		//printf("test2 with %s\n", cmd->scmds[i].argv[0]);
 		// set the normal pipes
-		if (i == 0)
-			dup2(cmd->pipes[1], 1);
-		else if (i == cmd->argc - 1)
+		if (cmd->argc > 1)
 		{
-			dup2(cmd->pipes[2 * i - 2], 0);
-			printf("checked output\n");
-		}
-		else
-		{
-			dup2(cmd->pipes[2 * i - 2], 0);
-			dup2(cmd->pipes[2 * i + 1], 1);
+			if (i == 0)
+				dup2(cmd->pipes[1], 1);
+			else if (i == cmd->argc - 1)
+			{
+				// printf("wc -w");
+				dup2(cmd->pipes[2 * i - 2], 0);
+				// printf("checked output\n");
+			}
+			else
+			{
+				//printf("haha\n");
+				dup2(cmd->pipes[2 * i - 2], 0);
+				dup2(cmd->pipes[2 * i + 1], 1);
+			}
 		}
 		// TODO: CLOSE PIPES
 		// overwrite the pipes with fds from struct
 		if (cmd->scmds[i].fd_in.fname != NULL)
 			dup2(cmd->scmds[i].fd_in.fd, 0);
 		if (cmd->scmds[i].fd_out.fname != NULL)
-			dup2(cmd->scmds[i].fd_out.fd, 0);
+			dup2(cmd->scmds[i].fd_out.fd, 1);
 		bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
 		//printf("bin is : %s\n", bin);
 		if (!bin)
@@ -207,7 +212,7 @@ void	child(t_cmd *cmd, int i, char **envp) // echo "hello" | wc -w | grep 1
 		//printf("args are: %s\n", cmd->argv[]);
 		//envp = create_envp(cmd->env);
 		//printf("passed args: %s and %s\n", bin, *(cmd->scmds[i].argv + 1));
-		execve(bin, cmd->scmds[i].argv + 1, envp);
+		execve(bin, cmd->scmds[i].argv, envp);
 	}
 	// if the fork worked, reroute the fds if they're null
 }
@@ -243,6 +248,7 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 		child(cmd, i, envp);
 		//printf("i is: %d\n", i);
 	}
+	//wait(NULL);
 	waitpid(-1, NULL, 0);
 	// STEP 6: close the pipes and fds, waitpid processes
 
