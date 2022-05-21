@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/19 14:08:04 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/21 11:38:28 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ void	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env)
 	var_old_pwd = ft_strjoin("OLDPWD=", old_pwd);
 	var_pwd = ft_strjoin("PWD=", new_pwd);
 	head = *env;
-	while (!ft_strncmp((*env)->content, "OLDPWD=", 7))
+	while (ft_strncmp((*env)->content, "OLDPWD=", 7) != 0)
 		*env = (*env)->next;
 	(*env)->content = var_old_pwd;
 	*env = head;
-	while (!ft_strncmp((*env)->content, "PWD=", 4))
+	while (ft_strncmp((*env)->content, "PWD=", 4) != 0)
 		*env = (*env)->next;
 	(*env)->content = var_pwd;
 	*env = head;
