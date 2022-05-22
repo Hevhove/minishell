@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:46:58 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/22 17:30:37 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:49:12 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	init_term(void)
 		return ;
 	}
 	term.c_lflag &= ~ECHOCTL; // in order to turn off ECHO, so whatever we type is not printed twice on the terminal
-	if (tcsetattr(0, TCSANOW, &term) != 0);
+	if (tcsetattr(0, TCSANOW, &term) != 0)
 	{
 		perror("error in tcsetattr");
 		return ;
