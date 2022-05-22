@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 16:26:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:19:07 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,9 @@ char	*find_path(t_list **env);
 void	build_paths(t_cmd *cmd);
 int		init_term(t_list **env);
 char	*get_term_var(t_list **env);
+void	ft_unlink(t_cmd cmd);
+char *get_bin(char **paths, char *bin);
+void	heredoc_input(t_cmd cmd, char *delim);
 void	ft_unlink(t_cmd cmd);
 
 #endif
