@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/21 12:01:10 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:00:17 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	ft_free(char **ptr);
 void	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env);
 char	*find_path(t_list **env);
 void	build_paths(t_cmd *cmd);
-int		init_term(t_list **env);
-char	*get_term_var(t_list **env);
+void	init_term(void);
 
 #endif
