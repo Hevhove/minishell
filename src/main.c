@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/20 18:28:28 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 16:07:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,22 @@ int	main(int argc, char **argv, char **envp)
 	*(cmd.env) = NULL;
 	tokens = NULL;
 	env_init(cmd.env, envp);
-	//exec_env(cmd.env);
 	line = NULL;
 	while (1)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
+		// extra parsing steps to be done: start or end with pipe, only one heredoc allowed
 		// token validity check on heredocs?
 		if (!tokens)
 			continue ; // or exit?
 		expand_tokens(tokens);
-		//print_tokens(tokens);
 		build_cmds(tokens, &cmd);
 		build_paths(&cmd);
 		exec_cmds(&cmd);
-		if (ft_strncmp(line, "clear history", 13) == 0)
-			clear_history();
 		free_tokens(tokens);
 		free_cmds(cmd);
-		if (ft_strncmp(line, "exit", 4) == 0)
-			break ;
-		usleep(1000);
 	}
 	ft_clear_env(cmd.env);
-	printf("TESTINGXXXXXXX!\n");
 	return (0);
 }

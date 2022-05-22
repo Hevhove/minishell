@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/21 12:01:10 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/22 16:26:06 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ char	*find_path(t_list **env);
 void	build_paths(t_cmd *cmd);
 int		init_term(t_list **env);
 char	*get_term_var(t_list **env);
+void	ft_unlink(t_cmd cmd);
 
 #endif

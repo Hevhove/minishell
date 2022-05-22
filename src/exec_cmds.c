@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 15:40:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 16:29:14 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,30 @@ void	heredoc_input(t_cmd cmd, char *delim)
 	}
 	free(line);
 	close(file);
-	//free(cmd.scmds[0].fd_in.fname);
 	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp"); // why no free before this?
 	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
-	// UNLINK LATER (SEE PIPEX)
+}
+
+void	ft_unlink(t_cmd cmd)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (i < cmd.argc)
+	{
+		j = 0;
+		while (j < cmd.scmds[i].argc)
+		{
+			if (cmd.scmds[i].heredoc == 1)
+			{
+				close(cmd.scmds[0].fd_in.fd);
+				unlink(".heredoc_tmp");
+			}
+			j++;
+		}
+		i++;
+	}
 }
 
 void	open_files(t_cmd cmd)
@@ -84,8 +104,6 @@ void	create_pipes(t_cmd *cmd)
 	return ;
 }
 
-// Write another function for close pipes.
-
 char	*find_path(t_list **env)
 {
 	char	*line;
@@ -113,16 +131,23 @@ char *get_bin(char **paths, char *bin)
 	char	*cmd_path;
 
 	i = 0;
-	while (paths[i])
+	if (bin[0] != '/')
 	{
-		inter = ft_strjoin(paths[i], "/");
-		cmd_path = ft_strjoin(inter, bin);
-		free(inter);
-		//printf("cmd_path tried is: %s\n", cmd_path);
-		if (access(cmd_path, F_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
-		i++;
+		while (paths[i])
+		{
+			inter = ft_strjoin(paths[i], "/");
+			cmd_path = ft_strjoin(inter, bin);
+			free(inter);
+			if (access(cmd_path, F_OK) == 0)
+				return (cmd_path);
+			free(cmd_path);
+			i++;
+		}
+	}
+	else
+	{
+		if (access(bin, F_OK) == 0)
+			return (bin);
 	}
 	return (NULL);
 }
@@ -139,7 +164,6 @@ int	count_list_len(t_list **env)
 		count++;
 		tmp = tmp->next;
 	}
-	//printf("count is %d\n", count);
 	return (count);
 }
 
@@ -159,7 +183,6 @@ char	**create_envp(t_list **env)
 	while (i < count)
 	{
 		envp[i] = tmp->content;
-		//printf("envp[%d] is now: %s\n", i, envp[i]);
 		i++;
 		tmp = tmp->next;
 	}
@@ -211,10 +234,33 @@ void	child(t_cmd *cmd, int i, char **envp)
 		bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
 		if (!bin)
 		{
-			printf("error bin\n");
+			printf("error: executable not found\n");
 			exit(5); // check error codes
 		}
 		execve(bin, cmd->scmds[i].argv, envp);
+	}
+}
+
+void	close_files(t_cmd cmd)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (i < cmd.argc)
+	{
+		j = 0;
+		while (j < cmd.scmds[i].argc)
+		{
+			if (cmd.scmds[i].fd_in.fname != NULL)
+				close(cmd.scmds[i].fd_in.fd);
+			if (cmd.scmds[i].fd_out.fname != NULL)
+				close(cmd.scmds[i].fd_out.fd);
+			if (cmd.scmds[i].fd_err.fname != NULL)
+				close(cmd.scmds[i].fd_err.fd);
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -230,14 +276,13 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	if (!cmd->paths)
 		; // some error code
 	envp = create_envp(cmd->env);
-	// STEP 4: build the paths/envp to where to execute cmds
-	// if no absolute path is given, execute relative path?
 	// STEP 5: launch children for every pipe and execute either binaries or built-ins
 	i = -1;
 	while (++i < cmd->argc)
 		child(cmd, i, envp);
 	close_pipes(cmd);
+	// wait(NULL);
 	while (wait(NULL) > 0);
-	// STEP 6: close remaining fds
+	// close_files(*cmd);
 	// STEP 7: free all the information used above, delete heredoc (unlink)
 }
