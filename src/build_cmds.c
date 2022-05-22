@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/05/20 17:49:37 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 14:50:52 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	build_cmds(char **tokens, t_cmd *cmd)
 	//print_raw_commands(cmd);
 	//printf("------------\n");
 	//print_fds(cmd);
-	printf("------------\n");
-	print_commands(cmd);
-	printf("------------\n");
+	//printf("------------\n");
+	//print_commands(cmd);
+	//printf("------------\n");
 }
