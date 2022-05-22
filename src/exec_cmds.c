@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/20 19:41:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 15:40:50 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,54 +167,55 @@ char	**create_envp(t_list **env)
 	return (envp);
 }
 
-void	child(t_cmd *cmd, int i, char **envp) // echo "hello" | wc -w | grep 1
+void	close_pipes(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < ( 2 * (cmd->argc - 1)))
+	{
+		close(cmd->pipes[i]);
+		i++;
+	}
+}
+
+void	set_redirections(t_cmd *cmd, int i)
+{
+	if (cmd->scmds[i].fd_in.fname != NULL)
+		dup2(cmd->scmds[i].fd_in.fd, 0);
+	if (cmd->scmds[i].fd_out.fname != NULL)
+		dup2(cmd->scmds[i].fd_out.fd, 1);
+}
+
+void	child(t_cmd *cmd, int i, char **envp)
 {
 	char	*bin;
 
-	//printf("test\n");
-	//printf("scmds[%d] is : %s\n", i, cmd->scmds[i].argv[0]);
 	cmd->scmds[i].pid = fork();
-	//printf("fork return is: %d\n", cmd->scmds[i].pid);
 	if (cmd->scmds[i].pid == 0)
 	{
-		//printf("test2 with %s\n", cmd->scmds[i].argv[0]);
-		// set the normal pipes
 		if (cmd->argc > 1)
 		{
 			if (i == 0)
 				dup2(cmd->pipes[1], 1);
 			else if (i == cmd->argc - 1)
-			{
-				// printf("wc -w");
 				dup2(cmd->pipes[2 * i - 2], 0);
-				// printf("checked output\n");
-			}
 			else
 			{
-				//printf("haha\n");
 				dup2(cmd->pipes[2 * i - 2], 0);
 				dup2(cmd->pipes[2 * i + 1], 1);
 			}
 		}
-		// TODO: CLOSE PIPES
-		// overwrite the pipes with fds from struct
-		if (cmd->scmds[i].fd_in.fname != NULL)
-			dup2(cmd->scmds[i].fd_in.fd, 0);
-		if (cmd->scmds[i].fd_out.fname != NULL)
-			dup2(cmd->scmds[i].fd_out.fd, 1);
+		close_pipes(cmd);
+		set_redirections(cmd, i);
 		bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
-		//printf("bin is : %s\n", bin);
 		if (!bin)
 		{
 			printf("error bin\n");
 			exit(5); // check error codes
 		}
-		//printf("args are: %s\n", cmd->argv[]);
-		//envp = create_envp(cmd->env);
-		//printf("passed args: %s and %s\n", bin, *(cmd->scmds[i].argv + 1));
 		execve(bin, cmd->scmds[i].argv, envp);
 	}
-	// if the fork worked, reroute the fds if they're null
 }
 
 void	exec_cmds(t_cmd *cmd) // cat << EOF
@@ -222,35 +223,21 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	int		i;
 	char 	**envp;
 
-	// (void)cmd;
-	// STEP 1: if heredoc of first scmd is 1, then open controls for heredoc
 	if ((*cmd).scmds[0].heredoc == 1)
 		heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname);
-	// STEP 2: open files
 	open_files(*cmd);
-	// STEP 3: open pipes
 	create_pipes(cmd);
-	// STEP 3b: execute the pipes into the fds
-	//exec_pipes(cmd);
+	if (!cmd->paths)
+		; // some error code
+	envp = create_envp(cmd->env);
 	// STEP 4: build the paths/envp to where to execute cmds
 	// if no absolute path is given, execute relative path?
-	//exec_env(NULL, cmd->env);
-	//exit(0);
-	i = 0;
-	if (!cmd->paths)
-		; // some exit code
 	// STEP 5: launch children for every pipe and execute either binaries or built-ins
 	i = -1;
-	envp = create_envp(cmd->env);
-	//printf("argc is: %d\n", cmd->argc);
 	while (++i < cmd->argc)
-	{
 		child(cmd, i, envp);
-		//printf("i is: %d\n", i);
-	}
-	//wait(NULL);
-	waitpid(-1, NULL, 0);
-	// STEP 6: close the pipes and fds, waitpid processes
-
-	// STEP 7: free all the information used above, delete heredoc
+	close_pipes(cmd);
+	while (wait(NULL) > 0);
+	// STEP 6: close remaining fds
+	// STEP 7: free all the information used above, delete heredoc (unlink)
 }
