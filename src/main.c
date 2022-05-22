@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 17:48:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:55:41 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	verify_tokens(char	**tokens)
 		|| ft_strncmp(tokens[i - 1], "|", 1) == 0
 		|| heredoc_count > 1)
 	{
-		printf("parse error\n");
+		printf("parse error: unexpected token\n");
 		return (0);
 	}
 	return (1);	
@@ -71,15 +71,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
-		if (verify_tokens(tokens) == 0 && tokens)
+		if (verify_tokens(tokens) && tokens)
 		{
 			expand_tokens(tokens);
 			build_cmds(tokens, &cmd);
 			build_paths(&cmd);
 			exec_cmds(&cmd);
+			free_cmds(cmd);
 		}
 		free_tokens(tokens);
-		free_cmds(cmd);
 	}
 	ft_clear_env(cmd.env);
 	return (0);

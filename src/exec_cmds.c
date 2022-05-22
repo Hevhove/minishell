@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 17:17:49 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 18:10:53 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,21 @@ void	child(t_cmd *cmd, int i, char **envp)
 		}
 		close_pipes(cmd);
 		set_redirections(cmd, i);
-		bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
-		if (!bin)
+		if (builtin_identifier(cmd->scmds[i].argv[0]))
 		{
-			printf("error: executable not found\n");
-			exit(5); // check error codes
+			builtin_executor(cmd->scmds[i].argv, cmd->env);
+			exit(0);
 		}
-		execve(bin, cmd->scmds[i].argv, envp);
+		else
+		{
+			bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
+			if (!bin)
+			{
+				printf("error: executable not found\n");
+				exit(5); // check error codes
+			}
+			execve(bin, cmd->scmds[i].argv, envp);
+		}
 	}
 }
 
