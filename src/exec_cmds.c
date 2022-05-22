@@ -6,58 +6,11 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 16:29:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:17:49 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void	heredoc_input(t_cmd cmd, char *delim)
-{
-	int		file;
-	char	*line;
-
-	file = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 000644);
-	if (file < 0)
-		exit(2); // add error message
-	while (1)
-	{
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		if (!line)
-			exit(1); // exit code?
-		if (!ft_strncmp(delim, line, ft_strlen(delim)))
-			break ;
-		write(file, line, ft_strlen(line));
-		free(line);
-	}
-	free(line);
-	close(file);
-	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp"); // why no free before this?
-	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
-}
-
-void	ft_unlink(t_cmd cmd)
-{
-	int	i;
-	int	j;
-	
-	i = 0;
-	while (i < cmd.argc)
-	{
-		j = 0;
-		while (j < cmd.scmds[i].argc)
-		{
-			if (cmd.scmds[i].heredoc == 1)
-			{
-				close(cmd.scmds[0].fd_in.fd);
-				unlink(".heredoc_tmp");
-			}
-			j++;
-		}
-		i++;
-	}
-}
 
 void	open_files(t_cmd cmd)
 {
@@ -102,54 +55,6 @@ void	create_pipes(t_cmd *cmd)
 		}
 	}
 	return ;
-}
-
-char	*find_path(t_list **env)
-{
-	char	*line;
-	t_list	*tmp;
-
-	tmp = *env;
-	line = NULL;
-	while (tmp->next != NULL)
-	{
-		if (ft_strncmp(tmp->content, "PATH", 4) == 0)
-		{
-			line = ft_strdup(tmp->content + 5);
-			return (line);
-		}
-		tmp = tmp->next;
-	}
-	printf("path not found\n");
-	return (line);
-}
-
-char *get_bin(char **paths, char *bin)
-{
-	int		i;
-	char	*inter;
-	char	*cmd_path;
-
-	i = 0;
-	if (bin[0] != '/')
-	{
-		while (paths[i])
-		{
-			inter = ft_strjoin(paths[i], "/");
-			cmd_path = ft_strjoin(inter, bin);
-			free(inter);
-			if (access(cmd_path, F_OK) == 0)
-				return (cmd_path);
-			free(cmd_path);
-			i++;
-		}
-	}
-	else
-	{
-		if (access(bin, F_OK) == 0)
-			return (bin);
-	}
-	return (NULL);
 }
 
 int	count_list_len(t_list **env)
@@ -283,6 +188,7 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	close_pipes(cmd);
 	// wait(NULL);
 	while (wait(NULL) > 0);
-	// close_files(*cmd);
+	free(envp);
+	close_files(*cmd);
 	// STEP 7: free all the information used above, delete heredoc (unlink)
 }

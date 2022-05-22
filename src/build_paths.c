@@ -3,14 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   build_paths.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/05/20 15:21:47 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/05/22 17:12:20 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+char	*find_path(t_list **env)
+{
+	char	*line;
+	t_list	*tmp;
+
+	tmp = *env;
+	line = NULL;
+	while (tmp->next != NULL)
+	{
+		if (ft_strncmp(tmp->content, "PATH", 4) == 0)
+		{
+			line = ft_strdup(tmp->content + 5);
+			return (line);
+		}
+		tmp = tmp->next;
+	}
+	printf("path not found\n");
+	return (line);
+}
+
+char *get_bin(char **paths, char *bin)
+{
+	int		i;
+	char	*inter;
+	char	*cmd_path;
+
+	i = 0;
+	if (bin[0] != '/')
+	{
+		while (paths[i])
+		{
+			inter = ft_strjoin(paths[i], "/");
+			cmd_path = ft_strjoin(inter, bin);
+			free(inter);
+			if (access(cmd_path, F_OK) == 0)
+				return (cmd_path);
+			free(cmd_path);
+			i++;
+		}
+	}
+	else
+	{
+		if (access(bin, F_OK) == 0)
+			return (bin);
+	}
+	return (NULL);
+}
 
 void	build_paths(t_cmd *cmd)
 {

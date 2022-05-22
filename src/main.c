@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 16:07:18 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:33:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ char	*rl_gets(char *line)
 	return (line);
 }
 
+void	verify_tokens(char	**tokens)
+{
+	int	i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
@@ -48,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
+		verify_tokens(tokens);
 		// extra parsing steps to be done: start or end with pipe, only one heredoc allowed
 		// token validity check on heredocs?
 		if (!tokens)
