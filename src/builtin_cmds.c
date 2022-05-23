@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/20 11:54:19 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/23 17:06:18 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exec_cd(char **tokens, t_list **env)
 
 	(void)env;
 	cwd = getcwd(NULL, 0);
-	printf("old_pwd = %s\n", cwd);
+	//printf("old_pwd = %s\n", cwd);
 	if (!tokens[1] || (ft_strcmp(tokens[1], "~") == 0))
 	{
 		cwd = getenv("HOME");
@@ -59,7 +59,7 @@ void	exec_cd(char **tokens, t_list **env)
 	}
 	new_cwd = getcwd(NULL, 0);
 	set_pwd_vars_env(cwd, new_cwd, env);
-	printf("new pwd = %s\n", new_cwd);
+	//printf("new pwd = %s\n", new_cwd);
 	return ;
 }
 
