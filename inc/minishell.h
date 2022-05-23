@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 17:39:17 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:54:49 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,15 @@ typedef struct s_simp_cmd
 typedef struct s_cmd {
 	int			argc;
 	t_scmd		*scmds;
+	char		**tokens;
 	int			*pipes;
 	t_list		**env;
 	char		**paths;
+	uint8_t		exit_status;
 }	t_cmd;
+
+// GLOBALS
+t_cmd cmd;
 
 // FUNCTION PROTOTYPES
 char	**tokenize(const char *s);
@@ -125,5 +130,12 @@ char 	*get_bin(char **paths, char *bin);
 void	heredoc_input(t_cmd cmd, char *delim);
 void	ft_unlink(t_cmd cmd);
 void	init_term(void);
+int		count_list_len(t_list **env);
+char	**create_envp(t_list **env);
+void	create_pipes(t_cmd *cmd);
+void	close_pipes(t_cmd *cmd);
+void	open_files(t_cmd cmd);
+void	close_files(t_cmd cmd);
+void	set_redirections(t_cmd *cmd, int i);
 
 #endif

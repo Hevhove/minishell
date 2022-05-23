@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/19 11:18:15 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/23 13:02:22 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int	builtin_identifier(char *tokens)
 {
 	if (ft_strcmp(tokens, "exit") == 0)
-		return (1);
+		return (2);
 	else if (ft_strcmp(tokens, "echo") == 0)
 		return (1);
 	else if (ft_strcmp(tokens, "cd") == 0)
-		return (1);
+		return (2);
 	else if (ft_strcmp(tokens, "pwd") == 0)
 		return (1);
 	else if (ft_strcmp(tokens, "export") == 0)
-		return (1);
+		return (2);
 	else if (ft_strcmp(tokens, "unset") == 0)
-		return (1);
+		return (2);
 	else if (ft_strcmp(tokens, "env") == 0)
 		return (1);
 	return (0);
