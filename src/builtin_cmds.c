@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 17:06:18 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:44:41 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	exec_cd(char **tokens, t_list **env)
 	//else if (ft_strcmp(tokens[1], "-") == 0) -> = cd OLDPWD
 	else if (chdir(tokens[1]) != 0)
 	{
-		if (access(tokens[1], X_OK) != 0)
-			printf("cd: %s: Permission denied\n", tokens[1]);
-		else
+		if (access(tokens[1], F_OK) != 0)
 			printf("cd: %s: No such file or directory\n", tokens[1]);
+		else if (access(tokens[1], X_OK) != 0)
+			printf("cd: %s: Permission denied\n", tokens[1]);
 		return ;
 	}
 	new_cwd = getcwd(NULL, 0);

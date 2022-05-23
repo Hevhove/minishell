@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 12:07:14 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/22 17:24:37 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:44:27 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ void	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env)
 	*env = head;
 	ft_free(&var_old_pwd);
 	ft_free(&var_pwd);
+	exec_env(env);
 	return ;
 }
