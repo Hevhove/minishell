@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 17:11:27 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:59:47 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int		metachar_wordlen(const char *s, int offset);
 void	build_cmds(char **tokens, t_cmd *cmd);
 void	exec_echo(char **tokens);
 void	exec_cd(char **tokens, t_list **env);
-void	exec_pwd(char **tokens);
+int		exec_pwd(void);
 int		exec_export(char **tokens, t_list **env);
 void	exec_env(t_list **env);
 int		exec_unset(char **tokens, t_list **env);

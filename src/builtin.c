@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/19 11:18:15 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:00:19 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	builtin_executor(char **tokens, t_list **env)
 	else if (ft_strcmp(tokens[0], "cd") == 0)
 		exec_cd(tokens, env);
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
-		exec_pwd(tokens);
+		exec_pwd();
 	else if (ft_strcmp(tokens[0], "export") == 0)
 		exec_export(tokens, env);
 	else if (ft_strcmp(tokens[0], "unset") == 0)

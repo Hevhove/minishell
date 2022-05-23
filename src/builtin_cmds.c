@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 18:44:41 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:18:16 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,15 @@ void	exec_cd(char **tokens, t_list **env)
 	return ;
 }
 
-void	exec_pwd(char **tokens)
+int	exec_pwd(void)
 {
-	// to check why in bash: "pwd | cd .." does nothing while 
-	// "pwd | ls" or "pwd | echo hello" works the way 2nd cmd is performed
 	char	*cwd;
 
-	(void)tokens;
-	// if (tokens[1])
-	// {
-	// 	printf("pwd: too many arguments\n");
-	// 	return ;
-	// }
-	// if (tokens[1] && ft_strcmp(tokens[1], "|") == 0) -> exectute 2nd cmd
+	cwd = NULL;
 	cwd = getcwd(NULL, 0);
 	printf("%s\n", cwd);
-	return ;
+	free (cwd);
+	return (0);
 }
 
 void	exec_env(t_list **env)
