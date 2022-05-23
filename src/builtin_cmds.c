@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 10:02:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 18:23:36 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:24:27 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	exec_cd(char **tokens, t_list **env)
 
 	(void)env;
 	cwd = getcwd(NULL, 0);
-	printf("old_pwd = %s\n", cwd);
+	//printf("old_pwd = %s\n", cwd);
 	if (!tokens[1] || (ft_strcmp(tokens[1], "~") == 0))
 	{
 		cwd = getenv("HOME");
@@ -51,34 +51,27 @@ void	exec_cd(char **tokens, t_list **env)
 	//else if (ft_strcmp(tokens[1], "-") == 0) -> = cd OLDPWD
 	else if (chdir(tokens[1]) != 0)
 	{
-		if (access(tokens[1], X_OK) != 0)
-			printf("cd: %s: Permission denied\n", tokens[1]);
-		else
+		if (access(tokens[1], F_OK) != 0)
 			printf("cd: %s: No such file or directory\n", tokens[1]);
+		else if (access(tokens[1], X_OK) != 0)
+			printf("cd: %s: Permission denied\n", tokens[1]);
 		return ;
 	}
 	new_cwd = getcwd(NULL, 0);
 	set_pwd_vars_env(cwd, new_cwd, env);
-	printf("new pwd = %s\n", new_cwd);
+	//printf("new pwd = %s\n", new_cwd);
 	return ;
 }
 
-void	exec_pwd(char **tokens)
+int	exec_pwd(void)
 {
-	// to check why in bash: "pwd | cd .." does nothing while 
-	// "pwd | ls" or "pwd | echo hello" works the way 2nd cmd is performed
 	char	*cwd;
 
-	(void)tokens;
-	// if (tokens[1])
-	// {
-	// 	printf("pwd: too many arguments\n");
-	// 	return ;
-	// }
-	// if (tokens[1] && ft_strcmp(tokens[1], "|") == 0) -> exectute 2nd cmd
+	cwd = NULL;
 	cwd = getcwd(NULL, 0);
 	printf("%s\n", cwd);
-	return ;
+	free (cwd);
+	return (0);
 }
 
 void	exec_env(t_list **env)

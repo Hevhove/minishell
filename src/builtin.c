@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 13:02:22 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:24:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	builtin_executor(char **tokens, t_list **env)
 	else if (ft_strcmp(tokens[0], "cd") == 0)
 		exec_cd(tokens, env);
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
-		exec_pwd(tokens);
+		exec_pwd();
 	else if (ft_strcmp(tokens[0], "export") == 0)
 		exec_export(tokens, env);
 	else if (ft_strcmp(tokens[0], "unset") == 0)
