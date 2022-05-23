@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 17:18:03 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:16:28 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	heredoc_input(t_cmd cmd, char *delim)
 	}
 	free(line);
 	close(file);
-	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp"); // why no free before this?
+	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp");
 	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
 }
 
