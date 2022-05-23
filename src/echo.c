@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 11:19:06 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 13:05:01 by hvan-hov         ###   ########.fr       */
+/*   Created: 2022/05/23 19:29:47 by hvan-hov          #+#    #+#             */
+/*   Updated: 2022/05/23 19:30:09 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	export_no_var(t_list **env)
+void	exec_echo(char **tokens)
 {
-	while (*env)
-	{
-		printf("declare -x %s\n", (*env)->content);
-		*env = (*env)->next;
-	}
-}
+	int	i;
 
-int	already_in_env(char **tokens, t_list **env)
-{
-	t_list *tmp;
-	
-	tmp = *env;
-	while (tmp)
+	if (!tokens[1])
 	{
-		if (!ft_strncmp(tokens[1], (tmp)->content, ft_strlen(tokens[1])))
-			return (1);
-		tmp = tmp->next;
+		printf("\n");
+		return ;
 	}
-	return (0);
+	i = 1;
+	if (ft_strcmp(tokens[1], "-n") == 0)
+		i = 2;
+	while (tokens[i])
+	{
+		printf("%s", tokens[i]);
+		if (tokens[i + 1])
+			printf(" ");
+		i++;
+	}
+	if (ft_strcmp(tokens[1], "-n") != 0)
+		printf("\n");
 }

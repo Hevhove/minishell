@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/05/22 17:12:20 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 10:11:54 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*find_path(t_list **env)
 	return (line);
 }
 
-char *get_bin(char **paths, char *bin)
+char	*get_bin(char **paths, char *bin)
 {
 	int		i;
 	char	*inter;

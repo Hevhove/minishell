@@ -1,36 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   create_envp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/13 11:19:06 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 13:05:01 by hvan-hov         ###   ########.fr       */
+/*   Created: 2022/05/23 10:12:22 by hvan-hov          #+#    #+#             */
+/*   Updated: 2022/05/23 10:12:49 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	export_no_var(t_list **env)
+int	count_list_len(t_list **env)
 {
-	while (*env)
-	{
-		printf("declare -x %s\n", (*env)->content);
-		*env = (*env)->next;
-	}
-}
+	int		count;
+	t_list	*tmp;
 
-int	already_in_env(char **tokens, t_list **env)
-{
-	t_list *tmp;
-	
+	count = 0;
 	tmp = *env;
-	while (tmp)
+	while (tmp != NULL)
 	{
-		if (!ft_strncmp(tokens[1], (tmp)->content, ft_strlen(tokens[1])))
-			return (1);
+		count++;
 		tmp = tmp->next;
 	}
-	return (0);
+	return (count);
+}
+
+char	**create_envp(t_list **env)
+{
+	t_list 	*tmp;
+	char	**envp;
+	int		count;
+	int		i;
+
+	tmp = *env;
+	count = count_list_len(env);
+	envp = (char **)malloc((count + 1) * sizeof(char *));
+	if (!envp)
+		return (NULL);
+	i = 0;
+	while (i < count)
+	{
+		envp[i] = tmp->content;
+		i++;
+		tmp = tmp->next;
+	}
+	envp[i] = NULL;
+	return (envp);
 }

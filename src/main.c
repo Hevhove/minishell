@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 17:55:41 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/23 14:56:10 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,12 @@ char	*rl_gets(char *line)
 int	verify_tokens(char	**tokens)
 {
 	int	i;
-	int	heredoc_count;
 
 	i = 0;
-	heredoc_count = 0;
 	while (tokens[i])
-	{
-		if (ft_strncmp(tokens[i], "<<", 1) == 0)
-			heredoc_count++;
 		i++;
-	}
 	if (ft_strncmp(tokens[0], "|", 1) == 0
-		|| ft_strncmp(tokens[i - 1], "|", 1) == 0
-		|| heredoc_count > 1)
+		|| ft_strncmp(tokens[i - 1], "|", 1) == 0)
 	{
 		printf("parse error: unexpected token\n");
 		return (0);
@@ -52,11 +45,34 @@ int	verify_tokens(char	**tokens)
 	return (1);	
 }
 
+int	check_heredocs(t_cmd cmd)
+{
+	int	i;
+	int	j;
+	int	heredoc_count;
+
+	i = 0;
+	heredoc_count = 0;
+	while (i < cmd.argc)
+	{
+		j = 0;
+		while (j < cmd.scmds[i].argc)
+		{
+			if (cmd.scmds[i].heredoc == 1)
+				heredoc_count++;
+			j++;
+		}
+		i++;
+	}
+	return (heredoc_count);
+}
+
+
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	char		**tokens;
-	t_cmd		cmd;
+	// char		**tokens;
 
 	(void)argv;
 	(void)argc;
@@ -64,22 +80,26 @@ int	main(int argc, char **argv, char **envp)
 	if (!cmd.env)
 		return (1);
 	*(cmd.env) = NULL;
-	tokens = NULL;
+	cmd.tokens = NULL;
 	env_init(cmd.env, envp);
 	line = NULL;
 	while (1)
 	{
 		line = rl_gets(line);
-		tokens = tokenize(line);
-		if (verify_tokens(tokens) && tokens)
+		cmd.tokens = tokenize(line);
+		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
-			expand_tokens(tokens);
-			build_cmds(tokens, &cmd);
+			expand_tokens(cmd.tokens);
+			build_cmds(cmd.tokens, &cmd);
 			build_paths(&cmd);
-			exec_cmds(&cmd);
+			//exec_env(cmd.env);
+			if (check_heredocs(cmd) <= 1)
+				exec_cmds(&cmd);
+			else
+				printf("parse error\n");
 			free_cmds(cmd);
 		}
-		free_tokens(tokens);
+		free_tokens(cmd.tokens);
 	}
 	ft_clear_env(cmd.env);
 	return (0);
