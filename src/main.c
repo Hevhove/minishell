@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/22 17:33:48 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/22 17:55:41 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,27 @@ char	*rl_gets(char *line)
 	return (line);
 }
 
-void	verify_tokens(char	**tokens)
+int	verify_tokens(char	**tokens)
 {
 	int	i;
+	int	heredoc_count;
 
 	i = 0;
+	heredoc_count = 0;
 	while (tokens[i])
 	{
-		
+		if (ft_strncmp(tokens[i], "<<", 1) == 0)
+			heredoc_count++;
+		i++;
 	}
+	if (ft_strncmp(tokens[0], "|", 1) == 0
+		|| ft_strncmp(tokens[i - 1], "|", 1) == 0
+		|| heredoc_count > 1)
+	{
+		printf("parse error: unexpected token\n");
+		return (0);
+	}
+	return (1);	
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -59,17 +71,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = rl_gets(line);
 		tokens = tokenize(line);
-		verify_tokens(tokens);
-		// extra parsing steps to be done: start or end with pipe, only one heredoc allowed
-		// token validity check on heredocs?
-		if (!tokens)
-			continue ; // or exit?
-		expand_tokens(tokens);
-		build_cmds(tokens, &cmd);
-		build_paths(&cmd);
-		exec_cmds(&cmd);
+		if (verify_tokens(tokens) && tokens)
+		{
+			expand_tokens(tokens);
+			build_cmds(tokens, &cmd);
+			build_paths(&cmd);
+			exec_cmds(&cmd);
+			free_cmds(cmd);
+		}
 		free_tokens(tokens);
-		free_cmds(cmd);
 	}
 	ft_clear_env(cmd.env);
 	return (0);
