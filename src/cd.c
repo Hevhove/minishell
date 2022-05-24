@@ -6,40 +6,52 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:39:40 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/24 14:10:01 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:17:56 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env)
+void	set_pwd_vars_env(char *name, char *value, t_list **env)
 {
-	char	*var_old_pwd;
-	char	*var_pwd;
-	t_list	*head;
+	//t_list	*head;
+	char	*var_to_search;
+	size_t	name_len;
 
-	var_old_pwd = ft_strjoin("OLDPWD=", old_pwd);
-	var_pwd = ft_strjoin("PWD=", new_pwd);
-	head = *env;
-	while (ft_strncmp((*env)->content, "OLDPWD=", 7) != 0)
+	if (!value)
+		return ;
+	//head = *env;
+	name_len = ft_strlen(name);
+	var_to_search = ft_strjoin(name, "=");
+	while (*env)
+	{
+		if (!ft_strncmp(var_to_search, (*env)->content, name_len))
+		{
+			//free((*env)->content);
+			//(*env)->content = NULL;
+			(*env)->content = ft_strdup(value);
+			ft_free(&var_to_search);
+			return ;
+		}
 		*env = (*env)->next;
-	(*env)->content = var_old_pwd;
-	*env = head;
-	while (ft_strncmp((*env)->content, "PWD=", 4) != 0)
-		*env = (*env)->next;
-	(*env)->content = var_pwd;
-	*env = head;
-	ft_free(&var_old_pwd);
-	ft_free(&var_pwd);
-	exec_env(env);
+	}
 	return ;
 }
 
-static char	*get_new_cwd(char *tokens, t_list **env)
+static char	*update_cwd(char *cwd)
+{
+	if (cwd)
+		free(cwd);
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
+	return (cwd);
+}
+
+static char	*get_new_cwd(char **tokens, t_list **env)
 {
 	char	*new_cwd;
 
-	if (!tokens || (ft_strcmp(tokens, "~") == 0))
+	if (!tokens[1] || (!ft_strcmp(tokens[1], "~")))
 	{
 		new_cwd = get_env_value("HOME", env);
 		if (!new_cwd)
@@ -48,7 +60,7 @@ static char	*get_new_cwd(char *tokens, t_list **env)
 			return (NULL);
 		}
 	}
-	else if (ft_strcmp(tokens, "-") == 0)
+	else if (!ft_strcmp(tokens[1], "-"))
 	{
 		new_cwd = get_env_value("OLDPWD", env);
 		if (!new_cwd)
@@ -58,7 +70,7 @@ static char	*get_new_cwd(char *tokens, t_list **env)
 		}
 	}
 	else
-		new_cwd = tokens;
+		new_cwd = tokens[1];
 	return (new_cwd);
 }
 
@@ -70,7 +82,7 @@ int	exec_cd(char **tokens, t_list **env)
 	(void)env;
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
-	new_cwd = get_new_cwd(tokens[1], env);
+	new_cwd = get_new_cwd(tokens, env);
 	if (new_cwd == NULL)
 		return (-1);
 	if (chdir(new_cwd) != 0)
@@ -81,8 +93,10 @@ int	exec_cd(char **tokens, t_list **env)
 			printf("cd: %s: Permission denied\n", tokens[1]);
 		return (-1);
 	}
+	//set_pwd_vars_env("OLDPWD", cwd, env);
 	cwd = update_cwd(cwd);
-	set_pwd_vars_env(cwd, new_cwd, env);
-	//printf("new pwd = %s\n", new_cwd);
-	return ;
+	//set_pwd_vars_env("PWD", cwd, env);
+	if (tokens[1] && ft_strcmp(tokens[1], "-") == 0)
+		exec_pwd();
+	return (0);
 }

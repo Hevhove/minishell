@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/24 14:05:43 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:17:11 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,19 @@ char	*get_env_value(char *name, t_list **env)
 	t_list	*to_get;
 	char	*var_name;
 	char	*var_value;
-	char	*ret;
-	size_t	var_name_len;
+	size_t	name_len;
 
 	to_get = *env;
 	var_name = ft_strjoin(name, "=");
-	var_name_len = ft_strlen(var_name);
+	name_len = ft_strlen(var_name);
 	while (to_get)
 	{
-		if (!ft_strncmp(var_name, to_get->content, var_name_len))
+		if (!ft_strncmp(var_name, to_get->content, name_len))
 		{
-			var_value = ft_substr(to_get->content, var_name_len, ft_strlen(to_get->content) - var_name_len);
-			ret = var_value;
-			ft_free(&var_value);
+			var_value = ft_substr(to_get->content, name_len, ft_strlen(to_get->content) - name_len);
 			ft_free(&var_name);
 			to_get = NULL;
-			return (ret);
+			return (var_value);
 		}
 		to_get = to_get->next; 
 	}

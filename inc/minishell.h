@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/24 14:14:13 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:17:26 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void		ft_clear_env(t_list **env);
 char		*get_next_line(int fd);
 void		rm_env_var(t_list **env);
 void		ft_free(char **ptr);
-int			set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env);
+void		set_pwd_vars_env(char *old_pwd, char *new_pwd, t_list **env);
 char		*find_path(t_list **env);
 void		build_paths(t_cmd *cmd);
 char		*get_term_var(t_list **env);
@@ -138,6 +138,5 @@ void		close_pipes(t_cmd *cmd);
 void		open_files(t_cmd cmd);
 void		close_files(t_cmd cmd);
 void		set_redirections(t_cmd *cmd, int i);
-static char	*get_new_cwd(char *tokens, t_list **env);
 
 #endif
