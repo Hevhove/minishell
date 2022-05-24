@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 19:30:44 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:57:04 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	export_no_var(t_list **env)
+{
+	while (*env)
+	{
+		printf("declare -x %s\n", (*env)->content);
+		*env = (*env)->next;
+	}
+}
+
+int	already_in_env(char **tokens, t_list **env)
+{
+	t_list *tmp;
+	
+	tmp = *env;
+	while (tmp)
+	{
+		if (!ft_strncmp(tokens[1], (tmp)->content, ft_strlen(tokens[1])))
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 int	exec_export(char **tokens, t_list **env)
 {

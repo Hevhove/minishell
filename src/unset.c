@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:57 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 19:31:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:58:37 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@ void	ft_free(char **ptr)
 {
 	free(*ptr);
 	*ptr = NULL;
+}
+
+void	rm_env_var(t_list **env)
+{
+	t_list	*tmp;
+
+	tmp = (*env)->next;
+	(*env)->next = (*env)->next->next;
+	free(tmp);
 }
 
 int	exec_unset(char **tokens, t_list **env)
