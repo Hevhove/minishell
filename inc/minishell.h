@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 19:24:12 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:15:45 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ typedef struct s_simp_cmd
 
 typedef struct s_cmd {
 	int			argc;
-	t_scmd		*scmds;
 	char		**tokens;
 	int			*pipes;
 	t_list		**env;
 	char		**paths;
 	uint8_t		exit_status;
+	t_scmd		*scmds;
 }	t_cmd;
 
 // GLOBALS
