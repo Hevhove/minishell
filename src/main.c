@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 14:56:10 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:29:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	*(cmd.env) = NULL;
 	cmd.tokens = NULL;
-	env_init(cmd.env, envp);
+	env_init(&cmd, envp);
 	line = NULL;
 	while (1)
 	{
@@ -90,9 +90,9 @@ int	main(int argc, char **argv, char **envp)
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
 			expand_tokens(cmd.tokens);
+			print_tokens(cmd.tokens);
 			build_cmds(cmd.tokens, &cmd);
 			build_paths(&cmd);
-			//exec_env(cmd.env);
 			if (check_heredocs(cmd) <= 1)
 				exec_cmds(&cmd);
 			else

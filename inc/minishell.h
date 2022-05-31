@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/31 12:30:27 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:21:42 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void		exec_env(t_list **env);
 int			exec_unset(char **tokens, t_list **env);
 int			builtin_identifier(char *tokens);
 int			builtin_executor(char **tokens, t_list **env);
-void		env_init(t_list **env, char **envp);
+void		env_init(t_cmd *cmd, char **envp);
 char		*get_env_value(char *name, t_list **env);
 void		export_no_var(t_list **env);
 int			already_in_env(char **tokens, t_list **env);

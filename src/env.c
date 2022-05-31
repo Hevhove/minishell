@@ -3,34 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/24 16:17:11 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/31 13:21:25 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	env_init(t_list **env, char **envp)
+void	env_init(t_cmd *cmd, char **envp)
 {
-	t_list	*new;
-	int		i;
-	int		lines_nb;
+	int	i;
+	t_list	*node;
 
 	i = 0;
-	lines_nb = 0;
-	while (envp[i++])
-		lines_nb++;
-	i = 0;
-	while (i < lines_nb)
+	while (envp[i])
 	{
-		new = ft_lstnew(envp[i]);
-		ft_lstadd_back(env, new);
+		node = ft_lstnew(envp[i]);
+		ft_lstadd_back(cmd->env, node);
 		i++;
 	}
-	return ;
 }
+
 
 void	ft_clear_env(t_list **env)
 {
