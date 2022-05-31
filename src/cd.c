@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:39:40 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/24 16:17:56 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/31 12:22:45 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 void	set_pwd_vars_env(char *name, char *value, t_list **env)
 {
-	//t_list	*head;
+	t_list	*to_set;
 	char	*var_to_search;
 	size_t	name_len;
 
 	if (!value)
 		return ;
-	//head = *env;
+	to_set = *env;
 	name_len = ft_strlen(name);
 	var_to_search = ft_strjoin(name, "=");
-	while (*env)
+	while (to_set)
 	{
-		if (!ft_strncmp(var_to_search, (*env)->content, name_len))
+		if (!ft_strncmp(var_to_search, (to_set)->content, name_len))
 		{
-			//free((*env)->content);
-			//(*env)->content = NULL;
-			(*env)->content = ft_strdup(value);
+			//free(to_set->content);
+			to_set->content = NULL;
+			to_set->content = ft_strjoin(var_to_search, value);
 			ft_free(&var_to_search);
 			return ;
 		}
-		*env = (*env)->next;
+		to_set = to_set->next;
 	}
 	return ;
 }
@@ -93,9 +93,9 @@ int	exec_cd(char **tokens, t_list **env)
 			printf("cd: %s: Permission denied\n", tokens[1]);
 		return (-1);
 	}
-	//set_pwd_vars_env("OLDPWD", cwd, env);
+	set_pwd_vars_env("OLDPWD", cwd, env);
 	cwd = update_cwd(cwd);
-	//set_pwd_vars_env("PWD", cwd, env);
+	set_pwd_vars_env("PWD", cwd, env);
 	if (tokens[1] && ft_strcmp(tokens[1], "-") == 0)
 		exec_pwd();
 	return (0);
