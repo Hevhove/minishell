@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/31 17:40:44 by miam             ###   ########.fr       */
+/*   Updated: 2022/05/31 20:03:37 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,12 @@ typedef struct s_simp_cmd
 
 typedef struct s_cmd {
 	int			argc;
-	t_scmd		*scmds;
 	char		**tokens;
 	int			*pipes;
 	t_list		**env;
 	char		**paths;
 	uint8_t		exit_status;
+	t_scmd		*scmds;
 }	t_cmd;
 
 // GLOBALS
@@ -108,7 +108,7 @@ void	exec_env(t_list **env);
 int		exec_unset(char **tokens, t_list **env);
 int		builtin_identifier(char *tokens);
 int		builtin_executor(char **tokens, t_list **env);
-void	env_init(t_list **env, char **envp);
+void	env_init(t_cmd *cmd, char **envp);
 char	*get_env_value(char *name, t_list **env);
 void	export_no_var(t_list **env);
 int		already_in_env(char **tokens, t_list **env);

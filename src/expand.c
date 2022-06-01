@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/16 16:41:32 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:02:02 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ void	expand_tokens(char **tokens)
 	char	*str;
 
 	i = 0;
-	while (tokens[i])
-	{
-		if (start_end_quote(tokens[i]) != 1 && ft_strchr(tokens[i], '$'))
+	while (tokens[i]) // start_end_quote(tokens[i]) != 1 && 
+	{ // write a function that checks if dollar sign is between double quotes
+		if (ft_strchr(tokens[i], '$')) // "$PWD"lol expansion also needs to work if token-end is not a quote
 		{
 			j = 0;
 			while (tokens[i][j] != '$' && tokens[i][j])

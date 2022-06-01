@@ -6,7 +6,7 @@
 /*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 16:19:09 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/01 16:21:14 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 	//exec_env(cmd->env);
 	if (cmd->argc == 1 && builtin_identifier(cmd->scmds[0].argv[0]) == 2)
 	{
-		printf("we're here!\n");
+		// printf("we're here!\n");
 		builtin_executor(cmd->scmds[0].argv, cmd->env);
 		cmd->exit_status = 0;
 	}

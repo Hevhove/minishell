@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/24 10:57:04 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/05/24 13:22:29 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	export_no_var(t_list **env)
 {
-	while (*env)
+	t_list	*tmp;
+
+	tmp = *env;
+	while (tmp)
 	{
-		printf("declare -x %s\n", (*env)->content);
-		*env = (*env)->next;
+		printf("declare -x %s\n", tmp->content);
+		tmp = tmp->next;
 	}
 }
 
