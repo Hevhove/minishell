@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/31 20:03:54 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:51:25 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int	main(int argc, char **argv, char **envp)
 		cmd.tokens = tokenize(line);
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
-			expand_tokens(cmd.tokens);
-			print_tokens(cmd.tokens);
+			expand_tokens2(cmd.tokens, cmd.env);
+			print_tokens(cmd.tokens); // CASE TO FIX: echo "$PWD"old | wc -c
 			build_cmds(cmd.tokens, &cmd);
 			build_paths(&cmd);
 			if (check_heredocs(cmd) <= 1)

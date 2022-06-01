@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/31 20:03:37 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:14:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_cmd cmd;
 // FUNCTION PROTOTYPES
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
-void	expand_tokens(char **tokens);
+void	expand_tokens2(char **tokens, t_list **env);
 void	print_tokens(char **tokens);
 int		check_token_type(int token);
 int		check_quotes(const char *s);
