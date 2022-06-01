@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 15:43:05 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:19:09 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	child(t_cmd *cmd, int i, char **envp)
 	char	*bin;
 
 	cmd->scmds[i].pid = fork();
+	exec_signals(CHILD_PROCESS);
 	if (cmd->scmds[i].pid == 0)
 	{
 		if (cmd->argc > 1)

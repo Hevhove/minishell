@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/23 19:24:18 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:16:18 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	builtin_executor(char **tokens, t_list **env)
 {
 	if (ft_strcmp(tokens[0], "exit") == 0)
 	{
-		printf("exit");
-		return (0);
+		printf("exit\n");
+		exit (0);
 	}
 	else if (ft_strcmp(tokens[0], "echo") == 0)
 		exec_echo(tokens);
