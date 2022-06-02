@@ -6,7 +6,7 @@
 /*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 16:21:14 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/02 18:02:05 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 			child(cmd, i, envp);
 		close_pipes(cmd);
 		while (wait(&status) > 0);
+		exec_signals(RESET);
 		if (WIFEXITED(status))
 			cmd->exit_status = WEXITSTATUS(status);
 		close_files(*cmd);

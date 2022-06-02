@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 19:51:25 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:07:11 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)argc;
+	init_term();
 	cmd.env = (t_list **)malloc(sizeof(t_list));
 	if (!cmd.env)
 		return (1);
@@ -87,6 +88,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		line = rl_gets(line);
+		if (!line)
+			break;
 		cmd.tokens = tokenize(line);
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{

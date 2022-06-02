@@ -6,7 +6,7 @@
 /*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:40:11 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/31 17:41:40 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/02 15:56:21 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	exec_signals(t_status status)
 		sa.sa_handler = &handle_signals;
 		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = 0;
-		sigaction(SIGQUIT, &sa, NULL); // to check how to set SIGQUIT as SIGIGN
 		sigaction(SIGINT, &sa, NULL);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
