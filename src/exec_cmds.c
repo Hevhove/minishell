@@ -6,7 +6,7 @@
 /*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 18:02:05 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/02 18:11:09 by miam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,21 @@ void	child(t_cmd *cmd, int i, char **envp)
 		{
 			bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
 			if (!bin)
-			{
-				printf("error: executable not found\n");
-				exit(5); // check error codes
-			}
+				error_message("error: executable not found\n", 5);
 			execve(bin, cmd->scmds[i].argv, envp);
 		}
 	}
 }
 
-void	exec_cmds(t_cmd *cmd) // cat << EOF
+void	exec_cmds(t_cmd *cmd)
 {
 	int		i;
 	char 	**envp;
 	int		status;
 
 	envp = create_envp(cmd->env);
-	//printf("before2\n");
-	//exec_env(cmd->env);
 	if (cmd->argc == 1 && builtin_identifier(cmd->scmds[0].argv[0]) == 2)
 	{
-		// printf("we're here!\n");
 		builtin_executor(cmd->scmds[0].argv, cmd->env);
 		cmd->exit_status = 0;
 	}
@@ -78,8 +72,7 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 		open_files(*cmd);
 		create_pipes(cmd);
 		if (!cmd->paths)
-			; // some error code
-		// STEP 5: launch children for every pipe and execute either binaries or built-ins
+			error_message("Malloc error\n", 1);
 		i = -1;
 		while (++i < cmd->argc)
 			child(cmd, i, envp);
@@ -90,11 +83,5 @@ void	exec_cmds(t_cmd *cmd) // cat << EOF
 			cmd->exit_status = WEXITSTATUS(status);
 		close_files(*cmd);
 	}
-	// wait(NULL);
-	// printf("exit status was: %d\n", cmd->exit_status);
 	free(envp);
-	//printf("before\n");
-	//exec_env(cmd->env);
-	//printf("after\n");
-	// STEP 7: free all the information used above, delete heredoc (unlink)
 }

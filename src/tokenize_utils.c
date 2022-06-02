@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:51:15 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/05/04 11:18:39 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/06/02 13:09:53 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	check_quotes(const char *s)
 		while (s[i] != CHAR_DQUOTE && s[i])
 			i++;
 	}
-	if (s[i] == CHAR_SQUOTE)
+	else if (s[i] == CHAR_SQUOTE)
 	{
 		i++;
 		while (s[i] != CHAR_SQUOTE && s[i])
@@ -77,4 +77,15 @@ int	metachar_wordlen(const char *s, int offset)
 			return (1);
 	}
 	return (0);
+}
+
+int	postcheck(const char *token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i] && check_token_type(token[i]) != 1
+		&& token[i] != CHAR_WHITESPACE)
+		i++;
+	return (i);
 }
