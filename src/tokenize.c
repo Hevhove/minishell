@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/14 13:00:30 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:09:39 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,10 @@ void	token_alloc(char **tokens, int wc, int word_len)
 	return ;
 }
 
-void	add_tokens(char **tokens, const char *s)
+void	add_tokens(char **tokens, const char *s, int wc, int i)
 {
-	int	i;
 	int	w_l;
-	int	wc;
 
-	i = 0;
-	wc = 0;
 	while (s[i])
 	{
 		if (s[i] == CHAR_WHITESPACE)
@@ -81,7 +77,10 @@ void	add_tokens(char **tokens, const char *s)
 			{
 				while (s[i + w_l] != CHAR_WHITESPACE
 					&& check_token_type(s[i + w_l]) != 1 && s[i + w_l])
+				{
 					w_l = w_l + check_quotes(s + i) + 1;
+					w_l = w_l + postcheck(s + i + w_l);
+				}
 			}
 			token_alloc(tokens, wc, w_l);
 			i += write_token(tokens[wc++], s + i, w_l);
@@ -93,6 +92,8 @@ char	**tokenize(const char *s)
 {
 	char	**tokens;
 	int		wc;
+	int		wc2;
+	int		i2;
 
 	if (!s)
 		return (NULL);
@@ -100,7 +101,9 @@ char	**tokenize(const char *s)
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
 	if (!tokens)
 		return (NULL);
-	add_tokens(tokens, s);
+	wc2 = 0;
+	i2 = 0;
+	add_tokens(tokens, s, wc2, i2);
 	tokens[wc] = NULL;
 	return (tokens);
 }

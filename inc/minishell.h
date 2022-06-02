@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 16:14:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 13:56:51 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,16 @@ t_cmd cmd;
 // FUNCTION PROTOTYPES
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
-void	expand_tokens2(char **tokens, t_list **env);
+void	expand_tokens(char **tokens, t_list **env);
+char	*get_var_name(char	*token);
+char	*fill_expanded_name(char *line, int index);
+char	*get_expanded_name(char	*var_name, t_list **env);
+char	*get_prestring(char	*token);
+char	*get_poststring(char *token);
 void	print_tokens(char **tokens);
 int		check_token_type(int token);
 int		check_quotes(const char *s);
+int		postcheck(const char *token);
 int		metachar_wordlen(const char *s, int offset);
 void	build_cmds(char **tokens, t_cmd *cmd);
 void	exec_echo(char **tokens);
@@ -146,5 +152,6 @@ void	open_files(t_cmd cmd);
 void	close_files(t_cmd cmd);
 void	set_redirections(t_cmd *cmd, int i);
 void	exec_signals(t_status status);
+void	error_message(char *s, int code);
 
 #endif

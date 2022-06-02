@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 19:51:25 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 16:55:34 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,16 @@ int	verify_tokens(char	**tokens)
 	int	i;
 
 	i = 0;
+	if (tokens[i] == NULL)
+		return (0);
 	while (tokens[i])
 		i++;
-	if (ft_strncmp(tokens[0], "|", 1) == 0
-		|| ft_strncmp(tokens[i - 1], "|", 1) == 0)
+	if (ft_strncmp(tokens[0], "|", 1) == 0)
+	{
+		printf("parse error: unexpected token\n");
+		return (0);
+	}
+	if (i >= 1 && ft_strncmp(tokens[i - 1], "|", 1) == 0)
 	{
 		printf("parse error: unexpected token\n");
 		return (0);
@@ -90,8 +96,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd.tokens = tokenize(line);
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
-			expand_tokens2(cmd.tokens, cmd.env);
-			print_tokens(cmd.tokens); // CASE TO FIX: echo "$PWD"old | wc -c
+			expand_tokens(cmd.tokens, cmd.env);
 			build_cmds(cmd.tokens, &cmd);
 			build_paths(&cmd);
 			if (check_heredocs(cmd) <= 1)
