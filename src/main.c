@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 18:11:55 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/03 20:15:48 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	verify_tokens(char	**tokens)
 		printf("parse error: unexpected token\n");
 		return (0);
 	}
-	return (1);	
+	return (1);
 }
 
 int	check_heredocs(t_cmd cmd)
@@ -78,7 +78,6 @@ int	check_heredocs(t_cmd cmd)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	// char		**tokens;
 
 	(void)argv;
 	(void)argc;
@@ -100,6 +99,7 @@ int	main(int argc, char **argv, char **envp)
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
 			expand_tokens(cmd.tokens, cmd.env);
+			print_tokens(cmd.tokens);
 			build_cmds(cmd.tokens, &cmd);
 			build_paths(&cmd);
 			if (check_heredocs(cmd) <= 1)

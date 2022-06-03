@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 17:23:23 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:21:07 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_env_value(char *name, t_list **env)
 			to_get = NULL;
 			return (var_value);
 		}
-		to_get = to_get->next; 
+		to_get = to_get->next;
 	}
 	ft_free(&var_name);
 	to_get = NULL;
@@ -73,7 +73,7 @@ void	exec_env(t_list **env)
 	tmp = *env;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		printf("%s\n", (char *)(tmp->content));
 		tmp = tmp->next;
 	}
 }
