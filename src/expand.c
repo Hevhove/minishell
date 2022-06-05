@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 14:25:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:09:11 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,28 +47,6 @@ int	st_end_qts(char *token, int i, int dollar_count)
 	return (0);
 }
 
-// void	text_replace(char **token, int len, char *str)
-// {
-// 	char	*pre;
-// 	char	*inter;
-// 	int		i;
-
-// 	i = 0;
-// 	pre = (char *)malloc(sizeof(char) * (len + 1));
-// 	ft_strlcpy(pre, *token, len);
-// 	free(*token);
-// 	*token = NULL;
-// 	*token = ft_strjoin(pre, str);
-// 	if (pre[0] == '\"')
-// 	{
-// 		inter = ft_strjoin(*token, "\"");
-// 		free(*token);
-// 		*token = inter;
-// 	}
-// 	free(pre);
-// 	return ;
-// }
-
 /*	Expand Tokens function:
 |	This function expands the $ for variables, and handles the following cases:
 |	CASE1: $PWD			-> WORKS
@@ -84,34 +62,6 @@ int	st_end_qts(char *token, int i, int dollar_count)
 |			tokens[0] is: echo
 |			tokens[1] is: "old/Users/hvan-hov/Documents/minishell"
 */
-
-// void	expand_tokens(char **tokens)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*tmp;
-// 	char	*str;
-
-// 	i = 0;
-// 	while (tokens[i]) // start_end_quote(tokens[i]) != 1 &&
-// 	{ // write a function that checks if dollar sign is between double quotes
-// 		if (ft_strchr(tokens[i], '$')) // "$PWD"lol expansion also needs
-//		to work if token-end is not a quote
-// 		{
-// 			j = 0;
-// 			while (tokens[i][j] != '$' && tokens[i][j])
-// 				j++;
-// 			tmp = ft_strtrim(tokens[i] + j + 1, " \""); // $PWDlol
-// 			printf("PWDvar is: %s\n", tmp);
-// 			str = getenv(tmp); // fix this
-// 			free(tmp);
-// 			if (!str)
-// 				break ;
-// 			text_replace(&tokens[i], j + 1, str);
-// 		}
-// 		i++;
-// 	}
-// }
 
 char	*replace_token(char	*token, char *exp_name)
 {
@@ -169,34 +119,45 @@ int	is_exit_code(char *token)
 	return (0);
 }
 
-// Remove all double quotes unless they are inside single quotes
-// Remove all single quotes unless they are inside double quotes
-
-char	*remove_quotes(char *token)
+char	*remove_outer_quotes(char *token)
 {
 	int		i;
+	int		j;
 	char	*new_token;
-	i = 0;
 	
+	new_token = (char *)malloc(ft_strlen(token) * sizeof(char));
+	i = 0;
+	j = 0;
 	while (token[i])
 	{
-		new_token = (char *)malloc(1 * ft_strlen(token));
-		if (token[i] == "\"" || token[i] == "\'")
+		if (token[i] == '\'' || token[i] == '\"')
 		{
-			is_between_quotes(token[i]);
+			i++;
+			continue ;
 		}
+		new_token[j] = token[i];
+		j++;
+		i++;
 	}
+	new_token[j] = '\0';
+	return (new_token);
 }
 
 void	handle_quotes(char **tokens)
 {
 	int		i;
-	char	*new_token;
+	char	*tmp;
 	
 	i = 0;
 	while (tokens[i])
 	{
-		new_token = remove_quotes(tokens[i]);
+		if (ft_strchr(tokens[i], '\"') || ft_strchr(tokens[i], '\''))
+		{
+			tmp = tokens[i];
+			tokens[i] = remove_outer_quotes(tokens[i]);
+			free(tmp);
+			printf("tokens[%d] is: %s\n", i, tokens[i]);
+		}
 		i++;
 	}
 }
@@ -225,10 +186,9 @@ void	expand_tokens(char	**tokens, t_list **env)
 			while (tokens[i][j] && tokens[i][j] != '$')
 				j++;
 			new_token = dollar_expansion(tokens[i], tokens[i] + j + 1, env);
-			free(tokens[i]);
 			tokens[i] = new_token;
 		}
 		i++;
 	}
-	//handle_quotes(tokens);
+	handle_quotes(tokens);
 }

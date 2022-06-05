@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:26:24 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/13 19:27:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:09:22 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ void	write_raw_cmds(t_cmd *cmd, char **tokens)
 	int	k;
 
 	i = 0;
-	j = 0;
 	k = 0;
 	while (i < cmd->argc)
 	{
