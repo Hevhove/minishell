@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/24 13:22:29 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:21:38 by Hendrik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	export_no_var(t_list **env)
 	tmp = *env;
 	while (tmp)
 	{
-		printf("declare -x %s\n", tmp->content);
+		printf("declare -x %s\n", (char *)tmp->content);
 		tmp = tmp->next;
 	}
 }
@@ -27,7 +27,7 @@ void	export_no_var(t_list **env)
 int	already_in_env(char **tokens, t_list **env)
 {
 	t_list *tmp;
-	
+
 	tmp = *env;
 	while (tmp)
 	{

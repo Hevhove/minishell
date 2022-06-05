@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 17:34:40 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/05 12:02:09 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	exec_env(t_list **env)
 	tmp = *env;
 	while (tmp)
 	{
-		printf("%s\n", tmp->content);
+		printf("%s\n", (char *)(tmp->content));
 		tmp = tmp->next;
 	}
 }

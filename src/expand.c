@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 17:48:36 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/05 12:02:13 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	st_end_qts(char *token, int i, int dollar_count)
 // 	char	*str;
 
 // 	i = 0;
-// 	while (tokens[i]) // start_end_quote(tokens[i]) != 1 && 
+// 	while (tokens[i]) // start_end_quote(tokens[i]) != 1 &&
 // 	{ // write a function that checks if dollar sign is between double quotes
 // 		if (ft_strchr(tokens[i], '$')) // "$PWD"lol expansion also needs
 //		to work if token-end is not a quote
@@ -140,10 +140,27 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	char	*new_token;
 
 	var_name = get_var_name(token);
-	expanded_name = get_expanded_name(var_name, env);
+	if (ft_strncmp(var_name, "?", 1) == 0)
+		expanded_name = ft_itoa(cmd.exit_status);
+	else
+		expanded_name = get_expanded_name(var_name, env);
 	new_token = replace_token(orig, expanded_name);
 	free(var_name);
 	return (new_token);
+}
+
+int	is_exit_code(char *token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i + 1] && token[i] == '$' && token[i + 1] == '?')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	expand_tokens(char	**tokens, t_list **env)
