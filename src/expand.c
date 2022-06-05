@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 13:20:38 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:48:36 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ char	*replace_token(char	*token, char *exp_name)
 	free(exp_name);
 	result2 = ft_strjoin(result, post);
 	free(result);
+	free(post);
 	return (result2);
 }
 
@@ -141,6 +142,7 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	var_name = get_var_name(token);
 	expanded_name = get_expanded_name(var_name, env);
 	new_token = replace_token(orig, expanded_name);
+	free(var_name);
 	return (new_token);
 }
 

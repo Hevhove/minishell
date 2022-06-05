@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/01 17:23:23 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:34:40 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	env_init(t_cmd *cmd, char **envp)
 {
-	int	i;
+	int		i;
 	t_list	*node;
 
 	i = 0;
@@ -25,7 +25,6 @@ void	env_init(t_cmd *cmd, char **envp)
 		i++;
 	}
 }
-
 
 void	ft_clear_env(t_list **env)
 {
@@ -54,12 +53,13 @@ char	*get_env_value(char *name, t_list **env)
 	{
 		if (!ft_strncmp(var_name, to_get->content, name_len))
 		{
-			var_value = ft_substr(to_get->content, name_len, ft_strlen(to_get->content) - name_len);
+			var_value = ft_substr(to_get->content, name_len,
+					ft_strlen(to_get->content) - name_len);
 			ft_free(&var_name);
 			to_get = NULL;
 			return (var_value);
 		}
-		to_get = to_get->next; 
+		to_get = to_get->next;
 	}
 	ft_free(&var_name);
 	to_get = NULL;
