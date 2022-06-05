@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 13:21:01 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/05 12:53:04 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,19 @@ char	*get_expanded_name(char	*var_name, t_list **env)
 	char	*expanded_name;
 
 	tmp = *env;
+	expanded_name = NULL;
 	while (tmp != NULL)
 	{
 		i = 0;
 		while (((char *)tmp->content)[i] && ((char *)tmp->content)[i] != '=')
 			i++;
-		if (ft_strncmp(var_name, (char *)tmp->content, i) == 0)
+		if (ft_strncmp(var_name, (char *)tmp->content, ft_strlen(var_name)) == 0)
 			expanded_name = fill_expanded_name((char *)tmp->content, i + 1);
+		if (!expanded_name)
+		{
+			expanded_name = (char *)malloc(1 * sizeof(char));
+			expanded_name[0] = '\0';
+		}
 		tmp = tmp->next;
 	}
 	return (expanded_name);
@@ -80,9 +86,7 @@ char	*get_prestring(char	*token)
 
 	i = 0;
 	while (token[i] && token[i] != '$')
-	{
 		i++;
-	}
 	pre = (char *)malloc(i * sizeof(char) + 1);
 	i = 0;
 	while (token[i] && token[i] != '$')
@@ -115,7 +119,7 @@ char	*get_poststring(char *token)
 		len++;
 	post = (char *)malloc(len * sizeof(char) + 1);
 	j = 0;
-	i = i - len;
+	i = i - len - 1;
 	while (j < len)
 		post[j++] = token[i++];
 	post[j] = '\0';

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 13:56:51 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:19:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 	ERROR MANAGEMENT:
 	1: MALLOC ERROR
 	2: OPEN ERROR
-	3:
+	3: PIPES ERROR
 */
 
 #ifndef MINISHELL_H
@@ -141,17 +141,17 @@ void	build_paths(t_cmd *cmd);
 char	*get_term_var(t_list **env);
 void	ft_unlink(t_cmd cmd);
 char 	*get_bin(char **paths, char *bin);
-void	heredoc_input(t_cmd cmd, char *delim);
+int		heredoc_input(t_cmd cmd, char *delim);
 void	ft_unlink(t_cmd cmd);
 void	init_term(void);
 int		count_list_len(t_list **env);
 char	**create_envp(t_list **env);
-void	create_pipes(t_cmd *cmd);
+int		create_pipes(t_cmd *cmd);
 void	close_pipes(t_cmd *cmd);
 void	open_files(t_cmd cmd);
 void	close_files(t_cmd cmd);
 void	set_redirections(t_cmd *cmd, int i);
 void	exec_signals(t_status status);
-void	error_message(char *s, int code);
+void	error_message(char *s, int code, t_cmd *cmd);
 
 #endif

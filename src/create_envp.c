@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:12:22 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 13:59:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:08:06 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	count_list_len(t_list **env)
 
 char	**create_envp(t_list **env)
 {
-	t_list 	*tmp;
+	t_list	*tmp;
 	char	**envp;
 	int		count;
 	int		i;

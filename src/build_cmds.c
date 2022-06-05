@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/05/31 13:36:29 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/02 17:33:07 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,4 @@ void	build_cmds(char **tokens, t_cmd *cmd)
 	write_raw_cmds(cmd, tokens);
 	update_fds(cmd);
 	rm_redirs(cmd);
-	//printf("cmd_arg is: %d\n", cmd->argc);
-	//printf("------------\n");
-	//print_raw_commands(cmd);
-	//printf("------------\n");
-	//print_fds(cmd);
-	//printf("------------\n");
-	//print_commands(cmd);
-	//printf("------------\n");
 }

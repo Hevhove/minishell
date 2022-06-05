@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 12:02:13 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/05 14:25:50 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ char	*replace_token(char	*token, char *exp_name)
 
 	i = 0;
 	pre = get_prestring(token);
+	printf("prestring is: %s\n", pre);
 	post = get_poststring(token);
+	printf("poststring is: %s\n", post);
 	result = ft_strjoin(pre, exp_name);
 	free(pre);
 	free(exp_name);
@@ -140,10 +142,14 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	char	*new_token;
 
 	var_name = get_var_name(token);
+	printf("var_name is %s\n", var_name);
 	if (ft_strncmp(var_name, "?", 1) == 0)
 		expanded_name = ft_itoa(cmd.exit_status);
 	else
 		expanded_name = get_expanded_name(var_name, env);
+	if (expanded_name[0] == '\0')
+		return (expanded_name);
+	printf("expanded_name is: %s\n", expanded_name);
 	new_token = replace_token(orig, expanded_name);
 	free(var_name);
 	return (new_token);
@@ -162,6 +168,43 @@ int	is_exit_code(char *token)
 	}
 	return (0);
 }
+
+// Remove all double quotes unless they are inside single quotes
+// Remove all single quotes unless they are inside double quotes
+
+char	*remove_quotes(char *token)
+{
+	int		i;
+	char	*new_token;
+	i = 0;
+	
+	while (token[i])
+	{
+		new_token = (char *)malloc(1 * ft_strlen(token));
+		if (token[i] == "\"" || token[i] == "\'")
+		{
+			is_between_quotes(token[i]);
+		}
+	}
+}
+
+void	handle_quotes(char **tokens)
+{
+	int		i;
+	char	*new_token;
+	
+	i = 0;
+	while (tokens[i])
+	{
+		new_token = remove_quotes(tokens[i]);
+		i++;
+	}
+}
+
+/*
+|	ATTENTION: if the variable is not found (Such as $PWDlol), then the new token will be '\0'.
+|	Echo must then deal with this appropriately.
+*/
 
 void	expand_tokens(char	**tokens, t_list **env)
 {
@@ -187,4 +230,5 @@ void	expand_tokens(char	**tokens, t_list **env)
 		}
 		i++;
 	}
+	//handle_quotes(tokens);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 18:11:09 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/05 13:45:00 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ void	child(t_cmd *cmd, int i, char **envp)
 		{
 			bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
 			if (!bin)
-				error_message("error: executable not found\n", 5);
+			{
+				error_message("error: executable not found\n", 5, cmd);
+				free_tokens(cmd->tokens);
+				free_cmds(*cmd);
+				exit(5);
+			}
 			execve(bin, cmd->scmds[i].argv, envp);
 		}
 	}
@@ -56,7 +61,7 @@ void	child(t_cmd *cmd, int i, char **envp)
 void	exec_cmds(t_cmd *cmd)
 {
 	int		i;
-	char 	**envp;
+	char	**envp;
 	int		status;
 
 	envp = create_envp(cmd->env);
@@ -72,12 +77,13 @@ void	exec_cmds(t_cmd *cmd)
 		open_files(*cmd);
 		create_pipes(cmd);
 		if (!cmd->paths)
-			error_message("Malloc error\n", 1);
+			error_message("Malloc error\n", 1, cmd);
 		i = -1;
 		while (++i < cmd->argc)
 			child(cmd, i, envp);
 		close_pipes(cmd);
-		while (wait(&status) > 0);
+		while (wait(&status) > 0)
+			;
 		exec_signals(RESET);
 		if (WIFEXITED(status))
 			cmd->exit_status = WEXITSTATUS(status);
