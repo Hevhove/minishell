@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/06 17:42:48 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:44:44 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	*get_bin(char **paths, char *bin)
 	char	*cmd_path;
 
 	i = 0;
+	if (access(bin, F_OK) == 0)
+				return (bin);
 	if (bin[0] != '/')
 	{
 		while (paths[i])

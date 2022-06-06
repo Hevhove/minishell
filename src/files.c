@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:15:05 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 16:27:51 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:51:49 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	open_files(t_cmd *cmd)
 	{
 		ret = open_files_loop(cmd, i);
 		if (ret == -1)
-			printf("parse error: can't read from %s\n",
+			ft_printf("parse error: can't read from %s\n",
 				cmd->scmds[i].fd_in.fname);
 		else if (ret == -2)
-			printf("parse error: can't write to %s\n",
+			ft_printf("parse error: can't write to %s\n",
 				cmd->scmds[i].fd_out.fname);
 		i++;
 	}

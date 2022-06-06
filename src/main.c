@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 19:18:36 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:41:19 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	verify_tokens(char	**tokens)
 		i++;
 	if (ft_strncmp(tokens[0], "|", 1) == 0)
 	{
-		printf("parse error: unexpected token\n");
+		ft_printf("parse error: unexpected token\n");
 		return (0);
 	}
 	if (i >= 1 && ft_strncmp(tokens[i - 1], "|", 1) == 0)
 	{
-		printf("parse error: unexpected token\n");
+		ft_printf("parse error: unexpected token\n");
 		return (0);
 	}
 	return (1);
@@ -54,20 +54,14 @@ int	verify_tokens(char	**tokens)
 int	check_heredocs(t_cmd cmd)
 {
 	int	i;
-	int	j;
 	int	heredoc_count;
 
 	i = 0;
 	heredoc_count = 0;
 	while (i < cmd.argc)
 	{
-		j = 0;
-		while (j < cmd.scmds[i].argc)
-		{
-			if (cmd.scmds[i].heredoc == 1)
-				heredoc_count++;
-			j++;
-		}
+		if (cmd.scmds[i].heredoc == 1)
+			heredoc_count++;
 		i++;
 	}
 	return (heredoc_count);
@@ -77,13 +71,17 @@ void	build_and_exec_cmds(t_cmd *cmd)
 {
 	cmd->envp = create_envp(cmd->env);
 	build_cmds(cmd->tokens, cmd);
-	if (check_heredocs(*cmd) <= 1 && build_paths(cmd) >= 0)
+	build_paths(cmd);
+	if (check_heredocs(*cmd) <= 1)
 	{
 		if (exec_cmds(cmd) < 0)
 			cmd->exit_status = -1;
 	}
 	else
+	{
 		ft_printf("parse error\n");
+		cmd->exit_status = -1;
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
