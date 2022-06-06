@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:54:30 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:03:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ int	exec_export(char **tokens, t_list **env)
 	}
 	if (ft_isdigit((int)tokens[1][0]))
 	{
-		printf("bash: export: `%s': not a valid identifier\n", tokens[1]);
+		ft_printf("export error: `%s': not a valid identifier\n", tokens[1]);
 		return (-1);
 	}
 	if (!ft_strchr(tokens[1], '='))
+	{
+		ft_printf("export error: no '=' sign found\n");
 		return (-1);
+	}
 	if (already_in_env(tokens, env) == 1)
 		return (0);
 	new = ft_lstnew(tokens[1]);

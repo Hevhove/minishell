@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 16:16:24 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:13:35 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	child(t_cmd *cmd, int i, char **envp)
 		set_redirections(cmd, i);
 		if (builtin_identifier(cmd->scmds[i].argv[0]))
 		{
-			builtin_executor(cmd->scmds[i].argv, cmd->env);
+			builtin_executor(cmd->scmds[i].argv, cmd, envp);
 			free_cmds(*cmd);
 			free_tokens(cmd->tokens);
 			ft_clear_env(cmd->env);
@@ -51,7 +51,7 @@ void	child(t_cmd *cmd, int i, char **envp)
 				ft_printf("error: command not found\n");
 				free_tokens(cmd->tokens);
 				free_cmds(*cmd);
-				exit(-1);
+				exit(127);
 			}
 			execve(bin, cmd->scmds[i].argv, envp);
 		}
@@ -66,12 +66,12 @@ int	exec_cmds(t_cmd *cmd)
 
 	envp = create_envp(cmd->env);
 	if (cmd->argc == 1 && builtin_identifier(cmd->scmds[0].argv[0]) == 2)
-		cmd->exit_status = builtin_executor(cmd->scmds[0].argv, cmd->env); // errors to write in execs
+		cmd->exit_status = builtin_executor(cmd->scmds[0].argv, cmd, envp);
 	else
 	{
 		if ((*cmd).scmds[0].heredoc == 1)
 		{
-			if (heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname) < 0) // error message already done
+			if (heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname) < 0)
 				return (-1);
 		}
 		if (open_files(cmd) < 0)
