@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 12:53:04 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:32:44 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ char	*get_expanded_name(char	*var_name, t_list **env)
 		i = 0;
 		while (((char *)tmp->content)[i] && ((char *)tmp->content)[i] != '=')
 			i++;
-		if (ft_strncmp(var_name, (char *)tmp->content, ft_strlen(var_name)) == 0)
+		if (ft_strncmp(var_name, (char *)tmp->content,
+				ft_strlen(var_name)) == 0)
 			expanded_name = fill_expanded_name((char *)tmp->content, i + 1);
 		if (!expanded_name)
 		{

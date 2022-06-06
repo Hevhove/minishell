@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 19:09:11 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:32:06 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,51 +119,9 @@ int	is_exit_code(char *token)
 	return (0);
 }
 
-char	*remove_outer_quotes(char *token)
-{
-	int		i;
-	int		j;
-	char	*new_token;
-	
-	new_token = (char *)malloc(ft_strlen(token) * sizeof(char));
-	i = 0;
-	j = 0;
-	while (token[i])
-	{
-		if (token[i] == '\'' || token[i] == '\"')
-		{
-			i++;
-			continue ;
-		}
-		new_token[j] = token[i];
-		j++;
-		i++;
-	}
-	new_token[j] = '\0';
-	return (new_token);
-}
-
-void	handle_quotes(char **tokens)
-{
-	int		i;
-	char	*tmp;
-	
-	i = 0;
-	while (tokens[i])
-	{
-		if (ft_strchr(tokens[i], '\"') || ft_strchr(tokens[i], '\''))
-		{
-			tmp = tokens[i];
-			tokens[i] = remove_outer_quotes(tokens[i]);
-			free(tmp);
-			printf("tokens[%d] is: %s\n", i, tokens[i]);
-		}
-		i++;
-	}
-}
-
 /*
-|	ATTENTION: if the variable is not found (Such as $PWDlol), then the new token will be '\0'.
+|	ATTENTION: if the variable is not found (Such as $PWDlol), then the new
+|	token will be '\0'.
 |	Echo must then deal with this appropriately.
 */
 

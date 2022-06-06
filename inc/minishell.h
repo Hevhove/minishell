@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 18:19:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:25:08 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,33 +91,33 @@ typedef struct s_cmd {
 // GLOBALS
 t_cmd cmd;
 
-// FUNCTION PROTOTYPES
+/////////////////////////
+// FUNCTION PROTOTYPES //
+/////////////////////////
+// TOKENISATION
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens, t_list **env);
+int		check_token_type(int token);
+
+// VARIABLE EXPANSION
 char	*get_var_name(char	*token);
 char	*fill_expanded_name(char *line, int index);
 char	*get_expanded_name(char	*var_name, t_list **env);
 char	*get_prestring(char	*token);
 char	*get_poststring(char *token);
-void	print_tokens(char **tokens);
-int		check_token_type(int token);
 int		check_quotes(const char *s);
 int		postcheck(const char *token);
 int		metachar_wordlen(const char *s, int offset);
+
+// QUOTE HANDLING
+char	*remove_outer_quotes(char *token);
+char	*remove_first_quote(char *token);
+char	*remove_last_quote(char *token);
+void	handle_quotes(char **tokens);
+
+// COMMAND BUILDING
 void	build_cmds(char **tokens, t_cmd *cmd);
-void	exec_echo(char **tokens);
-int		exec_cd(char **tokens, t_list **env);
-int		exec_pwd(void);
-int		exec_export(char **tokens, t_list **env);
-void	exec_env(t_list **env);
-int		exec_unset(char **tokens, t_list **env);
-int		builtin_identifier(char *tokens);
-int		builtin_executor(char **tokens, t_list **env);
-void	env_init(t_cmd *cmd, char **envp);
-char	*get_env_value(char *name, t_list **env);
-void	export_no_var(t_list **env);
-int		already_in_env(char **tokens, t_list **env);
 void	free_tokens(char **tokens);
 void	free_cmds(t_cmd cmd);
 int		count_cmds(char **tokens);
@@ -130,20 +130,12 @@ void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos);
 void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
+
+// COMMAND EXECUTION
 void	exec_cmds(t_cmd *cmd);
-void	ft_clear_env(t_list **env);
-char	*get_next_line(int fd);
-void	rm_env_var(t_list **env);
-void	ft_free(char **ptr);
-void	set_pwd_vars_env(char *name, char *value, t_list **env);
 char	*find_path(t_list **env);
 void	build_paths(t_cmd *cmd);
-char	*get_term_var(t_list **env);
-void	ft_unlink(t_cmd cmd);
-char 	*get_bin(char **paths, char *bin);
 int		heredoc_input(t_cmd cmd, char *delim);
-void	ft_unlink(t_cmd cmd);
-void	init_term(void);
 int		count_list_len(t_list **env);
 char	**create_envp(t_list **env);
 int		create_pipes(t_cmd *cmd);
@@ -151,6 +143,32 @@ void	close_pipes(t_cmd *cmd);
 void	open_files(t_cmd cmd);
 void	close_files(t_cmd cmd);
 void	set_redirections(t_cmd *cmd, int i);
+char 	*get_bin(char **paths, char *bin);
+
+// BUILTINS
+void	exec_echo(char **tokens);
+int		exec_cd(char **tokens, t_list **env);
+int		exec_pwd(void);
+int		exec_export(char **tokens, t_list **env);
+void	exec_env(t_list **env);
+int		exec_unset(char **tokens, t_list **env);
+int		builtin_identifier(char *tokens);
+int		builtin_executor(char **tokens, t_list **env);
+void	env_init(t_cmd *cmd, char **envp);
+char	*get_env_value(char *name, t_list **env);
+void	export_no_var(t_list **env);
+int		already_in_env(char **tokens, t_list **env);
+void	ft_clear_env(t_list **env);
+char	*get_next_line(int fd);
+void	rm_env_var(t_list **env);
+void	ft_free(char **ptr);
+void	set_pwd_vars_env(char *name, char *value, t_list **env);
+char	*get_term_var(t_list **env);
+void	ft_unlink(t_cmd cmd);
+void	ft_unlink(t_cmd cmd);
+void	init_term(void);
+
+// SIGNALS
 void	exec_signals(t_status status);
 void	error_message(char *s, int code, t_cmd *cmd);
 
