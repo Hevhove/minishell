@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/05 19:09:30 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 18:02:12 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	rm_redirs(t_cmd *cmd)
 
 void	build_cmds(char **tokens, t_cmd *cmd)
 {
+	expand_tokens(tokens, cmd->env);
 	set_cmd_count(tokens, cmd);
 	write_raw_cmds(cmd, tokens);
 	update_fds(cmd);

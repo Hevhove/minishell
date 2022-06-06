@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/06 17:06:43 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:35:16 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ int	builtin_identifier(char *tokens)
 	return (0);
 }
 
-int	builtin_executor(char **tokens, t_cmd *cmd, char **envp)
+int	builtin_executor(char **tokens, t_cmd *cmd)
 {
 	int	ret;
 
 	ret = 0;
 	if (ft_strcmp(tokens[0], "exit") == 0)
-		ft_exit(cmd, envp);
+		ft_exit(cmd, cmd->envp);
 	else if (ft_strcmp(tokens[0], "echo") == 0)
 		ret = exec_echo(tokens);
 	else if (ft_strcmp(tokens[0], "cd") == 0)

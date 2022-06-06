@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 16:28:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:18:36 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,27 @@ int	check_heredocs(t_cmd cmd)
 	return (heredoc_count);
 }
 
+void	build_and_exec_cmds(t_cmd *cmd)
+{
+	cmd->envp = create_envp(cmd->env);
+	build_cmds(cmd->tokens, cmd);
+	if (check_heredocs(*cmd) <= 1 && build_paths(cmd) >= 0)
+	{
+		if (exec_cmds(cmd) < 0)
+			cmd->exit_status = -1;
+	}
+	else
+		ft_printf("parse error\n");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char		*line;
+	char	*line;
 
 	(void)argv;
 	(void)argc;
-	init_term();
-	cmd.env = (t_list **)malloc(sizeof(t_list));
-	if (!cmd.env)
-		return (1);
-	*(cmd.env) = NULL;
-	cmd.tokens = NULL;
-	env_init(&cmd, envp);
-	cmd.exit_status = 0;
-	exec_signals(INIT);
 	line = NULL;
+	ft_setup(&cmd, envp);
 	while (1)
 	{
 		line = rl_gets(line);
@@ -97,16 +102,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd.tokens = tokenize(line);
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
-			expand_tokens(cmd.tokens, cmd.env);
-			build_cmds(cmd.tokens, &cmd);
-			build_paths(&cmd);
-			if (check_heredocs(cmd) <= 1)
-			{
-				if (exec_cmds(&cmd) < 0)
-					cmd.exit_status = -1;
-			}
-			else
-				ft_printf("parse error\n");
+			build_and_exec_cmds(&cmd);
 			free_cmds(cmd);
 		}
 		free_tokens(cmd.tokens);

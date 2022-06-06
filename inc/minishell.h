@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 17:06:34 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:08:20 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_cmd {
 	char		**tokens;
 	int			*pipes;
 	t_list		**env;
+	char		**envp;
 	char		**paths;
 	uint8_t		exit_status;
 	t_scmd		*scmds;
@@ -95,6 +96,7 @@ t_cmd cmd;
 // FUNCTION PROTOTYPES //
 /////////////////////////
 // TOKENISATION
+void	ft_setup(t_cmd *cmd, char **envp);
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens, t_list **env);
@@ -132,9 +134,10 @@ void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
 
 // COMMAND EXECUTION
+void	build_and_exec_cmds(t_cmd *cmd);
 int		exec_cmds(t_cmd *cmd);
 char	*find_path(t_list **env);
-void	build_paths(t_cmd *cmd);
+int		build_paths(t_cmd *cmd);
 int		heredoc_input(t_cmd cmd, char *delim);
 int		count_list_len(t_list **env);
 char	**create_envp(t_list **env);
@@ -153,7 +156,7 @@ int		exec_export(char **tokens, t_list **env);
 int		exec_env(t_list **env);
 int		exec_unset(char **tokens, t_list **env);
 int		builtin_identifier(char *tokens);
-int		builtin_executor(char **tokens, t_cmd *cmd, char **envp);
+int		builtin_executor(char **tokens, t_cmd *cmd);
 void	env_init(t_cmd *cmd, char **envp);
 char	*get_env_value(char *name, t_list **env);
 void	export_no_var(t_list **env);
