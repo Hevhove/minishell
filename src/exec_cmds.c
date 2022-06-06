@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 13:45:00 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:16:24 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,17 @@ void	child(t_cmd *cmd, int i, char **envp)
 			bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
 			if (!bin)
 			{
-				error_message("error: executable not found\n", 5, cmd);
+				ft_printf("error: command not found\n");
 				free_tokens(cmd->tokens);
 				free_cmds(*cmd);
-				exit(5);
+				exit(-1);
 			}
 			execve(bin, cmd->scmds[i].argv, envp);
 		}
 	}
 }
 
-void	exec_cmds(t_cmd *cmd)
+int	exec_cmds(t_cmd *cmd)
 {
 	int		i;
 	char	**envp;
@@ -66,28 +66,33 @@ void	exec_cmds(t_cmd *cmd)
 
 	envp = create_envp(cmd->env);
 	if (cmd->argc == 1 && builtin_identifier(cmd->scmds[0].argv[0]) == 2)
-	{
-		builtin_executor(cmd->scmds[0].argv, cmd->env);
-		cmd->exit_status = 0;
-	}
+		cmd->exit_status = builtin_executor(cmd->scmds[0].argv, cmd->env); // errors to write in execs
 	else
 	{
 		if ((*cmd).scmds[0].heredoc == 1)
-			heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname);
-		open_files(*cmd);
-		create_pipes(cmd);
+		{
+			if (heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname) < 0) // error message already done
+				return (-1);
+		}
+		if (open_files(cmd) < 0)
+			return (-1);
+		if (create_pipes(cmd) < 0)
+			return (-1);
 		if (!cmd->paths)
 			error_message("Malloc error\n", 1, cmd);
 		i = -1;
 		while (++i < cmd->argc)
 			child(cmd, i, envp);
-		close_pipes(cmd);
+		if (close_pipes(cmd) < 0)
+			return (-1);
 		while (wait(&status) > 0)
 			;
 		exec_signals(RESET);
 		if (WIFEXITED(status))
 			cmd->exit_status = WEXITSTATUS(status);
-		close_files(*cmd);
+		if (close_files(*cmd) < 0)
+			return (-1);
 	}
 	free(envp);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/01 16:16:18 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/06 16:29:40 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,32 @@ int	builtin_identifier(char *tokens)
 
 int	builtin_executor(char **tokens, t_list **env)
 {
+	int	ret;
+
+	ret = 0;
 	if (ft_strcmp(tokens[0], "exit") == 0)
 	{
-		printf("exit\n");
+		printf("exit\n"); // additional frees first maybe?
 		exit (0);
 	}
 	else if (ft_strcmp(tokens[0], "echo") == 0)
-		exec_echo(tokens);
+		ret = exec_echo(tokens);
 	else if (ft_strcmp(tokens[0], "cd") == 0)
-		exec_cd(tokens, env);
+		ret = exec_cd(tokens, env);
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
-		exec_pwd();
+		ret = exec_pwd();
 	else if (ft_strcmp(tokens[0], "export") == 0)
-		exec_export(tokens, env);
+		ret = exec_export(tokens, env);
 	else if (ft_strcmp(tokens[0], "unset") == 0)
-		exec_unset(tokens, env);
+		ret = exec_unset(tokens, env);
 	else if (ft_strcmp(tokens[0], "env") == 0)
 	{
 		if (tokens[1])
 		{
 			printf("env: %s: No such file or directory\n", tokens[1]);
-			return (0);
+			return (-1);
 		}
-		exec_env(env);
+		ret = exec_env(env);
 	}
-	return (1);
+	return (ret);
 }

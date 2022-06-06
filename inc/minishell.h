@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:25:08 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:47:09 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,25 +132,25 @@ void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
 
 // COMMAND EXECUTION
-void	exec_cmds(t_cmd *cmd);
+int		exec_cmds(t_cmd *cmd);
 char	*find_path(t_list **env);
 void	build_paths(t_cmd *cmd);
 int		heredoc_input(t_cmd cmd, char *delim);
 int		count_list_len(t_list **env);
 char	**create_envp(t_list **env);
 int		create_pipes(t_cmd *cmd);
-void	close_pipes(t_cmd *cmd);
-void	open_files(t_cmd cmd);
-void	close_files(t_cmd cmd);
-void	set_redirections(t_cmd *cmd, int i);
+int		close_pipes(t_cmd *cmd);
+int		open_files(t_cmd *cmd);
+int		close_files(t_cmd cmd);
+int		set_redirections(t_cmd *cmd, int i);
 char 	*get_bin(char **paths, char *bin);
 
 // BUILTINS
-void	exec_echo(char **tokens);
+int		exec_echo(char **tokens);
 int		exec_cd(char **tokens, t_list **env);
 int		exec_pwd(void);
 int		exec_export(char **tokens, t_list **env);
-void	exec_env(t_list **env);
+int		exec_env(t_list **env);
 int		exec_unset(char **tokens, t_list **env);
 int		builtin_identifier(char *tokens);
 int		builtin_executor(char **tokens, t_list **env);

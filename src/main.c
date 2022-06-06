@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 19:09:33 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:28:06 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,20 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line = rl_gets(line);
 		if (!line)
-			break;
+			break ;
 		cmd.tokens = tokenize(line);
 		if (verify_tokens(cmd.tokens) && cmd.tokens)
 		{
 			expand_tokens(cmd.tokens, cmd.env);
-			print_tokens(cmd.tokens);
 			build_cmds(cmd.tokens, &cmd);
 			build_paths(&cmd);
 			if (check_heredocs(cmd) <= 1)
-				exec_cmds(&cmd);
+			{
+				if (exec_cmds(&cmd) < 0)
+					cmd.exit_status = -1;
+			}
 			else
-				printf("parse error\n");
+				ft_printf("parse error\n");
 			free_cmds(cmd);
 		}
 		free_tokens(cmd.tokens);

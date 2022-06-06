@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 12:02:09 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:54:49 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*get_env_value(char *name, t_list **env)
 	return (NULL);
 }
 
-void	exec_env(t_list **env)
+int	exec_env(t_list **env)
 {
 	t_list	*tmp;
 
@@ -76,4 +76,5 @@ void	exec_env(t_list **env)
 		printf("%s\n", (char *)(tmp->content));
 		tmp = tmp->next;
 	}
+	return (0);
 }

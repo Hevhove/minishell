@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:13:40 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 18:16:42 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:28:19 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,18 @@ int	create_pipes(t_cmd *cmd)
 	return (0);
 }
 
-void	close_pipes(t_cmd *cmd)
+int	close_pipes(t_cmd *cmd)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
 	while (i < (2 * (cmd->argc - 1)))
 	{
-		close(cmd->pipes[i]);
+		ret = close(cmd->pipes[i]);
+		if (ret < 0)
+			return (-1);
 		i++;
 	}
+	return (0);
 }

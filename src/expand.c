@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:32:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:39:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,7 @@ char	*replace_token(char	*token, char *exp_name)
 
 	i = 0;
 	pre = get_prestring(token);
-	printf("prestring is: %s\n", pre);
 	post = get_poststring(token);
-	printf("poststring is: %s\n", post);
 	result = ft_strjoin(pre, exp_name);
 	free(pre);
 	free(exp_name);
@@ -92,14 +90,12 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	char	*new_token;
 
 	var_name = get_var_name(token);
-	printf("var_name is %s\n", var_name);
 	if (ft_strncmp(var_name, "?", 1) == 0)
 		expanded_name = ft_itoa(cmd.exit_status);
 	else
 		expanded_name = get_expanded_name(var_name, env);
 	if (expanded_name[0] == '\0')
 		return (expanded_name);
-	printf("expanded_name is: %s\n", expanded_name);
 	new_token = replace_token(orig, expanded_name);
 	free(var_name);
 	return (new_token);

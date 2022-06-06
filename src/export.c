@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Hendrik <Hendrik@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/03 16:21:38 by Hendrik          ###   ########.fr       */
+/*   Updated: 2022/06/06 12:54:30 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	export_no_var(t_list **env)
 
 int	already_in_env(char **tokens, t_list **env)
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *env;
 	while (tmp)

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:39:40 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/05/31 12:22:45 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/06 12:53:56 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+/*
+| Removed comment by hendirk in below function: //free(to_set->content);
+*/
 
 void	set_pwd_vars_env(char *name, char *value, t_list **env)
 {
@@ -27,7 +31,6 @@ void	set_pwd_vars_env(char *name, char *value, t_list **env)
 	{
 		if (!ft_strncmp(var_to_search, (to_set)->content, name_len))
 		{
-			//free(to_set->content);
 			to_set->content = NULL;
 			to_set->content = ft_strjoin(var_to_search, value);
 			ft_free(&var_to_search);

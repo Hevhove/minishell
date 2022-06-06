@@ -6,11 +6,23 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/05 12:05:33 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:02:13 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	open_heredoc(t_cmd cmd)
+{
+	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp");
+	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
+	if (cmd.scmds[0].fd_in.fd < 0)
+	{
+		ft_printf("error: unable to open temporary heredoc file\n");
+		return (-1);
+	}
+	return (0);
+}
 
 int	heredoc_input(t_cmd cmd, char *delim)
 {
@@ -19,7 +31,10 @@ int	heredoc_input(t_cmd cmd, char *delim)
 
 	file = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 000644);
 	if (file < 0)
-		error_message("unable to open temporary heredoc file\n", 2, &cmd);
+	{
+		ft_printf("error: unable to open temporary heredoc file\n");
+		return (-1);
+	}
 	while (1)
 	{
 		write(1, "> ", 2);
@@ -33,8 +48,8 @@ int	heredoc_input(t_cmd cmd, char *delim)
 	}
 	free(line);
 	close(file);
-	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp");
-	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
+	if (open_heredoc(cmd) < 0)
+		return (-1);
 	return (0);
 }
 

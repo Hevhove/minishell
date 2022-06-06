@@ -6,62 +6,101 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:15:05 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/23 10:15:48 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:27:51 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	open_files(t_cmd cmd)
+int	open_files_loop(t_cmd *cmd, int i)
 {
-	int	i;
-
-	i = 0;
-	while (i < cmd.argc)
-	{
-		if (cmd.scmds[i].fd_in.fname != NULL && !access(cmd.scmds[i].fd_in.fname, F_OK | R_OK))
-			cmd.scmds[i].fd_in.fd = open(cmd.scmds[i].fd_in.fname, O_RDONLY);
-		else if (cmd.scmds[i].fd_in.fname != NULL && access(cmd.scmds[i].fd_in.fname, F_OK | R_OK))
-			printf("parse error: can't read from %s\n", cmd.scmds[i].fd_in.fname); // some exit?
-		if (cmd.scmds[i].fd_out.fname != NULL && !access(cmd.scmds[i].fd_out.fname, F_OK) && access(cmd.scmds[i].fd_out.fname, W_OK))
-				printf("parse error: can't write to %s\n", cmd.scmds[i].fd_out.fname);
-		else if (cmd.scmds[i].fd_out.fname != NULL && cmd.scmds[i].append == 1)
-			cmd.scmds[i].fd_out.fd = open(cmd.scmds[i].fd_out.fname, O_CREAT | O_WRONLY | O_APPEND, 0644);
-		else if (cmd.scmds[i].fd_out.fname != NULL && cmd.scmds[i].append == 0)
-			cmd.scmds[i].fd_out.fd = open(cmd.scmds[i].fd_out.fname, O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (cmd.scmds[i].fd_in.fd < 0 || cmd.scmds[i].fd_out.fd < 0)
-			; // some exit?
-		i++;
-	}
+	if (cmd->scmds[i].fd_in.fname != NULL
+		&& !access(cmd->scmds[i].fd_in.fname, F_OK | R_OK))
+		cmd->scmds[i].fd_in.fd = open(cmd->scmds[i].fd_in.fname, O_RDONLY);
+	else if (cmd->scmds[i].fd_in.fname != NULL
+		&& access(cmd->scmds[i].fd_in.fname, F_OK | R_OK))
+		return (-1);
+	if (cmd->scmds[i].fd_out.fname != NULL
+		&& !access(cmd->scmds[i].fd_out.fname, F_OK)
+		&& access(cmd->scmds[i].fd_out.fname, W_OK))
+		return (-2);
+	else if (cmd->scmds[i].fd_out.fname != NULL && cmd->scmds[i].append == 1)
+		cmd->scmds[i].fd_out.fd = open(cmd->scmds[i].fd_out.fname,
+				O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else if (cmd->scmds[i].fd_out.fname != NULL && cmd->scmds[i].append == 0)
+		cmd->scmds[i].fd_out.fd = open(cmd->scmds[i].fd_out.fname,
+				O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (cmd->scmds[i].fd_in.fd < 0 || cmd->scmds[i].fd_out.fd < 0)
+		return (-1);
+	return (0);
 }
 
-void	close_files(t_cmd cmd)
+int	open_files(t_cmd *cmd)
 {
 	int	i;
-	int	j;
-	
+	int	ret;
+
 	i = 0;
-	while (i < cmd.argc)
+	ret = 0;
+	while (i < cmd->argc)
 	{
-		j = 0;
-		while (j < cmd.scmds[i].argc)
-		{
-			if (cmd.scmds[i].fd_in.fname != NULL)
-				close(cmd.scmds[i].fd_in.fd);
-			if (cmd.scmds[i].fd_out.fname != NULL)
-				close(cmd.scmds[i].fd_out.fd);
-			if (cmd.scmds[i].fd_err.fname != NULL)
-				close(cmd.scmds[i].fd_err.fd);
-			j++;
-		}
+		ret = open_files_loop(cmd, i);
+		if (ret == -1)
+			printf("parse error: can't read from %s\n",
+				cmd->scmds[i].fd_in.fname);
+		else if (ret == -2)
+			printf("parse error: can't write to %s\n",
+				cmd->scmds[i].fd_out.fname);
 		i++;
 	}
+	return (ret);
 }
 
-void	set_redirections(t_cmd *cmd, int i)
+int	close_files(t_cmd cmd)
+{
+	int	i;
+	int	ret1;
+	int	ret2;
+
+	i = 0;
+	ret1 = 0;
+	ret2 = 0;
+	while (i < cmd.argc)
+	{
+		if (cmd.scmds[i].fd_in.fname != NULL)
+			ret1 = close(cmd.scmds[i].fd_in.fd);
+		if (cmd.scmds[i].fd_out.fname != NULL)
+			ret2 = close(cmd.scmds[i].fd_out.fd);
+		if (ret1 < 0)
+			ft_printf("error: can't close fd_in: %s\n",
+				cmd.scmds[i].fd_in.fname);
+		else if (ret2 < 0)
+			ft_printf("error: can't close fd_out: %s\n",
+				cmd.scmds[i].fd_out.fname);
+		if (ret1 < 0 || ret2 < 0)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
+int	set_redirections(t_cmd *cmd, int i)
 {
 	if (cmd->scmds[i].fd_in.fname != NULL)
-		dup2(cmd->scmds[i].fd_in.fd, 0);
+	{
+		if (dup2(cmd->scmds[i].fd_in.fd, 0) < 0)
+		{
+			ft_printf("file error: unable to duplicate fd_in\n");
+			return (-1);
+		}
+	}
 	if (cmd->scmds[i].fd_out.fname != NULL)
-		dup2(cmd->scmds[i].fd_out.fd, 1);
+	{
+		if (dup2(cmd->scmds[i].fd_out.fd, 1) < 0)
+		{
+			ft_printf("file error: unable to duplicate fd_out\n");
+			return (-1);
+		}
+	}
+	return (0);
 }
