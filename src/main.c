@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:08:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:49:21 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	check_heredocs(t_cmd cmd)
 	return (heredoc_count);
 }
 
-void	build_and_exec_cmds(t_cmd *cmd)
+int	build_and_exec_cmds(t_cmd *cmd)
 {
 	int	ret;
 
@@ -85,6 +85,7 @@ void	build_and_exec_cmds(t_cmd *cmd)
 			ft_putstr_fd("error: shell failed to close files\n", 2);
 		cmd->exit_status = -1;
 	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)

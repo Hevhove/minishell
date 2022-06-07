@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 15:37:56 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:56:03 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int	exec_cmds(t_cmd *cmd)
 		cmd->exit_status = builtin_executor(cmd->scmds[0].argv, cmd);
 	else
 	{
+		build_paths(cmd);
 		if (cmd_setup(cmd) < 0)
 			return (-1);
 		i = -1;

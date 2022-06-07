@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/07 12:08:44 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:57:52 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	print_fds(t_cmd *cmd)
 	i = 0;
 	while (i < cmd->argc)
 	{
-		printf("current fd_in [%d] is: %s\n", i, cmd->scmds[i].fd_in.fname);
-		printf("current fd_out [%d] is: %s\n", i, cmd->scmds[i].fd_out.fname);
-		printf("current fd_err [%d] is: %s\n", i, cmd->scmds[i].fd_err.fname);
-		printf("Append status [%d] is: %d\n", i, cmd->scmds[i].append);
-		printf("Heredoc status [%d] is: %d\n", i, cmd->scmds[i].heredoc);
+		ft_printf("current fd_in [%d] is: %s\n", i, cmd->scmds[i].fd_in.fname);
+		ft_printf("current fd_out [%d] is: %s\n", i, cmd->scmds[i].fd_out.fname);
+		ft_printf("current fd_err [%d] is: %s\n", i, cmd->scmds[i].fd_err.fname);
+		ft_printf("Append status [%d] is: %d\n", i, cmd->scmds[i].append);
+		ft_printf("Heredoc status [%d] is: %d\n", i, cmd->scmds[i].heredoc);
 		i++;
 	}
 }

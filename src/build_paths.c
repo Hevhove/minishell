@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/07 12:16:40 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:57:08 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*find_path(t_list **env)
 
 	tmp = *env;
 	line = NULL;
-	while (tmp->next != NULL)
+	while (tmp != NULL)
 	{
 		if (ft_strncmp(tmp->content, "PATH", 4) == 0)
 		{
@@ -28,7 +28,6 @@ char	*find_path(t_list **env)
 		}
 		tmp = tmp->next;
 	}
-	ft_printf("path not found\n");
 	return (line);
 }
 
@@ -39,9 +38,9 @@ char	*get_bin(char **paths, char *bin)
 	char	*cmd_path;
 
 	i = -1;
-	if (access(bin, F_OK) == 0)
+	if (access(bin, F_OK) == 0 && paths)
 		return (bin);
-	if (bin[0] != '/')
+	if (bin[0] != '/' && paths)
 	{
 		while (paths[++i])
 		{
@@ -55,7 +54,7 @@ char	*get_bin(char **paths, char *bin)
 	}
 	else
 	{
-		if (access(bin, F_OK) == 0)
+		if (access(bin, F_OK) == 0 && paths)
 			return (bin);
 	}
 	return (NULL);
@@ -66,13 +65,7 @@ int	build_paths(t_cmd *cmd)
 	char	*paths_str;
 
 	paths_str = find_path(cmd->env);
-	cmd->paths = ft_split(paths_str, ':');
 	free(paths_str);
-	if (!cmd->paths)
-	{
-		ft_printf("failed to build the paths variable\n");
-		return (-1);
-	}
 	return (0);
 }
 

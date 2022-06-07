@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:40:11 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/07 12:48:41 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:58:21 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	handle_signals(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("\n");
+		ft_printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
@@ -29,12 +29,12 @@ static void	handle_signals_child(int sig)
 {
 	if (sig == SIGINT)
 	{
-		printf("^C\n");
+		ft_printf("^C\n");
 		g_cmd.exit_status = 130;
 	}
 	if (sig == SIGQUIT)
 	{
-		printf("^\\Quit: 3\n");
+		ft_printf("^\\Quit: 3\n");
 		g_cmd.exit_status = 131;
 	}
 	return ;

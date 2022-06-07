@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:47 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 16:17:42 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:58:10 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	exec_echo(char **tokens)
 
 	if (!tokens[1])
 	{
-		printf("\n");
+		ft_printf("\n");
 		return (0);
 	}
 	i = 1;
@@ -26,12 +26,12 @@ int	exec_echo(char **tokens)
 		i = 2;
 	while (tokens[i])
 	{
-		printf("%s", tokens[i]);
+		ft_printf("%s", tokens[i]);
 		if (tokens[i][0] != '\0' && tokens[i + 1])
-			printf(" ");
+			ft_printf(" ");
 		i++;
 	}
 	if (ft_strcmp(tokens[1], "-n") != 0)
-		printf("\n");
+		ft_printf("\n");
 	return (0);
 }

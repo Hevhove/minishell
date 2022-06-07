@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:49:57 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:09:35 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ typedef struct s_cmd {
 	char		**paths;
 	uint8_t		exit_status;
 	t_scmd		*scmds;
-	int			cd_count;
 }	t_cmd;
 
 // GLOBALS
@@ -135,7 +134,7 @@ void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
 
 // COMMAND EXECUTION
-void	build_and_exec_cmds(t_cmd *cmd);
+int		build_and_exec_cmds(t_cmd *cmd);
 int		exec_cmds(t_cmd *cmd);
 char	*find_path(t_list **env);
 int		build_paths(t_cmd *cmd);

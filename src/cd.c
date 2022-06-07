@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:39:40 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/07 15:37:35 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:58:01 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*get_new_cwd(char **tokens, t_list **env)
 		new_cwd = get_env_value("HOME", env);
 		if (!new_cwd)
 		{
-			printf("HOME not set.\n");
+			ft_printf("HOME not set.\n");
 			return (NULL);
 		}
 	}
@@ -71,7 +71,7 @@ static char	*get_new_cwd(char **tokens, t_list **env)
 		new_cwd = get_env_value("OLDPWD", env);
 		if (!new_cwd)
 		{
-			printf("OLDPWD not set.\n");
+			ft_printf("OLDPWD not set.\n");
 			return (NULL);
 		}
 	}
@@ -85,8 +85,6 @@ int	exec_cd(char **tokens, t_list **env)
 	char	*cwd;
 	char	*new_cwd;
 
-	g_cmd.cd_count++;
-	(void)env;
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
 	new_cwd = get_new_cwd(tokens, env);
