@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 12:46:58 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/07 12:08:36 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:49:01 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ int	init_term(void)
 		ft_putstr_fd("error in tcsetattr", STDERR_FILENO);
 		return (-1);
 	}
+	return (0);
 }
