@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:47 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 14:53:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:17:42 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	exec_echo(char **tokens)
 	while (tokens[i])
 	{
 		printf("%s", tokens[i]);
-		if (tokens[i + 1])
+		if (tokens[i][0] != '\0' && tokens[i + 1])
 			printf(" ");
 		i++;
 	}

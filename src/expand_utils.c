@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:32:44 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:44:21 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char	*get_var_name(char	*token)
 	while (token[i] && token[i] != '\"')
 	{
 		var_name[i] = token[i];
-		i++;
 		if (token[i + 1] && token[i] == '\'' && token[i + 1] == '\"')
 			break ;
+		i++;
 	}
 	var_name[i] = '\0';
 	return (var_name);
@@ -70,12 +70,13 @@ char	*get_expanded_name(char	*var_name, t_list **env)
 		if (ft_strncmp(var_name, (char *)tmp->content,
 				ft_strlen(var_name)) == 0)
 			expanded_name = fill_expanded_name((char *)tmp->content, i + 1);
-		if (!expanded_name)
-		{
-			expanded_name = (char *)malloc(1 * sizeof(char));
-			expanded_name[0] = '\0';
-		}
 		tmp = tmp->next;
+	}
+	if (!expanded_name)
+	{
+		free(expanded_name);
+		expanded_name = NULL;
+		expanded_name = (char *)ft_calloc(1, 1);
 	}
 	return (expanded_name);
 }

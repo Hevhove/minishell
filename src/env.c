@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:07:08 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:32:16 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	env_init(t_cmd *cmd, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		node = ft_lstnew(envp[i]);
+		node = ft_lstnew(ft_strdup(envp[i]));
 		ft_lstadd_back(cmd->env, node);
 		i++;
 	}
@@ -33,6 +33,7 @@ void	ft_clear_env(t_list **env)
 	while (*env != NULL)
 	{
 		tmp = *env;
+		free(tmp->content);
 		*env = (*env)->next;
 		free(tmp);
 	}
