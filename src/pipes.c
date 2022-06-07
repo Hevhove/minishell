@@ -6,13 +6,11 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:13:40 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 16:28:19 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:05:37 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-// Free the parent thing?
 
 int	create_pipes(t_cmd *cmd)
 {

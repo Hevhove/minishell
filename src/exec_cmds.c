@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:47:06 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:03:54 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	child(t_cmd *cmd, int i)
 			bin = get_bin(cmd->paths, cmd->scmds[i].argv[0]);
 			if (!bin)
 			{
-				ft_printf("error: command not found\n");
+				ft_putstr_fd("error: command not found\n", 2);
 				free_tokens(cmd->tokens);
 				free_cmds(*cmd);
 				exit(127);

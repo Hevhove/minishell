@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:14:38 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:04:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	open_heredoc(t_cmd cmd, int i)
 	cmd.scmds[i].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
 	if (cmd.scmds[i].fd_in.fd < 0)
 	{
-		ft_printf("error: unable to open temporary heredoc file\n");
+		ft_putstr_fd("error: unable to open temporary heredoc file\n", 2);
 		return (-1);
 	}
 	return (0);
@@ -32,7 +32,7 @@ int	heredoc_input(t_cmd cmd, char *delim, int i)
 	file = open(".heredoc_tmp", O_CREAT | O_WRONLY | O_TRUNC, 000644);
 	if (file < 0)
 	{
-		ft_printf("error: unable to open temporary heredoc file\n");
+		ft_putstr_fd("error: unable to open temporary heredoc file\n", 2);
 		return (-1);
 	}
 	while (1)

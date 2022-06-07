@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 16:29:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:09:25 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	exec_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 		return (-1);
-	printf("%s\n", cwd);
+	ft_printf("%s\n", cwd);
 	free (cwd);
 	return (0);
 }

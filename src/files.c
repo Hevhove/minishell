@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:15:05 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 20:51:49 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:06:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	set_redirections(t_cmd *cmd, int i)
 	{
 		if (dup2(cmd->scmds[i].fd_in.fd, 0) < 0)
 		{
-			ft_printf("file error: unable to duplicate fd_in\n");
+			ft_putstr_fd("file error: unable to duplicate fd_in\n", 2);
 			return (-1);
 		}
 	}
@@ -98,7 +98,7 @@ int	set_redirections(t_cmd *cmd, int i)
 	{
 		if (dup2(cmd->scmds[i].fd_out.fd, 1) < 0)
 		{
-			ft_printf("file error: unable to duplicate fd_out\n");
+			ft_putstr_fd("file error: unable to duplicate fd_out\n", 2);
 			return (-1);
 		}
 	}

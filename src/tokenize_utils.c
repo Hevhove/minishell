@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:51:15 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/02 13:09:53 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:08:31 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	print_tokens(char **tokens)
 	i = 0;
 	if (!tokens)
 		exit(1);
-	printf("#----#\n");
+	ft_printf("#----#\n");
 	while (tokens[i])
 	{
-		printf("tokens[%d] is: %s\n", i, tokens[i]);
+		ft_printf("tokens[%d] is: %s\n", i, tokens[i]);
 		i++;
 	}
-	printf("#----#\n");
+	ft_printf("#----#\n");
 	return ;
 }
 

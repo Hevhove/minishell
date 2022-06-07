@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 16:33:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/07 10:38:48 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:16:54 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,14 @@ int	builtin_executor(char **tokens, t_cmd *cmd)
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
 		ret = exec_pwd();
 	else if (ft_strcmp(tokens[0], "export") == 0)
-	{
 		ret = exec_export(tokens, cmd->env);
-	}
 	else if (ft_strcmp(tokens[0], "unset") == 0)
 		ret = exec_unset(tokens, cmd->env);
 	else if (ft_strcmp(tokens[0], "env") == 0)
 	{
 		if (tokens[1])
 		{
-			printf("env: %s: No such file or directory\n", tokens[1]);
+			ft_printf("env: %s: No such file or directory\n", tokens[1]);
 			return (-1);
 		}
 		ret = exec_env(cmd->env);

@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:09:37 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:22:09 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@
 # define METACHARSET ""
 
 // STRUCTS
-
-typedef enum s_error_codes{
-	CMD_NOT_FOUND = 127
-}	t_error_codes;
 
 typedef enum s_token_type{
 	CHAR_GENERAL = -1,
@@ -94,7 +90,7 @@ typedef struct s_cmd {
 }	t_cmd;
 
 // GLOBALS
-t_cmd cmd;
+t_cmd	g_cmd;
 
 /////////////////////////
 // FUNCTION PROTOTYPES //
@@ -150,7 +146,7 @@ int		close_pipes(t_cmd *cmd);
 int		open_files(t_cmd *cmd);
 int		close_files(t_cmd cmd);
 int		set_redirections(t_cmd *cmd, int i);
-char 	*get_bin(char **paths, char *bin);
+char	*get_bin(char **paths, char *bin);
 
 // BUILTINS
 int		exec_echo(char **tokens);
