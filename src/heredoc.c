@@ -6,17 +6,17 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 15:02:13 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:14:38 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	open_heredoc(t_cmd cmd)
+int	open_heredoc(t_cmd cmd, int i)
 {
-	cmd.scmds[0].fd_in.fname = ft_strdup(".heredoc_tmp");
-	cmd.scmds[0].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
-	if (cmd.scmds[0].fd_in.fd < 0)
+	cmd.scmds[i].fd_in.fname = ft_strdup(".heredoc_tmp");
+	cmd.scmds[i].fd_in.fd = open(".heredoc_tmp", O_RDONLY);
+	if (cmd.scmds[i].fd_in.fd < 0)
 	{
 		ft_printf("error: unable to open temporary heredoc file\n");
 		return (-1);
@@ -24,7 +24,7 @@ int	open_heredoc(t_cmd cmd)
 	return (0);
 }
 
-int	heredoc_input(t_cmd cmd, char *delim)
+int	heredoc_input(t_cmd cmd, char *delim, int i)
 {
 	int		file;
 	char	*line;
@@ -48,7 +48,7 @@ int	heredoc_input(t_cmd cmd, char *delim)
 	}
 	free(line);
 	close(file);
-	if (open_heredoc(cmd) < 0)
+	if (open_heredoc(cmd, i) < 0)
 		return (-1);
 	return (0);
 }
@@ -66,7 +66,7 @@ void	ft_unlink(t_cmd cmd)
 		{
 			if (cmd.scmds[i].heredoc == 1)
 			{
-				close(cmd.scmds[0].fd_in.fd);
+				close(cmd.scmds[i].fd_in.fd);
 				unlink(".heredoc_tmp");
 			}
 			j++;
