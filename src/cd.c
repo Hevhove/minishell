@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:39:40 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/06 12:53:56 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:06:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ int	exec_cd(char **tokens, t_list **env)
 	if (chdir(new_cwd) != 0)
 	{
 		if (access(tokens[1], F_OK) != 0)
-			printf("cd: %s: No such file or directory\n", tokens[1]);
+			ft_printf("cd: %s: No such file or directory\n", tokens[1]);
 		else if (access(tokens[1], X_OK) != 0)
-			printf("cd: %s: Permission denied\n", tokens[1]);
+			ft_printf("cd: %s: Permission denied\n", tokens[1]);
 		return (-1);
 	}
 	set_pwd_vars_env("OLDPWD", cwd, env);

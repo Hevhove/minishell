@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:47:26 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:03:44 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,20 @@ int	check_heredocs(t_cmd cmd)
 
 void	build_and_exec_cmds(t_cmd *cmd)
 {
+	int	ret;
+	
 	cmd->envp = create_envp(cmd->env);
 	build_cmds(cmd->tokens, cmd);
 	build_paths(cmd);
-	if (exec_cmds(cmd) < 0)
+	ret = exec_cmds(cmd);
+	if (ret < 0)
 	{
-		ft_printf("parse error\n");
+		if (ret == -1)
+			ft_putstr_fd("error: shell failed to open files and pipes\n", 2);
+		if (ret == -2)
+			ft_putstr_fd("error: shell failed to close pipes\n", 2);
+		if (ret == -3)
+			ft_putstr_fd("error: shell failed to close files\n", 2);
 		cmd->exit_status = -1;
 	}
 }

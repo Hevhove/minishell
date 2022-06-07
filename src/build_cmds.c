@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/06 18:02:12 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:08:44 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_raw_commands(t_cmd *cmd)
 		j = 0;
 		while (j < cmd->scmds[i].raw_argc)
 		{
-			printf("current command [%d][%d] is: %s\n",
+			ft_printf("current command [%d][%d] is: %s\n",
 				i, j, cmd->scmds[i].raw[j]);
 			j++;
 		}
@@ -49,7 +49,7 @@ void	print_commands(t_cmd *cmd)
 		j = 0;
 		while (j < cmd->scmds[i].argc)
 		{
-			printf("current command2 [%d][%d] is: %s\n",
+			ft_printf("current command2 [%d][%d] is: %s\n",
 				i, j, cmd->scmds[i].argv[j]);
 			j++;
 		}

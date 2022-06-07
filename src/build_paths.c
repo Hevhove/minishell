@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/06 21:44:44 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:08:50 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_path(t_list **env)
 		}
 		tmp = tmp->next;
 	}
-	printf("path not found\n");
+	ft_printf("path not found\n");
 	return (line);
 }
 

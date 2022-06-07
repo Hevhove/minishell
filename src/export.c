@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 10:47:09 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:05:27 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	exec_export(char **tokens, t_list **env)
 	}
 	if (!ft_strchr(tokens[1], '='))
 	{
-		ft_printf("export error: no '=' sign found\n");
+		ft_putstr_fd("export error: no '=' sign found\n", 2);
 		return (-1);
 	}
 	if (already_in_env(tokens, env) == 1)
