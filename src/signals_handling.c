@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:40:11 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/07 11:56:01 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:18:41 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ void	exec_signals(t_status status)
 		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = 0;
 		if (sigaction(SIGINT, &sa, NULL) < 0)
-			return ; // check how to set a specific error code (maybe a function)
+			exit (-1);
 		if (sigaction(SIGQUIT, &sa, NULL) < 0)
-			return ; // check how to set a specific error code (maybe a function)
+			exit (-1);
 	}
 	else
 	{
@@ -60,8 +60,8 @@ void	exec_signals(t_status status)
 		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = 0;
 		if (sigaction(SIGINT, &sa, NULL) < 0)
-			return ;
+			exit (-1);
 		if (signal(SIGQUIT, SIG_IGN) < 0)
-			return ;
+			exit (-1);
 	}
 }

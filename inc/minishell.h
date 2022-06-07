@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:46:02 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:09:37 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	set_pwd_vars_env(char *name, char *value, t_list **env);
 char	*get_term_var(t_list **env);
 void	ft_unlink(t_cmd cmd);
 void	ft_unlink(t_cmd cmd);
-void	init_term(void);
+int		init_term(void);
 void	ft_exit(t_cmd *cmd, char **envp);
 
 // SIGNALS
