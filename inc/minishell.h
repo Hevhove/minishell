@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:22:09 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:37:33 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int		builtin_executor(char **tokens, t_cmd *cmd);
 void	env_init(t_cmd *cmd, char **envp);
 char	*get_env_value(char *name, t_list **env);
 void	export_no_var(t_list **env);
-int		already_in_env(char **tokens, t_list **env);
+int		already_in_env(char *tokens, t_list **env);
 void	ft_clear_env(t_list **env);
 char	*get_next_line(int fd);
 void	rm_env_var(t_list **env);
