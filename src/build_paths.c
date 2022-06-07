@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/07 12:08:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:16:40 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ char	*get_bin(char **paths, char *bin)
 	char	*inter;
 	char	*cmd_path;
 
-	i = 0;
+	i = -1;
 	if (access(bin, F_OK) == 0)
-				return (bin);
+		return (bin);
 	if (bin[0] != '/')
 	{
-		while (paths[i])
+		while (paths[++i])
 		{
 			inter = ft_strjoin(paths[i], "/");
 			cmd_path = ft_strjoin(inter, bin);
@@ -51,7 +51,6 @@ char	*get_bin(char **paths, char *bin)
 			if (access(cmd_path, F_OK) == 0)
 				return (cmd_path);
 			free(cmd_path);
-			i++;
 		}
 	}
 	else
