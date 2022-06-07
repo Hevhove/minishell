@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:13:33 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:46:02 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@
 # define METACHARSET ""
 
 // STRUCTS
+
+typedef enum s_error_codes{
+	CMD_NOT_FOUND = 127
+}	t_error_codes;
 
 typedef enum s_token_type{
 	CHAR_GENERAL = -1,

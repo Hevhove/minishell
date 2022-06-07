@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:35:53 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:47:06 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,6 @@ int	cmd_setup(t_cmd *cmd)
 		}
 		i++;
 	}
-	// if ((*cmd).scmds[0].heredoc == 1)
-	// {
-	// 	if (heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname) < 0)
-	// 		return (-1);
-	// }
 	if (open_files(cmd) < 0)
 		return (-1);
 	if (create_pipes(cmd) < 0)
@@ -118,14 +113,14 @@ int	exec_cmds(t_cmd *cmd)
 		while (++i < cmd->argc)
 			child(cmd, i);
 		if (close_pipes(cmd) < 0)
-			return (-1);
+			return (-2);
 		while (wait(&status) > 0)
 			;
 		exec_signals(RESET);
 		if (WIFEXITED(status))
 			cmd->exit_status = WEXITSTATUS(status);
 		if (close_files(*cmd) < 0)
-			return (-1);
+			return (-3);
 	}
 	free(cmd->envp);
 	return (0);

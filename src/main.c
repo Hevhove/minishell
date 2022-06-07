@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 11:32:29 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:47:26 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	build_and_exec_cmds(t_cmd *cmd)
 		ft_printf("parse error\n");
 		cmd->exit_status = -1;
 	}
-	else
-		cmd->exit_status = 0;
 }
 
 int	main(int argc, char **argv, char **envp)
