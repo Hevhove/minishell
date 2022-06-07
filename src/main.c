@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:03:44 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:20:04 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,20 +94,20 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	(void)argc;
 	line = NULL;
-	ft_setup(&cmd, envp);
+	ft_setup(&g_cmd, envp);
 	while (1)
 	{
 		line = rl_gets(line);
 		if (!line)
 			break ;
-		cmd.tokens = tokenize(line);
-		if (verify_tokens(cmd.tokens) && cmd.tokens)
+		g_cmd.tokens = tokenize(line);
+		if (verify_tokens(g_cmd.tokens) && g_cmd.tokens)
 		{
-			build_and_exec_cmds(&cmd);
-			free_cmds(cmd);
+			build_and_exec_cmds(&g_cmd);
+			free_cmds(g_cmd);
 		}
-		free_tokens(cmd.tokens);
+		free_tokens(g_cmd.tokens);
 	}
-	ft_clear_env(cmd.env);
+	ft_clear_env(g_cmd.env);
 	return (0);
 }

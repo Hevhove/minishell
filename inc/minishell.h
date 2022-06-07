@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:14:09 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:19:35 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_cmd {
 }	t_cmd;
 
 // GLOBALS
-t_cmd cmd;
+t_cmd	g_cmd;
 
 /////////////////////////
 // FUNCTION PROTOTYPES //
@@ -146,7 +146,7 @@ int		close_pipes(t_cmd *cmd);
 int		open_files(t_cmd *cmd);
 int		close_files(t_cmd cmd);
 int		set_redirections(t_cmd *cmd, int i);
-char 	*get_bin(char **paths, char *bin);
+char	*get_bin(char **paths, char *bin);
 
 // BUILTINS
 int		exec_echo(char **tokens);
