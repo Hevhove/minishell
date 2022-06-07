@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:57 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:08:21 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:47:37 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,65 @@ void	rm_env_var(t_list **env)
 	free(tmp);
 }
 
+void	rm_env_var2(t_list *node, t_list **env)
+{
+	t_list *tmp;
+
+	tmp = *env;
+	while (tmp)
+	{
+		if (tmp->next == node)
+		{
+			free(tmp->next);
+			tmp->next = tmp->next->next;
+			return ;
+		}
+		tmp = tmp->next;
+	}
+}
+
+static int  check_identifier(char *tokens)
+{
+    int i;
+    if (!ft_isalnum(tokens[0]) && tokens[0] != '_')
+	{
+		ft_putstr_fd("unset error: not a valid identifier\n", 2);
+		return (1);
+	}
+        
+    i = 1;
+    while (tokens[i])
+    {
+        if (!ft_isalnum(tokens[i]) && tokens[i] != '_')
+		{
+			ft_putstr_fd("unset error: not a valid identifier\n", 2);
+			return (1);
+		}
+        i++;
+    }
+    return (0);
+}
+
 int	exec_unset(char **tokens, t_list **env)
 {
 	char	*var_equal;
-	t_list	*head;
+	t_list	*tmp;
+	int		i;
 
-	if (!tokens[1])
-		return (-1);
-	if (ft_strchr(tokens[1], '='))
+	i = 0;
+	while (tokens[++i])
 	{
-		ft_printf("unset error: `%s': not a valid identifier\n", tokens[1]);
-		return (-1);
-	}
-	var_equal = ft_strjoin(tokens[1], "=");
-	head = *env;
-	while (*env)
-	{
-		if (!ft_strncmp(var_equal, (*env)->next->content, ft_strlen(var_equal)))
-		{
-			rm_env_var(env);
-			*env = head;
-			ft_free(&var_equal);
+		if (check_identifier(tokens[i]))
 			return (1);
+		var_equal = ft_strjoin(tokens[i], "=");
+		tmp = *env;
+		while (tmp)
+		{
+			if (!ft_strncmp(var_equal, tmp->content, ft_strlen(var_equal)))
+				rm_env_var2(tmp, env);
+			tmp = tmp->next;
 		}
-		(*env) = (*env)->next;
+		ft_free(&var_equal);
 	}
-	ft_free(&var_equal);
 	return (0);
 }
