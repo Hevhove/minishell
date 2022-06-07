@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:37:33 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:49:57 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_cmd {
 	char		**paths;
 	uint8_t		exit_status;
 	t_scmd		*scmds;
+	int			cd_count;
 }	t_cmd;
 
 // GLOBALS

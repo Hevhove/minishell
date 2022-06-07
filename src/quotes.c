@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:20:05 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 12:31:39 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:41:52 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	handle_quotes(char **tokens)
 			tmp = tokens[i];
 			tokens[i] = remove_first_quote(tokens[i]);
 			free(tmp);
+			tmp = NULL;
 			tmp = tokens[i];
 			tokens[i] = remove_last_quote(tokens[i]);
 			free(tmp);

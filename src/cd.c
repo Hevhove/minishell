@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:39:40 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/07 12:06:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 15:37:35 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	set_pwd_vars_env(char *name, char *value, t_list **env)
 	t_list	*to_set;
 	char	*var_to_search;
 	size_t	name_len;
+	void	*tmp;
 
 	if (!value)
 		return ;
@@ -31,8 +32,10 @@ void	set_pwd_vars_env(char *name, char *value, t_list **env)
 	{
 		if (!ft_strncmp(var_to_search, (to_set)->content, name_len))
 		{
+			tmp = to_set->content;
 			to_set->content = NULL;
 			to_set->content = ft_strjoin(var_to_search, value);
+			free(tmp);
 			ft_free(&var_to_search);
 			return ;
 		}
@@ -82,6 +85,7 @@ int	exec_cd(char **tokens, t_list **env)
 	char	*cwd;
 	char	*new_cwd;
 
+	g_cmd.cd_count++;
 	(void)env;
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
@@ -97,9 +101,10 @@ int	exec_cd(char **tokens, t_list **env)
 		return (-1);
 	}
 	set_pwd_vars_env("OLDPWD", cwd, env);
+	free(cwd);
+	cwd = NULL;
 	cwd = update_cwd(cwd);
 	set_pwd_vars_env("PWD", cwd, env);
-	if (tokens[1] && ft_strcmp(tokens[1], "-") == 0)
-		exec_pwd();
+	free(cwd);
 	return (0);
 }

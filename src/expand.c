@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:48:02 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:44:14 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,14 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	else
 		expanded_name = get_expanded_name(var_name, env);
 	if (expanded_name[0] == '\0')
+	{
+		if (var_name)
+			free(var_name);
 		return (expanded_name);
+	}
 	new_token = replace_token(orig, expanded_name);
-	free(var_name);
+	if (var_name)
+		free(var_name);
 	return (new_token);
 }
 
@@ -140,6 +145,8 @@ void	expand_tokens(char	**tokens, t_list **env)
 			while (tokens[i][j] && tokens[i][j] != '$')
 				j++;
 			new_token = dollar_expansion(tokens[i], tokens[i] + j + 1, env);
+			free(tokens[i]);
+			tokens[i] = NULL;
 			tokens[i] = new_token;
 		}
 		i++;

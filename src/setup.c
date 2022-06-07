@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:49:01 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:18:20 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:35:24 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_setup(t_cmd *cmd, char **envp)
 {
+	cmd->cd_count = 0;
 	if (init_term() < 0)
 	{
 		ft_putstr_fd("Termcaps have failed.\n", STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/02 13:09:39 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:14:30 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	word_count(const char *s)
 	{
 		while (s[i] == CHAR_WHITESPACE)
 			i++;
+		if (s[i] == '\0')
+			return (0);
 		if (metachar_wordlen(s, i) != 0)
 		{
 			i = i + metachar_wordlen(s, i) + 1;
@@ -98,6 +100,8 @@ char	**tokenize(const char *s)
 	if (!s)
 		return (NULL);
 	wc = word_count(s);
+	if (wc < 1)
+		return (NULL);
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
 	if (!tokens)
 		return (NULL);
