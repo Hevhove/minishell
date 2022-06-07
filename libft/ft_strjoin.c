@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:46:29 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/04/29 17:55:59 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:43:26 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*join;
 	char	*join_start;
 
-	// if (!s1 || !s2)
-	// 	return (NULL);
-
-	// new
 	if (!s1)
 		return ((char *)s2);
 	if (!s2)

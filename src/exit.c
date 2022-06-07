@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:50:13 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:34:08 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:44:16 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ int	ft_isnumber(char	*str)
 
 void	ft_exit(t_cmd *cmd, char **envp)
 {
-	char *exit_code;
-	int	exit_nbr;
-	
+	char	*exit_code;
+	int		exit_nbr;
+
 	exit_code = cmd->scmds[0].argv[1];
 	if (exit_code && ft_isnumber(exit_code))
 	{

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 11:27:16 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/16 18:11:32 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:43:51 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,62 +77,3 @@ char	*get_next_line(int fd)
 	}
 	return (result);
 }
-
-// int	main(void)
-// {
-// 	//int		fd;
-// 	//char	*line1;
-// 	//char	*line2;
-
-// 	//char	str1[] = "hel\nlo"; // hell\0 --> o\nth\0 --> hello\n\0 || th\0
-// 	//char	str2[] = "the\nre";
-// 	//char	str3[] = "babies";
-
-// 	// open a file and enter contents into it
-// 	//fd = open("gnlTester/files/41_no_nl", O_RDWR | O_CREAT);
-// 	//ft_putendl_fd(str1, fd);
-// 	//ft_putendl_fd(str2, fd);
-// 	//ft_putendl_fd(str3, fd);
-// 	//printf("File descriptor is: %d\n", fd);
-
-// 	// call get_next_line
-// 	//line1 = get_next_line(fd);
-// 	//free(line1);
-// 	//line2 = get_next_line(fd);
-// 	//free(line2);
-	
-// 	char	*line = NULL;
-// 	while ((line = get_next_line(0)) != NULL)
-// 		printf("%s", line);
-
-// 	//while ((line1 = get_next_line(0)) != NULL)
-// 	//	printf("%s", line1);
-// 	/*	
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	printf("result is: %s\n", get_next_line(fd));
-// 	close(fd);
-// 	*/
-// }
-
-// int main(void)
-// {
-// 	int 	fd;
-// 	char	*line;
-	
-// 	fd = open("test1.txt", O_RDONLY);
-// 	line = get_next_line(fd);
-// 	printf("line is : %s", line);
-// 	line = get_next_line(fd);
-// 	printf("line is : %s", line);
-// 	line = get_next_line(fd);
-// 	printf("line is : %s", line);
-// 	line = get_next_line(fd);
-// 	printf("line is : %s", line);
-// 	line = get_next_line(fd);
-// 	printf("line is : %s", line);
-// }
