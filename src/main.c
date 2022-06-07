@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:23:05 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:08:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		g_cmd.tokens = tokenize(line);
+		if (!g_cmd.tokens)
+			continue ;
 		if (verify_tokens(g_cmd.tokens) && g_cmd.tokens)
 		{
 			build_and_exec_cmds(&g_cmd);
