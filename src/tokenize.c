@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:06:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 18:14:30 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char	**tokenize(const char *s)
 	wc = word_count(s);
 	if (wc < 1)
 		return (NULL);
-	printf("wc is :%d\n", wc);
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
 	if (!tokens)
 		return (NULL);
