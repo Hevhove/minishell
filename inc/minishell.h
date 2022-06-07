@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 19:08:20 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:13:33 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	build_and_exec_cmds(t_cmd *cmd);
 int		exec_cmds(t_cmd *cmd);
 char	*find_path(t_list **env);
 int		build_paths(t_cmd *cmd);
-int		heredoc_input(t_cmd cmd, char *delim);
+int		heredoc_input(t_cmd cmd, char *delim, int i);
 int		count_list_len(t_list **env);
 char	**create_envp(t_list **env);
 int		create_pipes(t_cmd *cmd);

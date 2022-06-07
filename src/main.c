@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 21:41:19 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:32:29 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,13 @@ void	build_and_exec_cmds(t_cmd *cmd)
 	cmd->envp = create_envp(cmd->env);
 	build_cmds(cmd->tokens, cmd);
 	build_paths(cmd);
-	if (check_heredocs(*cmd) <= 1)
-	{
-		if (exec_cmds(cmd) < 0)
-			cmd->exit_status = -1;
-	}
-	else
+	if (exec_cmds(cmd) < 0)
 	{
 		ft_printf("parse error\n");
 		cmd->exit_status = -1;
 	}
+	else
+		cmd->exit_status = 0;
 }
 
 int	main(int argc, char **argv, char **envp)

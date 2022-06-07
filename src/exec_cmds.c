@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/06 21:42:43 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 11:35:53 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,23 @@ void	child(t_cmd *cmd, int i)
 
 int	cmd_setup(t_cmd *cmd)
 {
-	if ((*cmd).scmds[0].heredoc == 1)
+	int	i;
+
+	i = 0;
+	while (i < cmd->argc)
 	{
-		if (heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname) < 0)
-			return (-1);
+		if ((*cmd).scmds[i].heredoc == 1)
+		{
+			if (heredoc_input((*cmd), (*cmd).scmds[i].fd_in.fname, i) < 0)
+				return (-1);
+		}
+		i++;
 	}
+	// if ((*cmd).scmds[0].heredoc == 1)
+	// {
+	// 	if (heredoc_input((*cmd), (*cmd).scmds[0].fd_in.fname) < 0)
+	// 		return (-1);
+	// }
 	if (open_files(cmd) < 0)
 		return (-1);
 	if (create_pipes(cmd) < 0)
