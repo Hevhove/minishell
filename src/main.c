@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 12:20:04 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 12:23:05 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	check_heredocs(t_cmd cmd)
 void	build_and_exec_cmds(t_cmd *cmd)
 {
 	int	ret;
-	
+
 	cmd->envp = create_envp(cmd->env);
 	build_cmds(cmd->tokens, cmd);
 	build_paths(cmd);
