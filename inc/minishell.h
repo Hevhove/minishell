@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 20:09:35 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:11:59 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void	export_no_var(t_list **env);
 int		already_in_env(char *tokens, t_list **env);
 void	ft_clear_env(t_list **env);
 char	*get_next_line(int fd);
-void	rm_env_var(t_list **env);
+void	rm_env_var(t_list *node, t_list **env);
 void	ft_free(char **ptr);
 void	set_pwd_vars_env(char *name, char *value, t_list **env);
 char	*get_term_var(t_list **env);
