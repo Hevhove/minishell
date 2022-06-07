@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handling.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: miam <miam@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:40:11 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/06/02 15:56:21 by miam             ###   ########.fr       */
+/*   Updated: 2022/06/07 11:56:01 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	handle_signals(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+		cmd.exit_status = 1;
 	}
 	return ;
 }
@@ -27,9 +28,15 @@ static void	handle_signals(int sig)
 static void	handle_signals_child(int sig)
 {
 	if (sig == SIGINT)
-		printf("^C\n"); // should add an exit code
+	{
+		printf("^C\n");
+		cmd.exit_status = 130;
+	}
 	if (sig == SIGQUIT)
-		printf("^\\Quit: 3\n"); // should add an exit code
+	{
+		printf("^\\Quit: 3\n");
+		cmd.exit_status = 131;
+	}
 	return ;
 }
 
@@ -37,7 +44,7 @@ void	exec_signals(t_status status)
 {
 	struct sigaction	sa;
 
-	if (status == CHILD_PROCESS) // when exec_signals is launched in a child process
+	if (status == CHILD_PROCESS)
 	{
 		sa.sa_handler = &handle_signals_child;
 		sigemptyset(&sa.sa_mask);
@@ -47,12 +54,14 @@ void	exec_signals(t_status status)
 		if (sigaction(SIGQUIT, &sa, NULL) < 0)
 			return ; // check how to set a specific error code (maybe a function)
 	}
-	else // for other status (INIT or RESET)
+	else
 	{
 		sa.sa_handler = &handle_signals;
 		sigemptyset(&sa.sa_mask);
 		sa.sa_flags = 0;
-		sigaction(SIGINT, &sa, NULL);
-		signal(SIGQUIT, SIG_IGN);
+		if (sigaction(SIGINT, &sa, NULL) < 0)
+			return ;
+		if (signal(SIGQUIT, SIG_IGN) < 0)
+			return ;
 	}
 }
