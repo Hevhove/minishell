@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/08 17:54:23 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:10:38 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	main(int argc, char **argv, char **envp)
 		g_cmd.tokens = tokenize(line);
 		if (!g_cmd.tokens)
 			continue ;
-		print_tokens(g_cmd.tokens);
 		if (verify_tokens(g_cmd.tokens) && g_cmd.tokens)
 		{
 			build_and_exec_cmds(&g_cmd);
