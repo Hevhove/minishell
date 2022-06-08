@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/07 21:27:18 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:09:42 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	*get_bin(char **paths, char *bin)
 	char	*cmd_path;
 
 	i = -1;
+	if (ft_strcmp(bin, ".") == 0 || ft_strcmp(bin, "..") == 0)
+		return (NULL);
 	if (access(bin, F_OK) == 0 && paths)
 		return (bin);
 	if (bin[0] != '/' && paths)
@@ -51,11 +53,6 @@ char	*get_bin(char **paths, char *bin)
 				return (cmd_path);
 			free(cmd_path);
 		}
-	}
-	else
-	{
-		if (access(bin, F_OK) == 0 && paths)
-			return (bin);
 	}
 	return (NULL);
 }

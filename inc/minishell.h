@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 21:11:59 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:51:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef enum s_token_type{
 	CHAR_SQUOTE = '\'',
 	CHAR_DQUOTE = '\"',
 	CHAR_WHITESPACE = ' ',
+	CHAR_TAB = '\t',
 	CHAR_NEWLINE = '\n',
 	CHAR_GREATER = '>',
 	CHAR_LESSER = '<',
@@ -101,6 +102,7 @@ char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens, t_list **env);
 int		check_token_type(int token);
+int		check_spacetab(char c);
 
 // VARIABLE EXPANSION
 char	*get_var_name(char	*token);

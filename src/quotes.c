@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 12:20:05 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 17:41:52 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:52:05 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*remove_last_quote(char *token)
 
 	i = ft_strlen(token) - 1;
 	check = 0;
-	new_token = (char *)malloc(ft_strlen(token) * sizeof(char));
+	new_token = (char *)malloc(ft_strlen(token) * sizeof(char) + 1);
 	while (i > 0)
 	{
 		if (check == 0 && (token[i] == '\"' || token[i] == '\''))
