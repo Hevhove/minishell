@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:51:15 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/07 12:08:31 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:11:57 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	postcheck(const char *token)
 
 	i = 0;
 	while (token[i] && check_token_type(token[i]) != 1
-		&& token[i] != CHAR_WHITESPACE)
+		&& !check_spacetab(token[i]))
 		i++;
 	return (i);
 }

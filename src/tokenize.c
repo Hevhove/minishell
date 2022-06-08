@@ -6,11 +6,35 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:14:30 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:51:50 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int line_empty(const char *s)
+{
+	int	i;
+	int check;
+
+	i = 0;
+	check = 0;
+	while (s[i] && check_spacetab(s[i]))
+		i++;
+	if (i == (int)ft_strlen(s))
+		return (1);
+	return (0);
+}
+
+int	check_spacetab(char c)
+{
+	if (c == CHAR_WHITESPACE)
+		return (1);
+	else if (c == CHAR_TAB)
+		return (1);
+	else
+		return (0);
+}
 
 static int	word_count(const char *s)
 {
@@ -19,22 +43,24 @@ static int	word_count(const char *s)
 
 	i = 0;
 	wc = 0;
+	if (line_empty(s))
+		return (0);
 	while (s[i])
 	{
-		while (s[i] == CHAR_WHITESPACE)
+		while (check_spacetab(s[i]))
 			i++;
 		if (s[i] == '\0')
-			return (0);
+			return (wc);
 		if (metachar_wordlen(s, i) != 0)
 		{
 			i = i + metachar_wordlen(s, i) + 1;
 			wc++;
 			continue ;
 		}
-		while (s[i] && s[i] != CHAR_WHITESPACE && check_token_type(s[i]) != 1)
+		while (s[i] && !check_spacetab(s[i]) && check_token_type(s[i]) != 1)
 			i = i + check_quotes(s + i) + 1;
 		wc++;
-		if (s[i] == CHAR_WHITESPACE)
+		if (check_spacetab(s[i]))
 			i++;
 	}
 	return (wc);
@@ -54,21 +80,25 @@ static int	write_token(char *dst, const char *src, int word_len)
 	return (word_len);
 }
 
-void	token_alloc(char **tokens, int wc, int word_len)
+int	token_alloc(char **tokens, int wc, int word_len)
 {
 	tokens[wc] = (char *)malloc((word_len + 1) * sizeof(char));
 	if (!tokens[wc])
-		exit(3);
-	return ;
+	{
+		ft_putstr_fd("error: malloc failed\n", 2);
+		return (-1);
+	}
+	return (0);
 }
 
-void	add_tokens(char **tokens, const char *s, int wc, int i)
+int	add_tokens(char **tokens, const char *s, int wc, int i)
 {
 	int	w_l;
-
+	int ret;
+	
 	while (s[i])
 	{
-		if (s[i] == CHAR_WHITESPACE)
+		if (check_spacetab(s[i]))
 			i++;
 		else
 		{
@@ -77,17 +107,18 @@ void	add_tokens(char **tokens, const char *s, int wc, int i)
 				w_l = w_l + metachar_wordlen(s, i);
 			else
 			{
-				while (s[i + w_l] != CHAR_WHITESPACE
+				while (!check_spacetab(s[i + w_l])
 					&& check_token_type(s[i + w_l]) != 1 && s[i + w_l])
 				{
 					w_l = w_l + check_quotes(s + i) + 1;
 					w_l = w_l + postcheck(s + i + w_l);
 				}
 			}
-			token_alloc(tokens, wc, w_l);
+			ret = token_alloc(tokens, wc, w_l);
 			i += write_token(tokens[wc++], s + i, w_l);
 		}
 	}
+	return (ret);
 }
 
 char	**tokenize(const char *s)
@@ -100,6 +131,7 @@ char	**tokenize(const char *s)
 	if (!s)
 		return (NULL);
 	wc = word_count(s);
+	//printf("wc is : %d\n", wc);
 	if (wc < 1)
 		return (NULL);
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
@@ -107,7 +139,8 @@ char	**tokenize(const char *s)
 		return (NULL);
 	wc2 = 0;
 	i2 = 0;
-	add_tokens(tokens, s, wc2, i2);
+	if (add_tokens(tokens, s, wc2, i2) < 0)
+		return (NULL);
 	tokens[wc] = NULL;
 	return (tokens);
 }
