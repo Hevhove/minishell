@@ -6,11 +6,18 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 17:44:21 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:27:58 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	is_expand_exception(char c)
+{
+	if (c == '/' || c == '=' || c == '\"' || c == '$')
+		return (1);
+	return (0); 
+}
 
 char	*get_var_name(char	*token)
 {
@@ -18,13 +25,13 @@ char	*get_var_name(char	*token)
 	char	*var_name;
 
 	i = 0;
-	while (token[i] && token[i] != '\"')
+	while (token[i] && !is_expand_exception(token[i]))
 		i++;
 	var_name = (char *)malloc((i * sizeof(char)) + 1);
 	if (!var_name)
 		return (NULL);
 	i = 0;
-	while (token[i] && token[i] != '\"')
+	while (token[i] && !is_expand_exception(token[i]))
 	{
 		var_name[i] = token[i];
 		if (token[i + 1] && token[i] == '\'' && token[i + 1] == '\"')
@@ -32,6 +39,7 @@ char	*get_var_name(char	*token)
 		i++;
 	}
 	var_name[i] = '\0';
+	printf("var_name is : %s\n", var_name);
 	return (var_name);
 }
 
