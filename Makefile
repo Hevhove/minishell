@@ -4,8 +4,6 @@ NAME_DEBUG = minishell.dSYM
 INCS	= inc/minishell.h
 42INCS	= /Users/$(USER)/.brew/opt/readline/include
 42LINK 	= /Users/$(USER)/.brew/opt/readline/lib
-HENDRIKINCS = /usr/local/Cellar/readline/include
-HENDRIKLINK = /usr/local/Cellar/readline/lib
 OBJS	= $(SRCS:c=o)
 CC		= gcc -g
 CFLAGS	= -Wall -Wextra -Werror `pkg-config readline --cflags` #-fsanitize=address
@@ -23,9 +21,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) -I$(INCS) -I$(42INCS) -lreadline -L $(42LINK) -o $(NAME) $(OBJS) $(LIBFT)
-
-hendrik: $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) -I$(INCS) -I$(HENDRIKINCS) -lreadline -L $(HENDRIKLINK) -o $(NAME) $(OBJS) $(LIBFT)
 	
 $(LIBFT):
 	make -C $(LIBFT_DIR) --silent
