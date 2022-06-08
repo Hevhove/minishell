@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:57 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 21:41:08 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:42:13 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,47 @@ static int	check_identifier(char *tokens)
 	return (0);
 }
 
+static int	check_name_var(char *name, t_list *tmp)
+{
+	int		i;
+	char	*name_env;
+
+	i = 0;
+	if (!ft_strncmp(name, tmp->content, ft_strlen(name)))
+	{
+		name_env = tmp->content;
+		while (name_env[i] && (name_env[i] != '='))
+			i++;
+		if (ft_strlen(name) == (size_t)i)
+			return (1);
+	}
+	return (0);
+}
+
 int	exec_unset(char **tokens, t_list **env)
 {
-	char	*var_equal;
+	char	*name;
 	t_list	*tmp;
 	int		i;
+	int		j;
 
 	i = 0;
 	while (tokens[++i])
 	{
 		if (check_identifier(tokens[i]))
 			return (1);
-		var_equal = ft_strjoin(tokens[i], "=");
+		j = 0;
 		tmp = *env;
+		while (tokens[i][j] && (ft_isalnum(tokens[i][j]) || tokens[i][j] == '_'))
+			j++;
+		name = ft_substr(tokens[i], 0, j);
 		while (tmp)
 		{
-			if (!ft_strncmp(var_equal, tmp->content, ft_strlen(var_equal)))
+			if (check_name_var(name, tmp))
 				rm_env_var(tmp, env);
 			tmp = tmp->next;
 		}
-		ft_free(&var_equal);
+		ft_free(&name);
 	}
 	return (0);
 }
