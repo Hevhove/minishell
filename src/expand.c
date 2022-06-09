@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 18:28:04 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/09 20:31:56 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,31 @@ char	*remove_var(char	*token, char	*var_name)
 	return (new_token);
 }
 
+char	*expand_exit_val(char *orig) // "0 + $?"
+{
+	char	*new_token;
+	int		i;
+	int		j;
+	
+	new_token = (char *)malloc(ft_strlen(orig));
+	i = 0;
+	j = 0;
+	while (orig[i])
+	{
+		if (orig[i] && orig[i] != '$')
+			new_token[j++] = orig[i++];
+		else if (orig[i] == '$' && is_not_between_squotes(orig, i))
+		{
+			new_token[j++] = *ft_itoa(g_cmd.exit_status);
+			if (orig[i] && orig[i + 1] != '\0')
+				i++;
+		}
+		i++;
+	}
+	new_token[j] = '\0';
+	return (new_token);
+}
+
 char	*dollar_expansion(char *orig, char	*token, t_list **env)
 {
 	char	*var_name;
@@ -116,8 +141,8 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	char	*new_token;
 
 	var_name = get_var_name(token);
-	if (ft_strncmp(var_name, "?", 1) == 0)
-		expanded_name = ft_itoa(g_cmd.exit_status);
+	if (ft_strcmp(var_name, "?") == 0)
+		expanded_name = expand_exit_val(orig); // TO FIX THIS FUNCTION
 	else
 		expanded_name = get_expanded_name(var_name, env);
 	if (expanded_name[0] == '\0')
@@ -223,6 +248,11 @@ void	expand_tokens(char	**tokens, t_list **env)
 	{
 		if (find_first_expansion(tokens[i]) != -1)
 		{
+			if (ft_strchr(tokens[i], '$')[1] == '\0' || check_spacetab(ft_strchr(tokens[i], '$')[1]) || is_expand_exception(ft_strchr(tokens[i], '$')[1]))
+			{
+				i++;
+				continue ;
+			}
 			j = find_first_expansion(tokens[i]);
 			new_token = dollar_expansion(tokens[i], tokens[i] + j + 1, env);
 			free(tokens[i]);
