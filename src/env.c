@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 15:32:16 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:54:46 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+char	*handling_SHLVL(char *var)
+{
+	char	*value;
+	char	*name;
+	int		i;
+	
+	i = 0;
+	while (var[i] != '=')
+		i++;
+	name = ft_substr(var, 0, i + 1);
+	value = ft_itoa(ft_atoi(var + i + 1) + 1);
+	var = ft_strjoin(name, value);
+	free(name);
+	free(value);
+	return (var);
+}
 
 void	env_init(t_cmd *cmd, char **envp)
 {
@@ -20,7 +37,13 @@ void	env_init(t_cmd *cmd, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		node = ft_lstnew(ft_strdup(envp[i]));
+		if (ft_strncmp("SHLVL", envp[i], 5) == 0)
+		{
+			envp[i] = handling_SHLVL(envp[i]);
+			node = ft_lstnew(ft_strdup(envp[i]));
+		}
+		else
+			node = ft_lstnew(ft_strdup(envp[i]));
 		ft_lstadd_back(cmd->env, node);
 		i++;
 	}
