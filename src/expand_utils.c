@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/08 18:27:58 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:29:23 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 int	is_expand_exception(char c)
 {
-	if (c == '/' || c == '=' || c == '\"' || c == '$')
+	if (c == '/' || c == '=' || c == '\"' || c == '$'
+		|| c == '\\' || c == '\'')
 		return (1);
-	return (0); 
+	return (0);
 }
 
 char	*get_var_name(char	*token)
@@ -39,7 +40,6 @@ char	*get_var_name(char	*token)
 		i++;
 	}
 	var_name[i] = '\0';
-	printf("var_name is : %s\n", var_name);
 	return (var_name);
 }
 
@@ -95,12 +95,18 @@ char	*get_prestring(char	*token)
 	char	*pre;
 
 	i = 0;
-	while (token[i] && token[i] != '$')
+	while (token[i])
+	{
+		if (token[i] == '$' && is_not_between_squotes(token, i))
+			break ;
 		i++;
+	}
 	pre = (char *)malloc(i * sizeof(char) + 1);
 	i = 0;
-	while (token[i] && token[i] != '$')
+	while (token[i])
 	{
+		if (token[i] == '$' && is_not_between_squotes(token, i))
+			break ;
 		pre[i] = token[i];
 		i++;
 	}
@@ -116,9 +122,14 @@ char	*get_poststring(char *token)
 	char	*post;
 
 	i = 0;
-	while (token[i] && token[i] != '$')
+	while (token[i])
+	{
+		if (token[i] == '$' && is_not_between_squotes(token, i))
+			break ;
 		i++;
-	while (token[i] && token[i] != '\"')
+	}
+	i++;
+	while (token[i] && !is_expand_exception(token[i]))
 	{
 		if (token[i] == '\'' && token[i + 1] == '\"')
 			break ;

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/08 18:19:16 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:28:04 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,32 @@ char	*replace_token(char	*token, char *exp_name)
 	return (result2);
 }
 
+char	*remove_var(char	*token, char	*var_name)
+{
+	int		pos;
+	int		i;
+	int		j;
+	char	*new_token;
+
+	new_token = (char *)malloc((ft_strlen(token)
+				- (ft_strlen(var_name)) * sizeof(char)) + 21);
+	pos = 0;
+	while (ft_strncmp(token + pos, var_name, ft_strlen(var_name)) != 0)
+		pos++;
+	i = 0;
+	j = 0;
+	while (token[i])
+	{
+		if (i == pos - 1)
+			i += ft_strlen(var_name) + 1;
+		new_token[j] = token[i];
+		i++;
+		j++;
+	}
+	new_token[j] = '\0';
+	return (new_token);
+}
+
 char	*dollar_expansion(char *orig, char	*token, t_list **env)
 {
 	char	*var_name;
@@ -95,12 +121,11 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 	else
 		expanded_name = get_expanded_name(var_name, env);
 	if (expanded_name[0] == '\0')
+		new_token = remove_var(orig, var_name);
+	else
 	{
-		if (var_name)
-			free(var_name);
-		return (expanded_name);
+		new_token = replace_token(orig, expanded_name);
 	}
-	new_token = replace_token(orig, expanded_name);
 	if (var_name)
 		free(var_name);
 	return (new_token);
@@ -126,6 +151,63 @@ int	is_exit_code(char *token)
 |	Echo must then deal with this appropriately.
 */
 
+int	is_not_between_squotes(char	*token, int i)
+{
+	int	j;
+	int	left;
+	int	right;
+
+	j = i;
+	left = 0;
+	right = 0;
+	while (i-- >= 0)
+	{
+		if (token[i] == '\'')
+			left = 1;
+	}
+	while (token[j++])
+	{
+		if (token[j] == '\'')
+			right = 1;
+	}
+	if (right && left)
+		return (0);
+	return (1);
+}
+
+int	dollar_remaining(char	*token)
+{
+	int	i;
+	int	check;
+
+	i = 0;
+	check = 0;
+	while (token[i])
+	{
+		if (token[i] == '$')
+			check += is_not_between_squotes(token, i);
+		i++;
+	}
+	if (check > 0)
+		return (1);
+	else
+		return (0);
+}
+
+int	find_first_expansion(char	*token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '$' && is_not_between_squotes(token, i))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
 void	expand_tokens(char	**tokens, t_list **env)
 {
 	int		i;
@@ -139,16 +221,16 @@ void	expand_tokens(char	**tokens, t_list **env)
 	i = 0;
 	while (tokens[i])
 	{
-		if (ft_strchr(tokens[i], '$') && st_end_qts(tokens[i], i2, j2) != 1)
+		if (find_first_expansion(tokens[i]) != -1)
 		{
-			j = 0;
-			while (tokens[i][j] && tokens[i][j] != '$')
-				j++;
+			j = find_first_expansion(tokens[i]);
 			new_token = dollar_expansion(tokens[i], tokens[i] + j + 1, env);
 			free(tokens[i]);
 			tokens[i] = NULL;
 			tokens[i] = new_token;
 		}
+		if (dollar_remaining(tokens[i]))
+			continue ;
 		i++;
 	}
 	handle_quotes(tokens);

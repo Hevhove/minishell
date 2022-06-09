@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/08 17:51:32 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:53:07 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ char	*get_poststring(char *token);
 int		check_quotes(const char *s);
 int		postcheck(const char *token);
 int		metachar_wordlen(const char *s, int offset);
+int		dollar_remaining(char	*token);
+int		is_not_between_squotes(char	*token, int i);
 
 // QUOTE HANDLING
 char	*remove_outer_quotes(char *token);

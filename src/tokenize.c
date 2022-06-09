@@ -6,16 +6,16 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/08 17:51:50 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:30:45 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int line_empty(const char *s)
+int	line_empty(const char *s)
 {
 	int	i;
-	int check;
+	int	check;
 
 	i = 0;
 	check = 0;
@@ -94,8 +94,8 @@ int	token_alloc(char **tokens, int wc, int word_len)
 int	add_tokens(char **tokens, const char *s, int wc, int i)
 {
 	int	w_l;
-	int ret;
-	
+	int	ret;
+
 	while (s[i])
 	{
 		if (check_spacetab(s[i]))
@@ -131,7 +131,6 @@ char	**tokenize(const char *s)
 	if (!s)
 		return (NULL);
 	wc = word_count(s);
-	//printf("wc is : %d\n", wc);
 	if (wc < 1)
 		return (NULL);
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
