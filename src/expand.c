@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 20:31:56 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:37:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*remove_var(char	*token, char	*var_name)
 	return (new_token);
 }
 
-char	*expand_exit_val(char *orig) // "0 + $?"
+char	*expand_exit_val(char *orig)
 {
 	char	*new_token;
 	int		i;
@@ -142,7 +142,7 @@ char	*dollar_expansion(char *orig, char	*token, t_list **env)
 
 	var_name = get_var_name(token);
 	if (ft_strcmp(var_name, "?") == 0)
-		expanded_name = expand_exit_val(orig); // TO FIX THIS FUNCTION
+		expanded_name = ft_itoa(g_cmd.exit_status); // TO FIX THIS FUNCTION
 	else
 		expanded_name = get_expanded_name(var_name, env);
 	if (expanded_name[0] == '\0')

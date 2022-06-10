@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 18:29:23 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:37:15 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 int	is_expand_exception(char c)
 {
 	if (c == '/' || c == '=' || c == '\"' || c == '$'
-		|| c == '\\' || c == '\'')
+		|| c == '\\' || c == '\'' || c == '+' || c == '-')
 		return (1);
 	return (0);
 }
 
-char	*get_var_name(char	*token)
+char	*get_var_name(char	*token) // "$? + $?"
 {
 	int		i;
 	char	*var_name;
 
 	i = 0;
-	while (token[i] && !is_expand_exception(token[i]))
+	while (token[i] && !check_spacetab(token[i]) && !is_expand_exception(token[i]))
 		i++;
 	var_name = (char *)malloc((i * sizeof(char)) + 1);
 	if (!var_name)
 		return (NULL);
 	i = 0;
-	while (token[i] && !is_expand_exception(token[i]))
+	while (token[i] && !check_spacetab(token[i]) && !is_expand_exception(token[i]))
 	{
 		var_name[i] = token[i];
 		if (token[i + 1] && token[i] == '\'' && token[i + 1] == '\"')
@@ -124,12 +124,12 @@ char	*get_poststring(char *token)
 	i = 0;
 	while (token[i])
 	{
-		if (token[i] == '$' && is_not_between_squotes(token, i))
+		if (token[i] == '$' && !check_spacetab(token[i]) && is_not_between_squotes(token, i))
 			break ;
 		i++;
 	}
 	i++;
-	while (token[i] && !is_expand_exception(token[i]))
+	while (token[i] && !check_spacetab(token[i]) && !is_expand_exception(token[i]))
 	{
 		if (token[i] == '\'' && token[i + 1] == '\"')
 			break ;
