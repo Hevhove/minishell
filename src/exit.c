@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:50:13 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 18:44:16 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 12:36:00 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_isnumber(char	*str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
 	while (str[i])
 	{
 		if (str[i] > '0' && str[i] < '9')
@@ -27,31 +29,49 @@ int	ft_isnumber(char	*str)
 	return (1);
 }
 
+void	non_num_arg(t_cmd *cmd, char **envp)
+{
+	free_cmds(*cmd);
+	free_tokens(cmd->tokens);
+	ft_clear_env(cmd->env);
+	free(envp);
+	ft_putstr_fd("exit: numeric argument required\n", 2);
+}
+
+int	normal_exit(t_cmd *cmd, char *exit_code, char **envp)
+{
+	int	exit_nbr;
+
+	exit_nbr = ft_atoi(exit_code);
+	free_cmds(*cmd);
+	free_tokens(cmd->tokens);
+	ft_clear_env(cmd->env);
+	free(envp);
+	return (exit_nbr);
+}
+
 void	ft_exit(t_cmd *cmd, char **envp)
 {
 	char	*exit_code;
 	int		exit_nbr;
 
 	exit_code = cmd->scmds[0].argv[1];
+	ft_printf("exit\n");
+	if (cmd->scmds[0].argv[2])
+	{
+		ft_putstr_fd("exit: too many arguments\n", 2);
+		return ;
+	}
 	if (exit_code && ft_isnumber(exit_code))
 	{
-		exit_nbr = ft_atoi(exit_code);
-		free_cmds(*cmd);
-		free_tokens(cmd->tokens);
-		ft_clear_env(cmd->env);
-		free(envp);
-		ft_printf("exit\n");
+		exit_nbr = normal_exit(cmd, exit_code, envp);
 		exit(exit_nbr);
 	}
+
 	else if (exit_code)
 	{
-		free_cmds(*cmd);
-		free_tokens(cmd->tokens);
-		ft_clear_env(cmd->env);
-		free(envp);
-		ft_putstr_fd("exit: numeric argument required\n", 2);
+		non_num_arg(cmd, envp);
 		exit(-1);
 	}
-	ft_printf("exit\n");
 	exit(0);
 }
