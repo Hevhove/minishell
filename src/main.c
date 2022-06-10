@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 12:35:23 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:37:52 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,14 @@ int	build_and_exec_cmds(t_cmd *cmd)
 	int	ret;
 
 	cmd->envp = create_envp(cmd->env);
+	//printf("hehe1\n");
 	build_cmds(cmd->tokens, cmd);
+	//printf("hehe10\n");
 	build_paths(cmd);
+	//printf("hehe11\n");
+	//print_commands(cmd);
 	ret = exec_cmds(cmd);
+	//printf("hehe12\n");
 	if (ret < 0)
 	{
 		if (ret == -1)
@@ -107,10 +112,14 @@ int	main(int argc, char **argv, char **envp)
 		//print_tokens(g_cmd.tokens);
 		if (verify_tokens(g_cmd.tokens) && g_cmd.tokens)
 		{
+			//printf("testx\n");
 			build_and_exec_cmds(&g_cmd);
+			//printf("test2\n");
 			free_cmds(g_cmd);
+			//printf("test3\n");
 		}
 		free_tokens(g_cmd.tokens);
+		//printf("test4\n");
 	}
 	ft_clear_env(g_cmd.env);
 	return (0);

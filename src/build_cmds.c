@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/07 20:57:52 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:56:16 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,32 @@ void	rm_redirs(t_cmd *cmd)
 	}
 }
 
+void	update_empty_heredoc_cmds(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (i < cmd->argc)
+	{
+		if (cmd->scmds[i].heredoc == 1 && cmd->scmds[i].argc == 0)
+			cmd->scmds[i].argv[0] = ft_strdup("cat");
+		i++;
+	}
+}
+
 void	build_cmds(char **tokens, t_cmd *cmd)
 {
+	//printf("hehe2\n");
 	expand_tokens(tokens, cmd->env);
+	//printf("hehe3\n");
 	set_cmd_count(tokens, cmd);
+	//printf("cmd->argc is: %d\n", cmd->argc);
+	//printf("hehe4\n");
 	write_raw_cmds(cmd, tokens);
+	//printf("hehe5\n");
 	update_fds(cmd);
+	//printf("hehe6\n");
 	rm_redirs(cmd);
+	update_empty_heredoc_cmds(cmd);
+	//printf("cmdi->argc is: %d\n", cmd->scmds[0].argc);	
 }

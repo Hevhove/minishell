@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 20:56:03 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:25:05 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,19 @@ void	child(t_cmd *cmd, int i)
 	}
 }
 
+void	move_delims(t_scmd *scmd, int i)
+{
+	char	*tmp;
+
+	//printf("entered delims\n");
+	scmd->delim = ft_strdup(scmd->fd_in.fname);
+	// free(scmd->fd_in.fname);
+	scmd->fd_in.fname = NULL;
+	tmp = ft_strdup(".heredoc_tmp");
+	scmd->fd_in.fname = ft_strjoin(tmp, ft_itoa(i));
+	free(tmp);
+}
+
 int	cmd_setup(t_cmd *cmd)
 {
 	int	i;
@@ -86,7 +99,8 @@ int	cmd_setup(t_cmd *cmd)
 	{
 		if ((*cmd).scmds[i].heredoc == 1)
 		{
-			if (heredoc_input((*cmd), (*cmd).scmds[i].fd_in.fname, i) < 0)
+			move_delims(&(cmd->scmds[i]), i);
+			if (heredoc_input((*cmd), (*cmd).scmds[i].delim, i) < 0)
 				return (-1);
 		}
 		i++;
