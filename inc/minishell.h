@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 19:07:20 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:37:12 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int		postcheck(const char *token);
 int		metachar_wordlen(const char *s, int offset);
 int		dollar_remaining(char	*token);
 int		is_not_between_squotes(char	*token, int i);
-int	is_expand_exception(char c);
+int		is_expand_exception(char c);
 
 // QUOTE HANDLING
 char	*remove_outer_quotes(char *token);

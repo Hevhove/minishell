@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:57 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/08 16:42:13 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:31:01 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	exec_unset(char **tokens, t_list **env)
 			return (1);
 		j = 0;
 		tmp = *env;
-		while (tokens[i][j] && (ft_isalnum(tokens[i][j]) || tokens[i][j] == '_'))
+		while (tokens[i][j] && (ft_isalnum(tokens[i][j]) ||
+		tokens[i][j] == '_'))
 			j++;
 		name = ft_substr(tokens[i], 0, j);
 		while (tmp)
