@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:47 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/07 20:58:10 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:53:49 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exec_echo(char **tokens)
 {
-	int	i;
+	int		i;
 
 	if (!tokens[1])
 	{
@@ -22,8 +22,8 @@ int	exec_echo(char **tokens)
 		return (0);
 	}
 	i = 1;
-	if (ft_strcmp(tokens[1], "-n") == 0)
-		i = 2;
+	while (ft_strncmp(tokens[i], "-n", 2) == 0)
+		i++;
 	while (tokens[i])
 	{
 		ft_printf("%s", tokens[i]);
@@ -31,7 +31,7 @@ int	exec_echo(char **tokens)
 			ft_printf(" ");
 		i++;
 	}
-	if (ft_strcmp(tokens[1], "-n") != 0)
+	if (ft_strncmp(tokens[1], "-n", 2) != 0)
 		ft_printf("\n");
 	return (0);
 }
