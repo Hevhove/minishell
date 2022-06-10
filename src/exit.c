@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:50:13 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 12:36:00 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/10 13:18:13 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,14 @@ int	normal_exit(t_cmd *cmd, char *exit_code, char **envp)
 	return (exit_nbr);
 }
 
+void	exit_no_arg(t_cmd *cmd, char **envp)
+{
+	free_cmds(*cmd);
+	free_tokens(cmd->tokens);
+	ft_clear_env(cmd->env);
+	free(envp);
+}
+
 void	ft_exit(t_cmd *cmd, char **envp)
 {
 	char	*exit_code;
@@ -57,7 +65,8 @@ void	ft_exit(t_cmd *cmd, char **envp)
 
 	exit_code = cmd->scmds[0].argv[1];
 	ft_printf("exit\n");
-	if (cmd->scmds[0].argv[2])
+	//printf("argv[2] = %s\n", cmd->scmds[0].argv[2]);
+	if (cmd->scmds[0].argc > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
 		return ;
@@ -67,11 +76,11 @@ void	ft_exit(t_cmd *cmd, char **envp)
 		exit_nbr = normal_exit(cmd, exit_code, envp);
 		exit(exit_nbr);
 	}
-
 	else if (exit_code)
 	{
 		non_num_arg(cmd, envp);
 		exit(-1);
 	}
+	exit_no_arg(cmd, envp);
 	exit(0);
 }
