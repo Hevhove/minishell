@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 19:07:20 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/10 15:28:14 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_simp_cmd
 	t_fd	fd_out;
 	t_fd	fd_err;
 	int		heredoc;
+	char	*delim;
 	int		append;
 	int		pid;
 }	t_scmd;
@@ -137,6 +138,9 @@ void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos);
 void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
+void	print_commands(t_cmd *cmd);
+void	print_raw_commands(t_cmd *cmd);
+
 
 // COMMAND EXECUTION
 int		build_and_exec_cmds(t_cmd *cmd);
