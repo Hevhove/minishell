@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 16:37:52 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:34:21 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,70 @@ char	*rl_gets(char *line)
 	return (line);
 }
 
-int	verify_tokens(char	**tokens)
+int verify_redir(char *curr, char *next)
+{
+	if ((ft_strncmp(curr, ">>", 2) == 0) && (ft_strncmp(next, "|", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, "<<", 2) == 0) && (ft_strncmp(next, "|", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, ">", 1) == 0) && (ft_strncmp(next, "|", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, "<", 1) == 0) && (ft_strncmp(next, "|", 1) == 0))
+		return (-1);
+	return (0);
+}
+
+int	check_even_quotes(char	*token)
+{
+	int	i;
+	int	squote_count;
+	int	dquote_count;
+
+	i = 0;
+	squote_count = 0;
+	dquote_count = 0;
+	while (token[i])
+	{
+		if (token[i] == '\'')
+			squote_count++;
+		if (token[i] == '\"')
+			dquote_count++;
+		i++;
+	}
+	if (squote_count % 2 != 0 || dquote_count % 2 != 0)
+		return (-1);
+	return (0);
+}
+
+int	verify_tokens(char	**t)
 {
 	int	i;
 
 	i = 0;
-	if (tokens[i] == NULL)
+	if (t[i] == NULL)
 		return (0);
-	while (tokens[i])
-		i++;
-	if (ft_strncmp(tokens[0], "|", 1) == 0)
+	while (t[i])
 	{
-		ft_printf("parse error: unexpected token\n");
-		return (0);
+		if (check_even_quotes(t[i]) < 0)
+		{
+			ft_printf("parse error: no closing quote found\n");
+			return (0);
+		}
+		if (t[i + 1] && ((ft_strncmp(t[i], "|", 1) == 0)
+		&& (ft_strncmp(t[i + 1], "|", 1) == 0)))
+		{
+			ft_printf("parse error: unexpected token\n");
+			return (0);
+		}
+		else if (verify_redir(t[i], t[i + 1]) < 0)
+		{
+			ft_printf("parse error: unexpected token\n");
+			return (0);
+		}
+		i++;
 	}
-	if (i >= 1 && ft_strncmp(tokens[i - 1], "|", 1) == 0)
+	if (t[i + 1] && (ft_strncmp(t[0], "|", 1) == 0 
+		|| (i >= 1 && ft_strncmp(t[i - 1], "|", 1) == 0)))
 	{
 		ft_printf("parse error: unexpected token\n");
 		return (0);
@@ -72,14 +121,10 @@ int	build_and_exec_cmds(t_cmd *cmd)
 	int	ret;
 
 	cmd->envp = create_envp(cmd->env);
-	//printf("hehe1\n");
-	build_cmds(cmd->tokens, cmd);
-	//printf("hehe10\n");
+	if (build_cmds(cmd->tokens, cmd) < 0)
+		return (-4);
 	build_paths(cmd);
-	//printf("hehe11\n");
-	//print_commands(cmd);
 	ret = exec_cmds(cmd);
-	//printf("hehe12\n");
 	if (ret < 0)
 	{
 		if (ret == -1)
@@ -107,19 +152,15 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		g_cmd.tokens = tokenize(line);
+		print_tokens(g_cmd.tokens);
 		if (!g_cmd.tokens)
 			continue ;
-		//print_tokens(g_cmd.tokens);
 		if (verify_tokens(g_cmd.tokens) && g_cmd.tokens)
 		{
-			//printf("testx\n");
 			build_and_exec_cmds(&g_cmd);
-			//printf("test2\n");
 			free_cmds(g_cmd);
-			//printf("test3\n");
 		}
 		free_tokens(g_cmd.tokens);
-		//printf("test4\n");
 	}
 	ft_clear_env(g_cmd.env);
 	return (0);

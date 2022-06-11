@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 16:03:25 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:20:20 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	heredoc_input(t_cmd cmd, char *delim, int i)
 	return (0);
 }
 
-void	ft_unlink(t_cmd cmd)
+int	ft_unlink(t_cmd cmd)
 {
 	int	i;
 	int	j;
@@ -74,11 +74,13 @@ void	ft_unlink(t_cmd cmd)
 		{
 			if (cmd.scmds[i].heredoc == 1)
 			{
-				close(cmd.scmds[i].fd_in.fd);
+				if (close(cmd.scmds[i].fd_in.fd) < 0)
+					return (-1);
 				unlink(cmd.scmds[i].fd_in.fname);
 			}
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }

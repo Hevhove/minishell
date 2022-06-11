@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:33:44 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 15:57:02 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:07:22 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,10 @@ void	free_heredocs(t_cmd cmd)
 	{
 		if (cmd.scmds[i].heredoc == 1)
 		{
-			free(cmd.scmds[i].fd_in.fname);
-			free(cmd.scmds[i].delim);
+			if (cmd.scmds[i].fd_in.fname)
+				free(cmd.scmds[i].fd_in.fname);
+			if (cmd.scmds[i].delim)
+				free(cmd.scmds[i].delim);
 		}
 		i++;
 	}
@@ -86,15 +88,11 @@ void	free_heredocs(t_cmd cmd)
 void	free_cmds(t_cmd cmd)
 {
 	ft_unlink(cmd);
-	//printf("test4\n");
 	free_raw(cmd);
-	//printf("test5\n");
 	free_argv(cmd);
-	//printf("test6\n");
-	if (cmd.paths)
+	if (cmd.paths && cmd.scmds[0].argc > 0)
 		free_split(cmd.paths);
 	free_heredocs(cmd);
-	//printf("test7\n");
 	free(cmd.scmds);
 	if (cmd.argc > 1)
 		free(cmd.pipes);

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/10 12:53:16 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:57:30 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,15 @@ void	free_split(char	**split)
 	int	i;
 
 	i = 0;
+	//printf("hehe\n");
+	//printf("split is : %p\n", split);
 	while (split[i])
 	{
 		free(split[i]);
 		i++;
 	}
+	//printf("hehe2\n");
 	free(split);
+	//printf("hehe3\n");
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 15:28:14 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/11 17:19:02 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ char	*remove_last_quote(char *token);
 void	handle_quotes(char **tokens);
 
 // COMMAND BUILDING
-void	build_cmds(char **tokens, t_cmd *cmd);
+int		build_cmds(char **tokens, t_cmd *cmd);
 void	free_tokens(char **tokens);
 void	free_cmds(t_cmd cmd);
 int		count_cmds(char **tokens);
@@ -140,7 +140,7 @@ void	update_fds(t_cmd *cmd);
 int		count_argv(t_scmd scmd);
 void	print_commands(t_cmd *cmd);
 void	print_raw_commands(t_cmd *cmd);
-
+void	move_delims(t_scmd *scmd, int i);
 
 // COMMAND EXECUTION
 int		build_and_exec_cmds(t_cmd *cmd);
@@ -176,8 +176,7 @@ void	rm_env_var(t_list *node, t_list **env);
 void	ft_free(char **ptr);
 void	set_pwd_vars_env(char *name, char *value, t_list **env);
 char	*get_term_var(t_list **env);
-void	ft_unlink(t_cmd cmd);
-void	ft_unlink(t_cmd cmd);
+int		ft_unlink(t_cmd cmd);
 int		init_term(void);
 void	ft_exit(t_cmd *cmd, char **envp);
 
