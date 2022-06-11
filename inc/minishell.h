@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/11 17:19:02 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/11 19:39:08 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int		postcheck(const char *token);
 int		metachar_wordlen(const char *s, int offset);
 int		dollar_remaining(char	*token);
 int		is_not_between_squotes(char	*token, int i);
-int	is_expand_exception(char c);
+int		is_expand_exception(char c);
 
 // QUOTE HANDLING
 char	*remove_outer_quotes(char *token);

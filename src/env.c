@@ -6,18 +6,18 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 17:54:46 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:36:31 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*handling_SHLVL(char *var)
+char	*handling_shlvl(char *var)
 {
 	char	*value;
 	char	*name;
 	int		i;
-	
+
 	i = 0;
 	while (var[i] != '=')
 		i++;
@@ -39,7 +39,7 @@ void	env_init(t_cmd *cmd, char **envp)
 	{
 		if (ft_strncmp("SHLVL", envp[i], 5) == 0)
 		{
-			envp[i] = handling_SHLVL(envp[i]);
+			envp[i] = handling_shlvl(envp[i]);
 			node = ft_lstnew(ft_strdup(envp[i]));
 		}
 		else
