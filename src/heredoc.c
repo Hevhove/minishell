@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 13:12:59 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:58:03 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,15 @@ int	ft_unlink(t_cmd cmd)
 		i++;
 	}
 	return (0);
+}
+
+void	move_delims(t_scmd *scmd, int i)
+{
+	char	*tmp;
+
+	scmd->delim = ft_strdup(scmd->fd_in.fname);
+	scmd->fd_in.fname = NULL;
+	tmp = ft_strdup(".heredoc_tmp");
+	scmd->fd_in.fname = ft_strjoin(tmp, ft_itoa(i));
+	free(tmp);
 }

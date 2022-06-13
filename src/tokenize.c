@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 15:53:18 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:15:47 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,19 @@ static int	word_count(const char *s)
 		return (0);
 	while (s[i])
 	{
-		//printf("1token[%d] considered: %c\n", i, s[i]);
 		while (check_spacetab(s[i]))
 			i++;
 		if (s[i] == '\0')
 			return (wc);
 		if (metachar_wordlen(s, i) != -1)
 		{
-			//printf("metachar_wordlen is: %d\n", metachar_wordlen(s, i));
 			i = i + metachar_wordlen(s, i) + 1;
 			wc++;
-			//printf("wc goes to %d\n", wc);
-			//printf("2token[%d] considered: %c\n", i, s[i]);
 			continue ;
 		}
 		while (s[i] && !check_spacetab(s[i]) && check_token_type(s[i]) != 1)
 			i = i + check_quotes(s + i) + 1;
-		//printf("3token[%d] considered: %c\n",i, s[i]);
 		wc++;
-		//printf("wc goes to %d\n", wc);
 		if (check_spacetab(s[i]))
 			i++;
 	}
@@ -120,7 +114,6 @@ int	add_tokens(char **tokens, const char *s, int wc, int i)
 					w_l = w_l + postcheck(s + i + w_l);
 				}
 			}
-			//printf("word_len is: %d\n", w_l);
 			ret = token_alloc(tokens, wc, w_l);
 			i += write_token(tokens[wc++], s + i, w_l);
 		}
@@ -138,8 +131,6 @@ char	**tokenize(const char *s)
 	if (!s)
 		return (NULL);
 	wc = word_count(s);
-	//printf("wc is: %d\n", wc);
-	//exit(0);
 	if (wc < 1)
 		return (NULL);
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));
