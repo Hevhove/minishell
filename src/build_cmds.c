@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/13 16:53:52 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:13:15 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	rm_redirs(t_cmd *cmd)
 		k = 0;
 		while (j < cmd->scmds[i].raw_argc && k < cmd->scmds[i].argc)
 		{
-			if (check_token_type(cmd->scmds[i].raw[j][0]) != 1)
+			if (ctt(cmd->scmds[i].raw[j][0]) != 1)
 			{
 				cmd->scmds[i].argv[k] = ft_strdup(cmd->scmds[i].raw[j]);
 				k++;
@@ -105,6 +105,7 @@ void	rm_redirs(t_cmd *cmd)
 int	build_cmds(char **tokens, t_cmd *cmd)
 {
 	expand_tokens(tokens, cmd->env);
+	handle_quotes(tokens);
 	if (set_cmd_count(tokens, cmd) < 0)
 		return (-1);
 	write_raw_cmds(cmd, tokens);

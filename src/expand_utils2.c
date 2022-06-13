@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:10:03 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 17:11:26 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:22:51 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,19 @@ int	find_first_expansion(char	*token)
 		i++;
 	}
 	return (-1);
+}
+
+int	count_poststring(char	*token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '$' && !cst(token[i])
+			&& is_not_between_squotes(token, i))
+			break ;
+		i++;
+	}
+	return (i);
 }

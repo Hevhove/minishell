@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils.c                                   :+:      :+:    :+:   */
+/*   tokenize_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:51:15 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/13 15:27:55 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:13:15 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_tokens(char **tokens)
 	return ;
 }
 
-int	check_token_type(int token)
+int	ctt(int token)
 {
 	if (token == CHAR_PIPE
 		|| token == CHAR_AMPERSAND
@@ -84,8 +84,8 @@ int	postcheck(const char *token)
 	int	i;
 
 	i = 0;
-	while (token[i] && check_token_type(token[i]) != 1
-		&& !check_spacetab(token[i]))
+	while (token[i] && ctt(token[i]) != 1
+		&& !cst(token[i]))
 		i++;
 	return (i);
 }

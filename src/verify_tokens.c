@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:13:18 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 17:16:56 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:50:12 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,22 @@ int	check_even_quotes(char	*token)
 	return (0);
 }
 
+int	check_start_and_end(char **t, int i)
+{
+	if (ft_strncmp(t[i - 1], ">", 1) == 0 || ft_strncmp(t[i - 1], "<", 1) == 0)
+	{
+		ft_printf("parse error: unexpected token\n");
+		return (0);
+	}
+	if (t[i + 1] && (ft_strncmp(t[0], "|", 1) == 0
+			|| (i >= 1 && ft_strncmp(t[i - 1], "|", 1) == 0)))
+	{
+		ft_printf("parse error: unexpected token\n");
+		return (0);
+	}
+	return (1);
+}
+
 int	verify_tokens(char	**t)
 {
 	int	i;
@@ -65,30 +81,17 @@ int	verify_tokens(char	**t)
 			ft_printf("parse error: no closing quote found\n");
 			return (0);
 		}
-		if (t[i + 1] && ((ft_strncmp(t[i], "|", 1) == 0)
-				&& (ft_strncmp(t[i + 1], "|", 1) == 0)))
-		{
-			ft_printf("parse error: unexpected token\n");
-			return (0);
-		}
-		else if (t[i + 1] && verify_redir(t[i], t[i + 1]) < 0)
+		if (t[i + 1] && (((ft_strncmp(t[i], "|", 1) == 0)
+					&& (ft_strncmp(t[i + 1], "|", 1) == 0))
+				|| (verify_redir(t[i], t[i + 1]) < 0)))
 		{
 			ft_printf("parse error: unexpected token\n");
 			return (0);
 		}
 		i++;
 	}
-	if (ft_strncmp(t[i - 1], ">", 1) == 0 || ft_strncmp(t[i - 1], "<", 1) == 0)
-	{
-		ft_printf("parse error: unexpected token\n");
+	if (!check_start_and_end(t, i))
 		return (0);
-	}
-	if (t[i + 1] && (ft_strncmp(t[0], "|", 1) == 0
-			|| (i >= 1 && ft_strncmp(t[i - 1], "|", 1) == 0)))
-	{
-		ft_printf("parse error: unexpected token\n");
-		return (0);
-	}
 	return (1);
 }
 

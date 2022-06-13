@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:26:33 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 16:54:09 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:13:15 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	count_argv(t_scmd scmd)
 	count = 0;
 	while (scmd.raw[i])
 	{
-		if (check_token_type(scmd.raw[i][0]) == 1)
+		if (ctt(scmd.raw[i][0]) == 1)
 		{
 			i += 2;
 			continue ;

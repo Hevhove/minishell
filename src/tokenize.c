@@ -6,48 +6,22 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 17:15:47 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:13:15 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	line_empty(const char *s)
-{
-	int	i;
-	int	check;
-
-	i = 0;
-	check = 0;
-	while (s[i] && check_spacetab(s[i]))
-		i++;
-	if (i == (int)ft_strlen(s))
-		return (1);
-	return (0);
-}
-
-int	check_spacetab(char c)
-{
-	if (c == CHAR_WHITESPACE)
-		return (1);
-	else if (c == CHAR_TAB)
-		return (1);
-	else
-		return (0);
-}
-
-static int	word_count(const char *s)
+static int	word_count(const char *s, int i)
 {
 	int	wc;
-	int	i;
 
-	i = 0;
 	wc = 0;
 	if (line_empty(s))
 		return (0);
 	while (s[i])
 	{
-		while (check_spacetab(s[i]))
+		while (cst(s[i]))
 			i++;
 		if (s[i] == '\0')
 			return (wc);
@@ -57,10 +31,10 @@ static int	word_count(const char *s)
 			wc++;
 			continue ;
 		}
-		while (s[i] && !check_spacetab(s[i]) && check_token_type(s[i]) != 1)
+		while (s[i] && !cst(s[i]) && ctt(s[i]) != 1)
 			i = i + check_quotes(s + i) + 1;
 		wc++;
-		if (check_spacetab(s[i]))
+		if (cst(s[i]))
 			i++;
 	}
 	return (wc);
@@ -98,17 +72,16 @@ int	add_tokens(char **tokens, const char *s, int wc, int i)
 
 	while (s[i])
 	{
-		if (check_spacetab(s[i]))
+		if (cst(s[i]))
 			i++;
 		else
 		{
 			w_l = 0;
-			if (check_token_type(s[i]) == 1)
+			if (ctt(s[i]) == 1)
 				w_l = w_l + metachar_wordlen(s, i) + 1;
 			else
 			{
-				while (!check_spacetab(s[i + w_l])
-					&& check_token_type(s[i + w_l]) != 1 && s[i + w_l])
+				while (!cst(s[i + w_l]) && ctt(s[i + w_l]) != 1 && s[i + w_l])
 				{
 					w_l = w_l + check_quotes(s + i) + 1;
 					w_l = w_l + postcheck(s + i + w_l);
@@ -127,10 +100,12 @@ char	**tokenize(const char *s)
 	int		wc;
 	int		wc2;
 	int		i2;
+	int		i3;
 
 	if (!s)
 		return (NULL);
-	wc = word_count(s);
+	i3 = 0;
+	wc = word_count(s, i3);
 	if (wc < 1)
 		return (NULL);
 	tokens = (char **)malloc((wc + 1) * sizeof(tokens));

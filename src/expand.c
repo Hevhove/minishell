@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:39:55 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 17:11:24 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:17:04 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,19 +130,15 @@ void	expand_tokens(char	**tokens, t_list **env)
 {
 	int		i;
 	int		j;
-	int		i2;
-	int		j2;
 	char	*new_token;
 
-	i2 = 0;
-	j2 = 0;
 	i = 0;
 	while (tokens[i])
 	{
 		if (find_first_expansion(tokens[i]) != -1)
 		{
 			if (ft_strchr(tokens[i], '$')[1] == '\0'
-				|| check_spacetab(ft_strchr(tokens[i], '$')[1])
+				|| cst(ft_strchr(tokens[i], '$')[1])
 				|| is_expand_exception(ft_strchr(tokens[i], '$')[1]))
 			{
 				i++;
@@ -151,12 +147,10 @@ void	expand_tokens(char	**tokens, t_list **env)
 			j = find_first_expansion(tokens[i]);
 			new_token = dollar_expansion(tokens[i], tokens[i] + j + 1, env);
 			free(tokens[i]);
-			tokens[i] = NULL;
 			tokens[i] = new_token;
 		}
 		if (dollar_remaining(tokens[i]))
 			continue ;
 		i++;
 	}
-	handle_quotes(tokens);
 }
