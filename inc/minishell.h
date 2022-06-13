@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/11 19:39:08 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:51:44 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,9 @@ int		count_argv(t_scmd scmd);
 void	print_commands(t_cmd *cmd);
 void	print_raw_commands(t_cmd *cmd);
 void	move_delims(t_scmd *scmd, int i);
+void	print_fds(t_cmd *cmd);
+void	print_split(char	**split);
+int		update_empty_heredoc_cmds(t_cmd *cmd);
 
 // COMMAND EXECUTION
 int		build_and_exec_cmds(t_cmd *cmd);

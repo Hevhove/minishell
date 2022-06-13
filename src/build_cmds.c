@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:18:00 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/11 17:50:55 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:51:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,42 +102,14 @@ void	rm_redirs(t_cmd *cmd)
 	}
 }
 
-int	update_empty_heredoc_cmds(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (i < cmd->argc)
-	{
-		if (cmd->scmds[i].heredoc == 1 && cmd->scmds[i].argc == 0)
-		{
-			move_delims(&(cmd->scmds[i]), i);
-			heredoc_input((*cmd), (*cmd).scmds[i].delim, i);
-			ft_unlink(*cmd);
-			return (-1);
-		}
-		else if (cmd->scmds[i].argc == 0)
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
 int	build_cmds(char **tokens, t_cmd *cmd)
 {
-	//printf("hehe2\n");
 	expand_tokens(tokens, cmd->env);
-	//printf("hehe3\n");
 	set_cmd_count(tokens, cmd);
-	//printf("cmd->argc is: %d\n", cmd->argc);
-	//printf("hehe4\n");
 	write_raw_cmds(cmd, tokens);
-	//printf("hehe5\n");
 	update_fds(cmd);
-	//printf("hehe6\n");
 	rm_redirs(cmd);
 	if (update_empty_heredoc_cmds(cmd) < 0)
 		return (-1);
 	return (0);
-	//printf("cmdi->argc is: %d\n", cmd->scmds[0].argc);	
 }

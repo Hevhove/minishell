@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 13:03:14 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/11 19:34:21 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:30:29 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ char	*rl_gets(char *line)
 
 int verify_redir(char *curr, char *next)
 {
-	if ((ft_strncmp(curr, ">>", 2) == 0) && (ft_strncmp(next, "|", 1) == 0))
-		return (-1);
-	if ((ft_strncmp(curr, "<<", 2) == 0) && (ft_strncmp(next, "|", 1) == 0))
-		return (-1);
 	if ((ft_strncmp(curr, ">", 1) == 0) && (ft_strncmp(next, "|", 1) == 0))
 		return (-1);
 	if ((ft_strncmp(curr, "<", 1) == 0) && (ft_strncmp(next, "|", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, "<", 1) == 0) && (ft_strncmp(next, "<", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, "<", 1) == 0) && (ft_strncmp(next, ">", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, ">", 1) == 0) && (ft_strncmp(next, ">", 1) == 0))
+		return (-1);
+	if ((ft_strncmp(curr, ">", 1) == 0) && (ft_strncmp(next, "<", 1) == 0))
 		return (-1);
 	return (0);
 }
@@ -84,12 +88,17 @@ int	verify_tokens(char	**t)
 			ft_printf("parse error: unexpected token\n");
 			return (0);
 		}
-		else if (verify_redir(t[i], t[i + 1]) < 0)
+		else if (t[i + 1] && verify_redir(t[i], t[i + 1]) < 0)
 		{
 			ft_printf("parse error: unexpected token\n");
 			return (0);
 		}
 		i++;
+	}
+	if (ft_strncmp(t[i - 1], ">", 1) == 0 || ft_strncmp(t[i - 1], "<", 1) == 0)
+	{
+		ft_printf("parse error: unexpected token\n");
+		return (0);
 	}
 	if (t[i + 1] && (ft_strncmp(t[0], "|", 1) == 0 
 		|| (i >= 1 && ft_strncmp(t[i - 1], "|", 1) == 0)))
@@ -152,12 +161,15 @@ int	main(int argc, char **argv, char **envp)
 		if (!line)
 			break ;
 		g_cmd.tokens = tokenize(line);
-		print_tokens(g_cmd.tokens);
+		//print_tokens(g_cmd.tokens);
+		//printf("test1\n");
 		if (!g_cmd.tokens)
 			continue ;
 		if (verify_tokens(g_cmd.tokens) && g_cmd.tokens)
 		{
+			//printf("test2\n");
 			build_and_exec_cmds(&g_cmd);
+			//printf("test3\n");
 			free_cmds(g_cmd);
 		}
 		free_tokens(g_cmd.tokens);

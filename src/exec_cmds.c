@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 13:35:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 15:25:05 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 13:32:01 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ void	move_delims(t_scmd *scmd, int i)
 {
 	char	*tmp;
 
-	//printf("entered delims\n");
 	scmd->delim = ft_strdup(scmd->fd_in.fname);
-	// free(scmd->fd_in.fname);
 	scmd->fd_in.fname = NULL;
 	tmp = ft_strdup(".heredoc_tmp");
 	scmd->fd_in.fname = ft_strjoin(tmp, ft_itoa(i));
