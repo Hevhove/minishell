@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 18:59:31 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 18:30:45 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:15:47 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	word_count(const char *s)
 			i++;
 		if (s[i] == '\0')
 			return (wc);
-		if (metachar_wordlen(s, i) != 0)
+		if (metachar_wordlen(s, i) != -1)
 		{
 			i = i + metachar_wordlen(s, i) + 1;
 			wc++;
@@ -104,7 +104,7 @@ int	add_tokens(char **tokens, const char *s, int wc, int i)
 		{
 			w_l = 0;
 			if (check_token_type(s[i]) == 1)
-				w_l = w_l + metachar_wordlen(s, i);
+				w_l = w_l + metachar_wordlen(s, i) + 1;
 			else
 			{
 				while (!check_spacetab(s[i + w_l])

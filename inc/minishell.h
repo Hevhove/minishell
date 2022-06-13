@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/11 19:39:08 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:14:19 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,10 @@ void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens, t_list **env);
 int		check_token_type(int token);
 int		check_spacetab(char c);
+int		verify_redir(char *curr, char *next);
+int		check_even_quotes(char	*token);
+int		verify_tokens(char	**t);
+int		check_heredocs(t_cmd cmd);
 
 // VARIABLE EXPANSION
 char	*get_var_name(char	*token);
@@ -117,6 +121,9 @@ int		metachar_wordlen(const char *s, int offset);
 int		dollar_remaining(char	*token);
 int		is_not_between_squotes(char	*token, int i);
 int		is_expand_exception(char c);
+int		is_exit_code(char *token);
+int		dollar_remaining(char	*token);
+int		find_first_expansion(char	*token);
 
 // QUOTE HANDLING
 char	*remove_outer_quotes(char *token);
@@ -133,7 +140,7 @@ int		skip_token(char *token);
 int		scmd_arg_count(char **tokens, int index);
 int		raw_arg_count(t_cmd *cmd, char **tokens, int i, int j);
 void	write_raw_cmds(t_cmd *cmd, char **tokens);
-void	set_cmd_count(char **tokens, t_cmd *cmd);
+int		set_cmd_count(char **tokens, t_cmd *cmd);
 void	write_fds(t_cmd *cmd, char *fname, const char *mode, int pos);
 void	init_scmd_fds(t_cmd *cmd, int i);
 void	update_fds(t_cmd *cmd);
@@ -141,6 +148,9 @@ int		count_argv(t_scmd scmd);
 void	print_commands(t_cmd *cmd);
 void	print_raw_commands(t_cmd *cmd);
 void	move_delims(t_scmd *scmd, int i);
+void	print_fds(t_cmd *cmd);
+void	print_split(char	**split);
+int		update_empty_heredoc_cmds(t_cmd *cmd);
 
 // COMMAND EXECUTION
 int		build_and_exec_cmds(t_cmd *cmd);
@@ -156,6 +166,7 @@ int		open_files(t_cmd *cmd);
 int		close_files(t_cmd cmd);
 int		set_redirections(t_cmd *cmd, int i);
 char	*get_bin(char **paths, char *bin);
+void	move_delims(t_scmd *scmd, int i);
 
 // BUILTINS
 int		exec_echo(char **tokens);

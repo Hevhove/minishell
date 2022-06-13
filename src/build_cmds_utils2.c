@@ -6,13 +6,13 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 19:26:33 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/05/17 12:18:13 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:54:09 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	set_cmd_count(char **tokens, t_cmd *cmd)
+int	set_cmd_count(char **tokens, t_cmd *cmd)
 {
 	int	i;
 	int	j;
@@ -20,7 +20,7 @@ void	set_cmd_count(char **tokens, t_cmd *cmd)
 	cmd->argc = count_cmds(tokens);
 	cmd->scmds = (t_scmd *)malloc((cmd->argc) * sizeof(t_scmd));
 	if (!cmd->scmds)
-		exit(2);
+		return (-1);
 	i = 0;
 	j = 0;
 	while (tokens[i])
@@ -30,6 +30,7 @@ void	set_cmd_count(char **tokens, t_cmd *cmd)
 			i++;
 		j++;
 	}
+	return (0);
 }
 
 /*

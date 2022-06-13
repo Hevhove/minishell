@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 14:51:15 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/08 17:11:57 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 15:27:55 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_tokens(char **tokens)
 
 	i = 0;
 	if (!tokens)
-		exit(1);
+		return ;
 	ft_printf("#----#\n");
 	while (tokens[i])
 	{
@@ -65,18 +65,18 @@ int	check_quotes(const char *s)
 int	metachar_wordlen(const char *s, int offset)
 {
 	if (*(s + offset) == CHAR_PIPE || *(s + offset) == CHAR_AMPERSAND)
-		return (1);
+		return (0);
 	if (offset < (int)ft_strlen(s))
 	{
 		if (*(s + offset) == CHAR_GREATER && *(s + offset + 1) == CHAR_GREATER)
-			return (2);
+			return (1);
 		else if (*(s + offset) == CHAR_LESSER
 			&& *(s + offset + 1) == CHAR_LESSER)
-			return (2);
-		else if (*(s + offset) == CHAR_GREATER || *(s + offset) == CHAR_LESSER)
 			return (1);
+		else if (*(s + offset) == CHAR_GREATER || *(s + offset) == CHAR_LESSER)
+			return (0);
 	}
-	return (0);
+	return (-1);
 }
 
 int	postcheck(const char *token)
