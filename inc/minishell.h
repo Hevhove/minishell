@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 17:14:19 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/13 18:23:05 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,13 @@ void	ft_setup(t_cmd *cmd, char **envp);
 char	**tokenize(const char *s);
 void	print_tokens(char **tokens);
 void	expand_tokens(char **tokens, t_list **env);
-int		check_token_type(int token);
-int		check_spacetab(char c);
+int		ctt(int token);
+int		cst(char c);
 int		verify_redir(char *curr, char *next);
 int		check_even_quotes(char	*token);
 int		verify_tokens(char	**t);
 int		check_heredocs(t_cmd cmd);
+int		line_empty(const char *s);
 
 // VARIABLE EXPANSION
 char	*get_var_name(char	*token);
@@ -124,6 +125,7 @@ int		is_expand_exception(char c);
 int		is_exit_code(char *token);
 int		dollar_remaining(char	*token);
 int		find_first_expansion(char	*token);
+int		count_poststring(char	*token);
 
 // QUOTE HANDLING
 char	*remove_outer_quotes(char *token);
