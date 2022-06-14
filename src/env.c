@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/14 11:08:43 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/14 11:58:14 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	exec_env(t_list **env)
 	while (tmp)
 	{
 		if (ft_strchr(tmp->content, '='))
-				ft_printf("%s\n", (char *)(tmp->content));
+			ft_printf("%s\n", (char *)(tmp->content));
 		tmp = tmp->next;
 	}
 	return (0);
