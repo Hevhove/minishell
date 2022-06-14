@@ -6,17 +6,18 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 16:50:13 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 17:34:43 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/14 11:57:04 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	ft_isnumber(char	*str)
+int	ft_isnumber(char *str)
 {
 	int	i;
 
 	i = 0;
+
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (str[i])
@@ -66,20 +67,20 @@ void	ft_exit(t_cmd *cmd, char **envp)
 
 	exit_code = cmd->scmds[0].argv[1];
 	ft_printf("exit\n");
+	if (exit_code && !ft_isnumber(exit_code))
+	{
+		non_num_arg(cmd, envp);
+		exit(-1);
+	}
 	if (cmd->scmds[0].argc > 2)
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
 		return ;
 	}
-	if (exit_code && ft_isnumber(exit_code))
+	else if (exit_code && ft_isnumber(exit_code))
 	{
 		exit_nbr = normal_exit(cmd, exit_code, envp);
 		exit(exit_nbr);
-	}
-	else if (exit_code)
-	{
-		non_num_arg(cmd, envp);
-		exit(-1);
 	}
 	exit_no_arg(cmd, envp);
 	exit(0);
