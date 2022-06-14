@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/22 17:17:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 16:58:03 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:20:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	heredoc_input(t_cmd cmd, char *delim, int i)
 		write(1, "> ", 2);
 		line = get_next_line(0);
 		if (!line)
-			return (0);
+			break ;
 		if (!ft_strncmp(delim, line, ft_strlen(delim)))
 			break ;
 		write(file, line, ft_strlen(line));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:52 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/09 18:45:55 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/14 12:59:01 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@ int	already_in_env(char *tokens, t_list **env)
 	if (tokens[i])
 		value = ft_strdup(tokens + i + 1);
 	if (get_env_value(name, env))
-	{
 		set_pwd_vars_env(name, value, env);
-		free(name);
-		free(value);
-	}
 	else
 		export_new_var(tokens, env);
+	free(name);
+	free(value);
 	return (0);
 }
 

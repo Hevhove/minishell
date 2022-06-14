@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 13:20:45 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 18:22:48 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:46:07 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_var_name(char	*token)
 	while (token[i] && !cst(token[i])
 		&& !is_expand_exception(token[i]))
 		i++;
-	var_name = (char *)malloc((i * sizeof(char)) + 1);
+	var_name = (char *)malloc((i * sizeof(char)) + 2);
 	if (!var_name)
 		return (NULL);
 	i = 0;
@@ -33,7 +33,8 @@ char	*get_var_name(char	*token)
 			break ;
 		i++;
 	}
-	var_name[i] = '\0';
+	var_name[i] = '=';
+	var_name[i + 1] = '\0';
 	return (var_name);
 }
 

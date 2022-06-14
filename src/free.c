@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 16:33:44 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 12:25:09 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/14 14:16:45 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,9 @@ void	free_heredocs(t_cmd cmd)
 
 void	free_cmds(t_cmd cmd)
 {
-	if (ft_unlink(cmd) < 0)
-		ft_printf("didn't manage to unlink\n");
+	ft_unlink(cmd);
 	free_raw(cmd);
 	free_argv(cmd);
-	if (cmd.paths && cmd.scmds[0].argc > 0)
-		free_split(cmd.paths);
 	free_heredocs(cmd);
 	free(cmd.scmds);
 	if (cmd.argc > 1)

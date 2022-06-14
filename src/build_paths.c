@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 15:19:13 by Hendrik           #+#    #+#             */
-/*   Updated: 2022/06/13 16:55:24 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:22:32 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ char	*get_bin(char **paths, char *bin)
 			free(cmd_path);
 		}
 	}
+	else if (bin && bin[0] == '/')
+		return (bin);
 	return (NULL);
 }
 
@@ -63,6 +65,11 @@ int	build_paths(t_cmd *cmd)
 	char	*paths_str;
 
 	paths_str = find_path(cmd->env);
+	if (cmd->paths)
+	{
+		free_split(cmd->paths);
+		cmd->paths = NULL;
+	}
 	cmd->paths = ft_split(paths_str, ':');
 	free(paths_str);
 	return (0);
@@ -73,11 +80,14 @@ void	free_split(char	**split)
 	int	i;
 
 	i = 0;
-	while (split[i])
+	if (split != NULL)
 	{
-		free(split[i]);
-		i++;
+		while (split[i])
+		{
+			free(split[i]);
+			i++;
+		}
+		free(split);
 	}
-	free(split);
 	return ;
 }

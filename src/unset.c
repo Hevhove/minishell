@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:57 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/10 17:31:01 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/14 13:24:17 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,17 @@ void	rm_env_var(t_list *node, t_list **env)
 	{
 		if (tmp->next == node)
 		{
+			free(tmp->next->content);
 			free(tmp->next);
 			tmp->next = tmp->next->next;
 			return ;
 		}
 		tmp = tmp->next;
+	}
+	if (tmp == node)
+	{
+		free(tmp->content);
+		tmp = NULL;
 	}
 }
 
