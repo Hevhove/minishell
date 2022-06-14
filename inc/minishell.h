@@ -6,7 +6,7 @@
 /*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/18 10:17:56 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 18:23:05 by hvan-hov         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:32:48 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,4 +197,8 @@ void	ft_exit(t_cmd *cmd, char **envp);
 void	exec_signals(t_status status);
 void	error_message(char *s, int code, t_cmd *cmd);
 
+// PROTOTYPES FOR READLINE
+int		rl_on_new_line(void);
+void	rl_replace_line(const char *text, int clear_undo);
+void	rl_redisplay(void);
 #endif
