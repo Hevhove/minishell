@@ -6,7 +6,7 @@
 /*   By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 19:29:49 by hvan-hov          #+#    #+#             */
-/*   Updated: 2022/06/13 17:54:01 by mmaxime-         ###   ########.fr       */
+/*   Updated: 2022/06/14 11:08:43 by mmaxime-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*handling_shlvl(char *var)
 void	env_init(t_cmd *cmd, char **envp)
 {
 	int		i;
+	char	*shlvl;
 	t_list	*node;
 
 	i = 0;
@@ -39,8 +40,12 @@ void	env_init(t_cmd *cmd, char **envp)
 	{
 		if (ft_strncmp("SHLVL", envp[i], 5) == 0)
 		{
-			envp[i] = handling_shlvl(envp[i]);
-			node = ft_lstnew(ft_strdup(envp[i]));
+			shlvl = handling_shlvl(envp[i]);
+			if (ft_strlcpy(envp[i], shlvl, ft_strlen(shlvl) + 1))
+			{
+				node = ft_lstnew(ft_strdup(envp[i]));
+				ft_free(&shlvl);
+			}
 		}
 		else
 			node = ft_lstnew(ft_strdup(envp[i]));
