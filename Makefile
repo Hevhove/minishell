@@ -1,63 +1,46 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mmaxime- <mmaxime-@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/02/14 10:25:00 by mmaxime-          #+#    #+#              #
-#    Updated: 2022/04/19 17:53:26 by mmaxime-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME	= minishell
+NAME_DEBUG = minishell.dSYM
 
-#Variables
+SRCS	= $(wildcard src/*c)
+OBJS	= $(SRCS:c=o)
 
-NAME			=	minishell
-CC				=	gcc
-RM				=	rm -f
-CFLAGS			=	-Wall -Wextra -Werror 
-COMPILE_FLAGS	=	-lreadline -L${HOME}/.brew/opt/readline/lib
-OBJ_FLAGS		=	-I${HOME}/.brew/opt/readline/include
+INCS	= inc/minishell.h
+LIBS	= -lreadline
 
-#Sources
+CC		= gcc -g
+CFLAGS	= -Wall -Wextra -Werror `pkg-config readline --cflags` #-fsanitize=address
 
-SRCS			=	$(wildcard src/*.c)
-INCLUDES		=	inc/minishell.h
-LIBFT			=	libft/libft.a
-LIBFT_DIR		=	libft
+RM		= rm -f
 
-#Binaries
+LIBFT	= libft/libft.a
+LIBFT_DIR = libft
 
-OBJS			=	$(SRCS:.c=.o)
+.PHONY: all clean fclean re debug
 
-#Rules
+all: $(NAME)
 
-all:		$(NAME)
+.c.o:
+	$(CC) $(CFLAGS) -I$(INCS) -c $< -o ${<:.c=.o}
 
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -I$(INCS) $(LIBS) -o $(NAME) $(OBJS) $(LIBFT)
+	
 $(LIBFT):
-				make -C $(LIBFT_DIR) --silent
+	make -C $(LIBFT_DIR) --silent
 
-$(NAME):	$(SRCS) $(OBJS) $(LIBFT)
-				$(CC) $(CFLAGS) $(COMPILE_FLAGS) -I$(INCLUDES) -o $(NAME) $(OBJS) $(LIBFT)
-
-obj/%.o:	%.c
-				$(CC) $(CFLAGS) $(OBJ_FLAGS) -c $< -o $@
-
-debug:		$(LIBFT)
-				$(CC) -g $(CFLAGS) -I$(INCLUDES) -o $(NAME) $(OBJS) $(LIBFT)
+debug: $(LIBFT)
+	$(CC) -g $(CFLAGS) -I$(INCS) -lreadline -L $(LIBFT) $(SRCS) -o $(NAME)
 
 valgrind:
-				valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME)
 
 clean:
-				$(RM) $(OBJS)
-				make -C $(LIBFT_DIR) clean
+	$(RM) $(OBJS)
+	make -s clean -C $(LIBFT_DIR)
 
-fclean:		clean
-				$(RM) $(NAME)
-				$(RM) -R fdf.dSYM fdf_bonus.dSYM
-				make -C $(LIBFT_DIR) fclean
+fclean: clean
+	$(RM) $(NAME)
+	$(RM) -R $(NAME_DEBUG)
+	make -s fclean -C $(LIBFT_DIR)
 
-re:			fclean all
-
-.PHONY:		all clean fclean re debug
+re:	fclean all

@@ -3,32 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:41:15 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/02 10:46:38 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/18 11:11:27 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 15:16:59 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** SYNOPSIS : locate character in string
-** LIBRARY : <string.h>
-** DESC : The strrchr() function returns a pointer to
-** the last occurrence of the character c in the string s.
-*/
 
 #include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	len;
+	int		len;
+	char	c2;
 
-	len = ft_strlen(s);
-	while (len >= 0 || c == '\0')
+	c2 = c;
+	len = ft_strlen(s) + 1;
+	while (len--)
 	{
-		if (s[len] == (char)c)
-			return ((char *)(s + len));
-		len--;
+		if (s[len] == c2)
+			return ((char *)&s[len]);
 	}
-	return (0);
+	return (NULL);
 }
+
+/*
+int main(void)
+{
+	char s1[] = "Hello there!";
+	char s2[] = "Another test";
+	char a = 'e';
+	char b = 'f';
+	char c = 'Q';
+	char d = '!';
+
+	printf("TESTING...\n");
+	printf("OUR VERS: addr of '%c' in '%s' at: %p\n", a, s1, ft_strrchr(s1, a));
+	printf("OFF VERS: addr of '%c' in '%s' at: %p\n", a, s1, strrchr(s1, a));
+	printf("----\n");
+	
+	printf("OUR VERS: addr of '%c' in '%s' at: %p\n", a, s2, ft_strrchr(s2, a));
+	printf("OFF VERS: addr of '%c' in '%s' at: %p\n", a, s2, strrchr(s2, a));
+	printf("----\n");
+
+	printf("OUR VERS: addr of '%c' in '%s' at: %p\n", b, s1, ft_strrchr(s1, a));
+	printf("OFF VERS: addr of '%c' in '%s' at: %p\n", b, s1, strrchr(s1, a));
+	printf("----\n");
+
+	printf("OUR VERS: addr of '%c' in '%s' at: %p\n", c, s1, ft_strrchr(s1, a));
+	printf("OFF VERS: addr of '%c' in '%s' at: %p\n", c, s1, strrchr(s1, a));
+	printf("----\n");
+
+	printf("OUR VERS: addr of '%c' in '%s' at: %p\n", d, s1, ft_strrchr(s1, a));
+	printf("OFF VERS: addr of '%c' in '%s' at: %p\n", d, s1, strrchr(s1, a));
+	printf("----\n");
+
+	printf("OUR VERS: addr of '%c' in '%s' at: %p\n", d, s2, ft_strrchr(s2, a));
+	printf("OFF VERS: addr of '%c' in '%s' at: %p\n", d, s2, strrchr(s2, a));
+	printf("----\n");
+}
+*/

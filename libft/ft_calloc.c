@@ -3,30 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:35:29 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 10:35:41 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/22 15:27:31 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/02 19:58:44 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : allocate and free dynamic memory
-** LIBRARY : <stdlib.h>
-** DESC : The calloc() function contiguously allocates enough space for count
-** objects that are size bytes of memory each and returns a pointer to the
-** allocated memory. The allocated memory is filled with bytes of value zero.
-*/
-
 #include "libft.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+void	*ft_calloc(size_t count, size_t size)
 {
-	void	*dst;
+	void	*ptr;
 
-	dst = malloc(nmemb * size);
-	if (dst == 0)
-		return (0);
-	ft_bzero(dst, nmemb * size);
-	return (dst);
+	ptr = malloc(count * size);
+	if (ptr != NULL)
+		ft_memset(ptr, 0, count * size);
+	return (ptr);
 }

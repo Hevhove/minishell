@@ -3,41 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:43:06 by mmaxime-          #+#    #+#             */
-/*   Updated: 2022/02/21 17:59:09 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/22 16:20:52 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/05 14:35:29 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : extract substring from string
-** LIBRARY : N/A
-** DESC : Allocates (with malloc(3)) and returns a substring from the string ’s’.
-** The substring begins at index ’start’ and is of maximum size ’len’.
-*/
-
 #include "libft.h"
 
-char	*ft_substr(char	const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*dst;
-	size_t	i;
+	unsigned int	i;
+	unsigned int	j;
+	char			*substr;
 
 	if (!s)
-		return (0);
-	if (len > ft_strlen(s))
-		len = ft_strlen(s);
-	dst = (char *)malloc(sizeof(char) * (len + 1));
-	if (dst == NULL)
-		return (0);
-	i = 0;
-	while (i < len && s[start] != '\0')
+		return (NULL);
+	if (ft_strlen(s) < start)
+		return (ft_calloc(1, sizeof(char)));
+	if (len + start > ft_strlen(s))
+		len = ft_strlen(s) - start;
+	substr = (char *)malloc((len + 1) * sizeof(char));
+	if (!substr)
+		return (NULL);
+	i = start;
+	j = 0;
+	while (i < start + len && s[i])
 	{
-		dst[i] = s[start];
+		substr[j] = s[i];
 		i++;
-		start++;
+		j++;
 	}
-	dst[i] = '\0';
-	return (dst);
+	substr[j] = '\0';
+	return (substr);
 }
+
+/*
+int main(void)
+{
+	char str1[] = "tripouille";
+	char *substr;
+	
+	substr = ft_substr(str1,0,42000);
+	printf("The substring is: %s\n", substr);
+}
+*/

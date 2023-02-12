@@ -3,30 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 11:06:57 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/01 13:05:03 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/11/01 19:39:47 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/02 16:42:46 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** SYNOPSIS: count elements of a list
-** LIBRARY: N/A
-** DESC: Counts the number of elements in a list.
-*/
 
 #include "libft.h"
 
 int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int		len;
+	t_list	*temp;
 
-	i = 0;
-	while (lst)
+	len = 0;
+	temp = lst;
+	while (temp != NULL)
 	{
-		lst = lst->next;
-		i++;
+		len++;
+		temp = temp->next;
 	}
-	return (i);
+	return (len);
 }

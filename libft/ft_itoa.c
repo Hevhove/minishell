@@ -3,72 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:36:09 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 12:13:44 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/28 15:20:47 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 19:18:29 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS: convert integer to ASCII string
-** LIBRARY: N/A
-** DESC: Allocates (with malloc(3)) and returns a string representing the
-** integer received as an argument. Negative numbers must be handled.
-*/
-
 #include "libft.h"
 
-void	put_zero_or_minus(int n, char *result)
+static int	int_len(int i)
 {
-	if (n == 0)
-		result[0] = '0';
-	else if (n < 0)
-		result[0] = '-';
-}
+	size_t	len;
 
-int	len_n(int n)
-{
-	long	len;
-	long	nbr;
-
-	if (n < 1)
-		len = 1;
-	else
-		len = 0;
-	if (n < 0)
-		nbr = -(long)n;
-	else
-		nbr = (long)n;
-	while (nbr != 0)
+	len = 0;
+	while (i > 9 || i < -9)
 	{
-		nbr /= 10;
+		i /= 10;
 		len++;
 	}
-	return (len);
+	return (len + 1);
+}
+
+static char	*itoa_write(char *dst, int n, int len, int offset)
+{
+	while (n > 9)
+	{
+		dst[len + offset - 1] = (n % 10) + '0';
+		n /= 10;
+		len--;
+	}
+	dst[len + offset - 1] = n + '0';
+	return (dst);
 }
 
 char	*ft_itoa(int n)
 {
-	long	nbr;
-	long	i;
 	char	*result;
+	int		len;
+	int		offset;
 
-	i = len_n(n);
-	result = (char *)malloc(sizeof(char) * (i + 1));
-	if (result == NULL)
-		return (0);
-	result[i] = '\0';
+	len = int_len(n);
+	offset = 0;
 	if (n < 0)
-		nbr = -(long)n;
-	else
-		nbr = (long)n;
-	while (i > 0)
+		offset = 1;
+	result = (char *)malloc((len + offset + 1) * sizeof(char));
+	if (!result)
+		return (NULL);
+	if (n == -2147483648)
 	{
-		result[i - 1] = nbr % 10 + 48;
-		nbr /= 10;
-		i--;
+		result[1] = '2';
+		n = -147483648;
 	}
-	put_zero_or_minus(n, result);
+	if (n < 0)
+	{
+		result[0] = '-';
+		n = n * -1;
+	}
+	result = itoa_write(result, n, len, offset);
+	result[len + offset] = '\0';
 	return (result);
 }
+/*
+int	main(void)
+{
+
+	int	i = 0;
+	int j = -1234;
+	int k = -42;
+	int l = 2147483647;
+	int m = -2147483648;
+
+	for (int z = 0; z < 5; z++)
+		printf("The result for %d is: %c\n", i, ft_itoa(i)[z]);
+	printf("The result of %d in itoa is: %s\n",i ,ft_itoa(i));
+	printf("The result of %d in itoa is: %s\n",j ,ft_itoa(j));
+	printf("The result of %d in itoa is: %s\n",k ,ft_itoa(k));
+	printf("The result of %d in itoa is: %s\n",l ,ft_itoa(l));
+	printf("The result of %d in itoa is: %s\n",m ,ft_itoa(m));
+}
+*/

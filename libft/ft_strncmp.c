@@ -3,38 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:40:00 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 10:40:02 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/18 11:11:27 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/02 21:12:37 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** SYNOPSIS : compare two strings
-** LIBRARY : <string.h>
-** DESC : The  strncmp()  function compares the first
-** (at most) n bytes of strings s1 and s2. It returns
-** an integer less than, equal to, or greater than 0
-** if the first n bytes are found, respectively, to be
-** less than, to match, or be greater than s2.
-*/
 
 #include "libft.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	size_t	i;
+	unsigned int	i;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	if (n == 0)
-		return (0);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
 	i = 0;
-	while (s1[i] != '\0' && s1[i] == s2[i])
+	while (str1[i] && str2[i] && i < n)
 	{
-		if (i < (n - 1))
-			i++;
-		else
-			return (0);
+		if (str1[i] != str2[i])
+			return (str1[i] - str2[i]);
+		i++;
 	}
-	return ((unsigned char)(s1[i]) - (unsigned char)(s2[i]));
+	if (i < n)
+		return (str1[i] - str2[i]);
+	return (0);
 }
+
+/*
+int main(void)
+{
+	char str1[] = "Hello there!";
+	char str2[] = "Hello Universe!";
+	char str3[] = "Foo Bar";
+	char str4[] = "Foo Bar Bas";
+
+	printf("TESTING...\n");
+	printf("OUR VERS: Comp of '%s'
+   	and '%s' : %d\n", str1, str2, ft_strncmp(str1, str2, 4));
+	printf("OFF VERS: Comp of '%s'
+   	and '%s' : %d\n", str1, str2, strncmp(str1, str2, 4));
+	printf("----\n");
+
+	printf("OUR VERS: Comp of '%s'
+   	and '%s' : %d\n", str1, str2, ft_strncmp(str1, str2, 7));
+	printf("OFF VERS: Comp of '%s'
+   	and '%s' : %d\n", str1, str2, strncmp(str1, str2, 7));
+	printf("----\n");
+
+	printf("OUR VERS: Comp of '%s'
+   	and '%s' : %d\n", str3, str4, ft_strncmp(str3, str4, 4));
+	printf("OFF VERS: Comp of '%s'
+   	and '%s' : %d\n", str3, str4, strncmp(str3, str4, 4));
+	printf("----\n");
+
+	printf("OUR VERS: Comp of '%s'
+   	and '%s' : %d\n", str3, str4, ft_strncmp(str3, str4, 12));
+	printf("OFF VERS: Comp of '%s'
+   	and '%s' : %d\n", str3, str4, strncmp(str3, str4, 12));
+	printf("----\n");
+}
+*/

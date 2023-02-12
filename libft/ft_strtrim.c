@@ -3,62 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <hvan-hov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:41:54 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/16 17:45:53 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/22 17:08:53 by hvan-hov          #+#    #+#             */
+/*   Updated: 2022/05/13 12:59:37 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : trim beginning and end of string with the specified characters
-** LIBRARY : N/A
-** DESC : Allocates (with malloc(3)) and returns a copy of ’s1’ with the
-** characters specified in ’set’ removed from the beginning and the
-** end of the string.
-*/
-
 #include "libft.h"
 
-int	ft_setcheck(char c, char const *set)
+static int	ft_in_set(char c, char const *set)
 {
-	int	i;
-
-	i = 0;
-	while (set[i])
+	while (*set)
 	{
-		if (set[i] == c)
+		if (c == *set)
 			return (1);
-		i++;
+		set++;
 	}
 	return (0);
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	char	*str;
-	int		start;
-	int		end;
-	int		i;
+	char	*trim;
+	size_t	i;
+	size_t	start;
+	size_t	end;
 
-	i = 0;
+	if (!s1)
+		return (NULL);
 	start = 0;
-	if (!s1 || !set)
-		return (0);
-	end = (int)ft_strlen(s1);
-	while (s1[start] && ft_setcheck(s1[start], set))
+	while (s1[start] && ft_in_set(s1[start], set))
 		start++;
-	while (end > start && ft_setcheck(s1[end - 1], set))
+	end = ft_strlen(s1);
+	while (end > start && ft_in_set(s1[end - 1], set))
 		end--;
-	str = (char *)malloc(sizeof(char) * (end - start + 1));
-	if (str == NULL)
-		return (0);
+	trim = (char *)malloc((end - start + 1) * sizeof(char));
+	if (!trim)
+		return (NULL);
+	i = 0;
 	while (start < end)
-	{
-		str[i] = s1[start];
-		i++;
-		start++;
-	}
-	str[i] = '\0';
-	return (str);
+		trim[i++] = s1[start++];
+	trim[i] = '\0';
+	return (trim);
 }
+
+/*
+int	main(void)
+{
+	char s1[] = "tripouille   xxx";
+	char s2[] = "testxxx ";
+	char s3[] = "   x  x xxxxtexstxx  x ";
+	char s4[] = "hello :)";
+	char s5[] = "   xxxx   ";
+	char s6[] = "";
+	char set1[] = " x";
+	char set2[] = "";
+
+	printf("TESTING...\n");
+	printf("The trimmed string is: %s\n", ft_strtrim(s1, set1));
+	printf("The trimmed string is: %s\n", ft_strtrim(s2, set1));
+	printf("The trimmed string is: %s\n", ft_strtrim(s3, set1));
+	printf("The trimmed string is: %s\n", ft_strtrim(s4, set1));
+	printf("The trimmed string is: %s\n", ft_strtrim(s5, set1));
+	printf("The trimmed string is: %s\n", ft_strtrim(s6, set1));
+	printf("---\n");
+	printf("The trimmed string is: %s\n", ft_strtrim(s1, set2));
+	printf("The trimmed string is: %s\n", ft_strtrim(s6, set2));
+}
+*/

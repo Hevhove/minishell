@@ -3,30 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 11:06:41 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/01 11:23:44 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/11/01 19:19:06 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 19:52:18 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS: add new element at beginning of list
-** LIBRARY: N/A
-** DESC: Adds the element ’new’ at the beginning of the list.
-*/
-
 #include "libft.h"
 
-void	ft_lstadd_front(t_list **alst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (!new)
-		return ;
-	if (!alst)
+	if (lst && new)
 	{
-		*alst = new;
-		return ;
+		new->next = *lst;
+		*lst = new;
 	}
-	new->next = *alst;
-	*alst = new;
 }
+
+/*
+int	main(void)
+{
+	t_list **linked_list;
+	char *cont1 = "hello!";
+	char *cont2 = "cool";
+
+	linked_list = (t_list **)calloc(5, sizeof(t_list *));
+	linked_list[0] = ft_lstnew(cont1);
+	linked_list[1] = ft_lstnew(cont2);
+
+	printf("Content 1 is: %s\n", linked_list[0]->content);
+	printf("Content 2 is: %s\n", linked_list[1]->content);
+}
+*/

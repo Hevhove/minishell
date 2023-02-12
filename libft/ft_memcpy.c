@@ -1,37 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   memcpy.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 12:05:16 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/19 15:24:01 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/18 17:42:30 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 15:02:34 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** SYNOPSIS : copy memory area
-** LIBRARY : <string.h>
-** DESC : The memcpy() function copies n bytes from memory
-** area src to memory area dst.  If dst and src overlap,
-** behavior is undefined.  Applications in which dst and
-** src might overlap should use memmove(3) instead.
-*/
 
 #include "libft.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t	i;
+	int		i;
+	char	*dstptr;
+	char	*srcptr;
 
 	if (!dst && !src)
-		return (0);
+		return (NULL);
 	i = 0;
-	while (i < n)
+	dstptr = (char *)dst;
+	srcptr = (char *)src;
+	while (n--)
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		dstptr[i] = srcptr[i];
 		i++;
 	}
 	return (dst);
 }
+
+/*
+int	main(void)
+{
+	char src1[] = "Hello";
+	char dst1[] = "XXXXX";
+	int src2[] = {1, 2, 3, 4, 5};
+	int dst2[] = {0, 0, 0, 0, 0};
+
+	printf("Current dst is: %s\n", dst1);
+	ft_memcpy(dst1, src1, 3);
+	printf("New dst is: %s\n", dst1);
+
+	for (int i = 0; i < 5; i++)
+		printf("current dst[i] is: %d\n", dst2[i]);
+	ft_memcpy(dst2, src2, 5);
+	for (int i = 0; i < 5; i++)
+		printf("new dst[i] is: %d\n", dst2[i]);
+}
+*/

@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:37:19 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 10:37:22 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/11/01 16:14:17 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 17:21:26 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** SYNOPSIS: output a character to given file
-** LIBRARY: N/A
-** DESC: The fputc() function writes the character c (converted to an ``unsigned
-** char'') to the output stream pointed to by stream. [42 PDF] Outputs
-** the character ’c’ to the given file descriptor.
-*/
 
 #include "libft.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write (fd, &c, 1);
+	write(fd, &c, 1);
 }

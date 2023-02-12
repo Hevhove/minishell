@@ -3,31 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   memset.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 16:26:02 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/19 10:46:14 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/18 15:38:17 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/02 19:58:37 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** SYNOPSIS : fill a byte string with a byte value
-** LIBRARY : <string.h>
-** DESC : The memset() function writes len bytes of value c
-** (converted to an unsigned char) to the string b.
-*/
 
 #include "libft.h"
 
 void	*ft_memset(void *b, int c, size_t len)
 {
-	size_t	i;
+	int		i;
+	char	*s;
 
 	i = 0;
-	while (i < len)
+	s = (char *) b;
+	while (len--)
 	{
-		((unsigned char *)b)[i] = c;
+		s[i] = c;
 		i++;
 	}
 	return (b);
 }
+
+/*
+int main(void)
+{
+	char str1[] = "Hello there!";
+	char c = '.';
+
+	printf("OUR VERS: '%s' becomes '%s'\n", str1, ft_memset(str1, c, 5));
+	printf("OFF VERS: '%s' becomes '%s'\n", str1, memset(str1, c, 5));
+}
+*/

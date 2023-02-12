@@ -3,32 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 11:07:35 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/01 13:00:03 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/11/01 20:04:22 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/02 16:41:11 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS: add new element at end of list
-** LIBRARY: N/A
-** DESC: Adds the element ’new’ at the end of the list.
-*/
-
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **alst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*tmp;
+	t_list	*temp;
 
-	if (!new)
-		return ;
-	if (!*alst)
+	if (lst)
 	{
-		*alst = new;
-		return ;
+		if (*lst == NULL)
+			*lst = new;
+		else
+		{
+			temp = *lst;
+			while (temp->next != NULL)
+				temp = temp->next;
+			temp->next = new;
+		}
 	}
-	tmp = ft_lstlast(*alst);
-	tmp->next = new;
 }

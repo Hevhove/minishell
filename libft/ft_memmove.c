@@ -1,43 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   memmove.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 15:26:39 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/02 10:30:06 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/18 17:42:30 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 15:37:34 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : copy byte string
-** LIBRARY : <string.h>
-** DESC : The memmove() function copies len bytes from string src to string
-** dst.  The two strings may overlap; the copy is always done in a non-
-** destructive manner.
-*/
-
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, void *src, size_t n)
 {
-	size_t		i;
-	const char	*csrc;
-	char		*cdst;
+	char	*d;
+	char	*s;
+	char	*lasts;
+	char	*lastd;
 
-	if (src < dst && src + len >= dst)
-	{
-		i = len;
-		csrc = src;
-		cdst = dst;
-		while (i > 0)
-		{
-			cdst[i - 1] = csrc[i - 1];
-			i--;
-		}
-	}
+	if (!dst && !src)
+		return (NULL);
+	d = (char *)dst;
+	s = (char *)src;
+	if (d < s)
+		while (n--)
+			*d++ = *s++;
 	else
-		ft_memcpy(dst, src, len);
+	{
+		lasts = s + (n - 1);
+		lastd = d + (n - 1);
+		while (n--)
+			*lastd-- = *lasts--;
+	}
 	return (dst);
 }
+
+/*
+int	main(void)
+{
+	char src1[] = "Hello";
+	char dst1[] = "XXXXX";
+	int src2[] = {1, 2, 3, 4, 5};
+	int dst2[] = {0, 0, 0, 0, 0};
+
+	char *dst3 = src1 + ;
+
+	printf("Current dst is: %s\n", dst1);
+	ft_memmove(dst3, src1, 3);
+	printf("New dst is: %s\n", dst1);
+
+	for (int i = 0; i < 5; i++)
+		printf("current dst[i] is: %d\n", dst2[i]);
+	memmove(dst2, src2, 5);
+	for (int i = 0; i < 5; i++)
+		printf("new dst[i] is: %d\n", dst2[i]);
+}
+*/

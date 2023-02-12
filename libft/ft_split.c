@@ -3,100 +3,126 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:38:36 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 16:59:50 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/25 14:50:42 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/05 13:01:54 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS: split string, with specified character as delimiter, into
-** an array of strings
-** LIBRARY: N/A
-** DESC : Allocates (with malloc(3)) and returns an array of strings
-** obtained by splitting ’s’ using the character ’c’ as a delimiter.
-** The array must be ended by a NULL pointer.
-*/
-
 #include "libft.h"
+#include <stdio.h>
 
-static int	ft_count_words(char const *str, char c)
+static size_t	word_count(const char *s, char c)
 {
-	int	i;
-	int	count;
+	size_t	wc;
+
+	if (!s || *s == '\0')
+		return (0);
+	else if (c == '\0')
+		return (1);
+	wc = 0;
+	while (*s != '\0')
+	{
+		if (*s != c)
+		{
+			while (*s != c && *s != '\0')
+				s++;
+			wc++;
+		}
+		if (*s != '\0')
+			s++;
+	}
+	return (wc);
+}
+
+static void	write_word(char *dst, const char *src, char c)
+{
+	size_t	i;
 
 	i = 0;
-	count = 0;
-	while (str[i] != '\0')
+	while (src[i] != c && src[i] != '\0')
 	{
-		if (str[i] == c)
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+}
+
+static int	write_split(char **split, const char *s, char c)
+{
+	size_t	i;
+	size_t	len;
+	size_t	wc;
+
+	i = 0;
+	wc = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
 			i++;
 		else
 		{
-			count++;
-			while (str[i] && str[i] != c)
-				i++;
+			len = 0;
+			while (s[i + len] != c && s[i + len] != '\0')
+				len++;
+			split[wc] = (char *)malloc((len + 1) * sizeof(char));
+			if (split[wc] == NULL)
+				return (0);
+			write_word(split[wc], s + i, c);
+			i += len;
+			wc++;
 		}
 	}
-	return (count);
+	return (1);
 }
 
-static char	*ft_putwords(char *word, char const *s, int i, int word_len)
+char	**ft_split(const char *s, char c)
 {
-	int	j;
+	char	**split;
+	size_t	wc;
 
-	j = 0;
-	while (word_len > 0)
-	{
-		word[j] = s[i - word_len];
-		j++;
-		word_len--;
-	}
-	word[j] = '\0';
-	return (word);
+	if (!s)
+		return (NULL);
+	wc = word_count(s, c);
+	split = (char **)malloc((wc + 1) * sizeof(split));
+	if (split == NULL)
+		return (NULL);
+	if (write_split(split, s, c) == 0)
+		return (NULL);
+	split[wc] = NULL;
+	return (split);
 }
 
-static char	**ft_split_words(char const *s, char c, char **s2, int num_words)
+/*
+int main(void)
 {
-	int	i;
-	int	word;
-	int	word_len;
 
-	i = 0;
-	word = 0;
-	word_len = 0;
-	while (word < num_words)
-	{
-		while (s[i] && s[i] == c)
-			i++;
-		while (s[i] && s[i] != c)
-		{
-			i++;
-			word_len++;
-		}
-		s2[word] = (char *)malloc(sizeof(char) * (word_len + 1));
-		if (s2 == NULL)
-			return (0);
-		ft_putwords(s2[word], s, i, word_len);
-		word_len = 0;
-		word++;
-	}
-	s2[word] = 0;
-	return (s2);
-}	
+	char	s1[] = "hello_word_"; 
+	//char	s2[] = "**Hello*there**friend**!!!";
+	//char	s3[] = "____";
+	//char	s4[] = "";
+	char	c1 = '_';
+	//char	c2 = '*';
 
-char	**ft_split(char const *s, char c)
-{
-	char			**s2;
-	unsigned int	num_words;
-
-	if (s == NULL)
-		return (0);
-	num_words = ft_count_words(s, c);
-	s2 = (char **)malloc(sizeof(char *) * (num_words + 1));
-	if (s2 == NULL)
-		return (0);
-	ft_split_words(s, c, s2, num_words);
-	return (s2);
+	printf("TESTING...\n");
+	printf("The string '%s' gives: \n", s1);
+	printf("splitted[0] is: %s\n",ft_split(s1, c1)[0]);
+	for (int i = 0; i < 4; i++)
+		printf("splitted[%d] is: %s\n", i, ft_split(s1, c1)[i]);
+	printf("---\n");
+	
+	printf("The string '%s' gives: \n", s2);
+	for (int i = 0; i < 5; i++)
+		printf("splitted[%d] is: %s\n", i, ft_split(s2, c2)[i]);
+	printf("---\n");
+	printf("The string '%s' gives: \n", s3);
+	for (int i = 0; i < 2; i++)
+		printf("splitted[%d] is: %s\n", i, ft_split(s3, c1)[i]);
+	printf("---\n");	
+	printf("The string '%s' gives: \n", s4);
+	for (int i = 0; i < 2; i++)
+		printf("splitted[%d] is: %s\n", i, ft_split(s4, c1)[i]);
+	printf("---\n");
 }
+*/

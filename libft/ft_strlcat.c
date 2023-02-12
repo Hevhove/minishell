@@ -3,54 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 15:16:16 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/02 12:55:52 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/22 10:39:41 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/10/31 17:22:40 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : size-bounded string concatenation
-** LIBRARY : <string.h>
-** DESC : The strlcat() function concatenate strings with the
-** same input parameters and output result as snprintf(3).
-** It takes the full size of the destination buffer and
-** guarantee NUL-termination if there is room.  Note that
-** room for the NUL should be included in dstsize.
-** strlcat() appends string src to the end of dst. It will
-** append at most dstsize - strlen(dst) - 1 characters.
-** It will then NUL-terminate, unless dstsize is 0 or the
-** original dst string was longer than dstsize (in practice
-** this should not happen as it means that either dstsize is
-** incorrect or that dst is not a proper string).
-** If the src and dst strings overlap, the behavior is
-** undefined.
-*/
-
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
+	size_t	destlen;
+	size_t	srclen;
 	size_t	i;
-	size_t	j;
-	size_t	res;
 
-	i = ft_strlen(dst);
-	res = ft_strlen(src);
-	j = 0;
-	if (dstsize == 0)
-		return (res);
-	if (dstsize < 1 || dstsize <= i)
-		res = res + dstsize;
+	destlen = ft_strlen(dest);
+	srclen = ft_strlen(src);
+	if (size == 0)
+		return (srclen);
+	if (size < destlen)
+		srclen += size;
 	else
-		res = res + i;
-	while (src[j] != '\0' && i < dstsize - 1 && dst != src)
+		srclen += destlen;
+	i = 0;
+	while (src[i] != '\0' && (destlen + i) < size - 1)
 	{
-		dst[i] = src[j];
+		dest[destlen + i] = src[i];
 		i++;
-		j++;
 	}
-	dst[i] = '\0';
-	return (res);
+	dest[destlen + i] = '\0';
+	return (srclen);
 }
+
+/*
+int main(void)
+{
+	char dst1[20] = "destination";
+	char src1[] = "src";
+	char dst2[20] = "destination";
+	char src2[] = "src";
+
+	// Call function and check return values;
+	size_t r_val1 = ft_strlcat(dst1, src1, 14);
+	size_t r_val2 = strlcat(dst2, src2, 14);
+
+	printf("TESTING...\n");
+	printf("OUR RETURN VAL: %zu\n", r_val1);
+	printf("OFF RETURN VAL: %zu\n", r_val2);
+	printf("----\n");
+
+	// Memory layout check
+	printf("OUR MEMORY LAYOUT: \n");
+	for (int i = 0; i < 16; i++)
+		printf("dst1[%d] is : %c\n", i, dst1[i]);
+	printf("----\n");
+	printf("OFF MEMORY LAYOUT: \n");
+	for (int i = 0; i < 16; i++)
+		printf("dst2[%d] is : %c\n", i, dst2[i]);
+}
+*/

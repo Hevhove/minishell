@@ -3,33 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:38:52 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 11:24:00 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/22 15:47:38 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 20:34:28 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : duplicate a string
-** LIBRARY : <string.h>
-** DESC : The  strdup() function returns a pointer to
-** a new string which is a duplicate of the string s.
-** Memory for the new string  is  obtained  with
-** malloc(3), and can be freed with free(3).
-*/
-
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s1)
 {
-	char	*dst;
+	char	*ptr;
 	size_t	len;
+	size_t	i;
 
-	len = ft_strlen(s) + 1;
-	dst = (char *)malloc(len);
-	if (dst == NULL)
-		return (0);
-	ft_memcpy(dst, s, len);
-	return (dst);
+	len = ft_strlen(s1) + 1;
+	ptr = malloc(len * sizeof(char));
+	if (!ptr)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
 }
+
+/*
+int	main(void)
+{
+	char str[] = "Hello there";
+	char *ptr;
+
+	ptr = ft_strdup(str);
+	printf("TESTING...\n");
+	printf("---\n");
+	printf("ptr at address: %p\n", ptr);
+	printf("---\n");
+	for (int i = 0; i < 12; i++)
+		printf("ptr[%d] value is now: %c\n", i, ptr[i]);	
+}
+*/

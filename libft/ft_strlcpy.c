@@ -1,46 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strlcpy.c                                          :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/18 14:02:33 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/11/02 15:15:27 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/22 09:24:34 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/10/22 14:24:25 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : size-bounded string copying
-** LIBRARY : <string.h>
-** DESC : The strlcpy() function copy strings with the same input
-** parameters and output result as snprint(3).
-** It takes the full size of the destination buffer and guarantee
-** NUL-termination if there is room. Note that room for the NUL
-** should be included in dstsize.
-** strlcpy() copies up to dstsize - 1 characters from the string
-** src to dst, NUL-terminating the result if dstsize is not 0.
-*/
-
-#include "libft.h"
+#include <string.h>
+#include <stdio.h>
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	srcsize;
-	size_t	i;
+	size_t	srclen;
 
-	if (!dst || !src)
-		return (0);
-	srcsize = ft_strlen(src);
-	i = 0;
-	if (dstsize != 0)
+	srclen = 0;
+	while (src[srclen] != '\0')
+		srclen++;
+	while (dstsize--)
 	{
-		while (src[i] && i < (dstsize - 1))
+		if (dstsize == 0 || *src == '\0')
 		{
-			dst[i] = src[i];
-			i++;
+			*dst = '\0';
+			break ;
 		}
-		dst[i] = '\0';
+		*dst = *src;
+		dst++;
+		src++;
 	}
-	return (srcsize);
+	return (srclen);
 }
+
+/*
+int main(void)
+{
+	char dst1[] = "destination";
+	char src1[] = "src";
+	char dst2[] = "destination";
+	char src2[] = "src";
+
+	// Call function and check return values;
+	size_t r_val1 = ft_strlcpy(dst1, src1, 3);
+	size_t r_val2 = strlcpy(dst2, src2, 3);
+
+	printf("TESTING...\n");
+	printf("OUR RETURN VAL: %zu\n", r_val1);
+	printf("OFF RETURN VAL: %zu\n", r_val2);
+	printf("----\n");
+
+	// Memory layout check
+	printf("OUR MEMORY LAYOUT: \n");
+	for (int i = 0; i < 15; i++)
+		printf("dst1[%d] is : %c\n", i, dst1[i]);
+	printf("----\n");
+	printf("OFF MEMORY LAYOUT: \n");
+	for (int i = 0; i < 15; i++)
+		printf("dst2[%d] is : %c\n", i, dst2[i]);
+}
+*/

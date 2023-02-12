@@ -3,44 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmaxime- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hvan-hov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/28 10:40:57 by mmaxime-          #+#    #+#             */
-/*   Updated: 2021/10/28 10:50:43 by mmaxime-         ###   ########.fr       */
+/*   Created: 2021/10/19 17:33:24 by hvan-hov          #+#    #+#             */
+/*   Updated: 2021/11/01 18:14:24 by hvan-hov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** SYNOPSIS : locate a substring in a string
-** LIBRARY : <string.h>
-** DESC : The strnstr() function locates the first occurence
-** of the null-terminated string little in the string big,
-** where not more than len characters are searched. Characters
-** that appear after a '\0' character are not searched.
-*/
+#include <string.h>
+#include <stdio.h>
 
-#include "libft.h"
-
-char	*ft_strnstr(const char *big, const char *little, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	h;
-	size_t	n;
+	size_t	i;
+	size_t	j;
 
-	h = 0;
-	if (little[0] == '\0')
-		return ((char *)big);
-	while (big[h] != '\0')
+	i = 0;
+	if (*needle == '\0' || needle == NULL)
+		return ((char *)haystack);
+	while (haystack[i] != '\0' && i < len)
 	{
-		n = 0;
-		while (big[h + n] == little[n] && (h + n) < len)
+		j = 0;
+		while (needle[j] == haystack[i + j] && i + j < len)
 		{
-			if (big[h + n] == '\0' && little[n] == '\0')
-				return ((char *)&big[h]);
-			n++;
+			if (needle[j + 1] == '\0')
+				return ((char *)haystack + i);
+			j++;
 		}
-		if (little[n] == '\0')
-			return ((char *)big + h);
-		h++;
+		i++;
 	}
-	return (0);
+	return (NULL);
 }
+
+/*
+int main(void)
+{
+	char needle[] = "Caz";
+	char haystack[] = "Foo Bar Caz";
+
+	printf("The first occurence of '%s' in
+   	'%s' is at %c\n", needle, haystack, *ft_strnstr(haystack, needle, 11));
+}
+*/
