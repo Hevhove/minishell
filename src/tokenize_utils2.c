@@ -12,26 +12,22 @@
 
 #include "../inc/minishell.h"
 
-int	line_empty(const char *s)
-{
-	int	i;
-	int	check;
+int line_empty(const char *s) {
+  int i;
 
-	i = 0;
-	check = 0;
-	while (s[i] && cst(s[i]))
-		i++;
-	if (i == (int)ft_strlen(s))
-		return (1);
-	return (0);
+  i = 0;
+  while (s[i] && cst(s[i]))
+    i++;
+  if (i == (int)ft_strlen(s))
+    return (1);
+  return (0);
 }
 
-int	cst(char c)
-{
-	if (c == CHAR_WHITESPACE)
-		return (1);
-	else if (c == CHAR_TAB)
-		return (1);
-	else
-		return (0);
+int cst(char c) {
+  if (c == CHAR_WHITESPACE)
+    return (1);
+  else if (c == CHAR_TAB)
+    return (1);
+  else
+    return (0);
 }

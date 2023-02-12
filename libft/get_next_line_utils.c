@@ -12,46 +12,41 @@
 
 #include "get_next_line.h"
 
-// long	ft_strlen(const char *str)
-// {
-// 	long	len;
+long ft_strlen2(const char *str) {
+  long len;
 
-// 	len = 0;
-// 	while (*str != '\0')
-// 	{
-// 		len++;
-// 		str++;
-// 	}
-// 	return (len);
-// }
+  len = 0;
+  while (*str != '\0') {
+    len++;
+    str++;
+  }
+  return (len);
+}
 
-char	*ft_strnjoin(const char *s1, char *s2, struct s_i it)
-{
-	char	*join;
+char *ft_strnjoin(const char *s1, char *s2, struct s_i it) {
+  char *join;
 
-	if (!s1 || !s2)
-		return (NULL);
-	join = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!join)
-		return (NULL);
-	while (s1[++(it.i)] != '\0')
-		join[(it.i)] = s1[(it.i)];
-	while ((s2)[++(it.j)] != '\0')
-	{
-		if ((s2)[(it.j)] == '\n')
-		{
-			join[(it.i)++] = '\n';
-			join[(it.i)] = '\0';
-			while ((s2)[++(it.j)] != '\0')
-				(s2)[(it.k)++] = (s2)[(it.j)];
-			(s2)[it.k] = '\0';
-			break ;
-		}
-		join[(it.i)++] = (s2)[(it.j)];
-		(s2)[(it.j)] = '\0';
-	}
-	join[(it.i)] = '\0';
-	return (join);
+  if (!s1 || !s2)
+    return (NULL);
+  join = (char *)malloc((ft_strlen2(s1) + ft_strlen2(s2) + 1) * sizeof(char));
+  if (!join)
+    return (NULL);
+  while (s1[++(it.i)] != '\0')
+    join[(it.i)] = s1[(it.i)];
+  while ((s2)[++(it.j)] != '\0') {
+    if ((s2)[(it.j)] == '\n') {
+      join[(it.i)++] = '\n';
+      join[(it.i)] = '\0';
+      while ((s2)[++(it.j)] != '\0')
+        (s2)[(it.k)++] = (s2)[(it.j)];
+      (s2)[it.k] = '\0';
+      break;
+    }
+    join[(it.i)++] = (s2)[(it.j)];
+    (s2)[(it.j)] = '\0';
+  }
+  join[(it.i)] = '\0';
+  return (join);
 }
 
 // char	*ft_strchr(const char *s, int c)

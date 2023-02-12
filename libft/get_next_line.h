@@ -11,27 +11,25 @@
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
-# include "libft.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+#define GET_NEXT_LINE_H
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 42
+#endif
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-struct s_i
-{
-	long long	i;
-	long long	j;
-	long long	k;
+struct s_i {
+  long long i;
+  long long j;
+  long long k;
 };
 
-char	*get_next_line(int fd);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putendl_fd(char *s, int fd);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_strnjoin(const char *s1, char *s2, struct s_i i);
-char	*ft_strchr(const char *s, int c);
+char *get_next_line(int fd);
+void ft_putchar_fd(char c, int fd);
+void ft_putendl_fd(char *s, int fd);
+void ft_putstr_fd(char *s, int fd);
+char *ft_strnjoin(const char *s1, char *s2, struct s_i i);
+char *ft_strchr(const char *s, int c);
 
 #endif
